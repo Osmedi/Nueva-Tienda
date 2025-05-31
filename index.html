@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Tu Tienda de Tecnología</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Products Grid */
+        .products-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-badge.bestseller {
+            background: #2ed573;
+        }
+
+        .product-carousel {
+            position: relative;
+            margin-bottom: 1rem;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .carousel-image {
+            min-width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-prev {
+            left: 10px;
+        }
+
+        .carousel-next {
+            right: 10px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        .stars {
+            color: #ffd700;
+            margin: 0.5rem 0;
+        }
+
+        .reviews-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .cart-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-cart {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .item-info {
+            flex: 1;
+            margin-left: 1rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .checkout-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo"><i class="fas fa-laptop"></i> TechStore</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#ofertas">Ofertas</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="inicio">
+            <h1>¡Bienvenido a TechStore!</h1>
+            <p>Los mejores productos tecnológicos al mejor precio</p>
+        </section>
+
+        <section class="categories">
+            <button class="category-btn active" onclick="filterProducts('all')">Todos</button>
+            <button class="category-btn" onclick="filterProducts('smartphones')">Smartphones</button>
+            <button class="category-btn" onclick="filterProducts('laptops')">Laptops</button>
+            <button class="category-btn" onclick="filterProducts('accesorios')">Accesorios</button>
+            <button class="category-btn" onclick="filterProducts('gaming')">Gaming</button>
+        </section>
+
+        <section class="products-section" id="ofertas">
+            <h2 class="section-title">🔥 Ofertas Especiales</h2>
+            <div class="products-grid" id="offersGrid">
+                <!-- Productos en oferta se generarán aquí -->
+            </div>
+        </section>
+
+        <section class="products-section" id="bestsellers">
+            <h2 class="section-title">⭐ Los Más Vendidos</h2>
+            <div class="products-grid" id="bestsellersGrid">
+                <!-- Productos más vendidos se generarán aquí -->
+            </div>
+        </section>
+
+        <section class="products-section" id="productos">
+            <h2 class="section-title">📱 Todos los Productos</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Todos los productos se generarán aquí -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+            <h2>🛒 Tu Carrito de Compras</h2>
+            <div id="cartItems"></div>
+            <div id="cartTotal" style="font-size: 1.5rem; font-weight: bold; margin: 1rem 0; text-align: right;"></div>
+            
+            <form class="checkout-form" id="checkoutForm">
+                <div class="form-group">
+                    <label for="customerName">Nombre Completo *</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Teléfono *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Dirección de Entrega *</label>
+                    <input type="text" id="customerAddress" name="customerAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerNotes">Notas Adicionales</label>
+                    <textarea id="customerNotes" name="customerNotes" rows="3" placeholder="Instrucciones especiales, referencias, etc."></textarea>
+                </div>
+                <button type="submit" class="checkout-btn">
+                    <i class="fab fa-whatsapp"></i> Finalizar Compra por WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TechStore</h3>
+                    <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor servicio al cliente.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#ofertas">Ofertas</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Categorías</h3>
+                    <ul>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Accesorios</a></li>
+                        <li><a href="#">Gaming</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +504 9999-9999</li>
+                        <li><i class="fas fa-envelope"></i> info@techstore.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> San Pedro Sula, Honduras</li>
+                        <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechStore. Todos los derechos reservados. | Diseñado con ❤️ en Honduras</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Productos de muestra
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro Max",
+                price: 1200,
+                originalPrice: 1400,
+                category: "smartphones",
+                images: [
+                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 5,
+                reviews: 128,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+            },
+            {
+                id: 2,
+                name: "MacBook Pro M3",
+                price: 2500,
+                originalPrice: 2800,
+                category: "laptops",
+                images: [
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 5,
+                reviews: 89,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+            },
+            {
+                id: 3,
+                name: "AirPods Pro 2",
+                price: 250,
+                originalPrice: 300,
+                category: "accesorios",
+                images: [
+                    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 4,
+                reviews: 256,
+                badge: "Más Vendido",
+                isBestseller: true,
+                isOffer: true
+            },
+            {
+                id: 4,
+                name: "PlayStation 5",
+                price: 500,
+                originalPrice: null,
+                category: "gaming",
+                images: [
+                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 5,
+                reviews: 342,
+                badge: "Más Vendido",
+                isBestseller: true,
+                isOffer: false
+            },
+            {
+                id: 5,
+                name: "Samsung Galaxy S24",
+                price: 900,
+                originalPrice: 1100,
+                category: "smartphones",
+                images: [
+                    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 4,
+                reviews: 167,
+                badge: "Oferta",
+                isBestseller: false,
+                isOffer: true
+            },
+            {
+                id: 6,
+                name: "Dell XPS 13",
+                price: 1200,
+                originalPrice: null,
+                category: "laptops",
+                images: [
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 4,
+                reviews: 93,
+                badge: null,
+                isBestseller: false,
+                isOffer: false
+            },
+            {
+                id: 7,
+                name: "Gaming Mouse RGB",
+                price: 75,
+                originalPrice: 95,
+                category: "accesorios",
+                images: [
+                    "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 4,
+                reviews: 445,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+            },
+            {
+                id: 8,
+                name: "Nintendo Switch OLED",
+                price: 350,
+                originalPrice: null,
+                category: "gaming", 
+                images: [
+                    "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop",
+                    "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop&sat=50",
+                    "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop&hue=30"
+                ],
+                rating: 5,
+                reviews: 278,
+                badge: "Más Vendido",
+                isBestseller: true,
+                isOffer: false
+            }
+        ];
+
+        let cart = [];
+        let currentCarousels = {};
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts('all');
+            renderOffers();
+            renderBestsellers();
+            updateCartUI();
+        });
+
+        // Renderizar productos
+        function renderProducts(category = 'all') {
+            const grid = document.getElementById('productsGrid');
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            
+            grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+            initializeCarousels();
+        }
+
+        // Renderizar ofertas
+        function renderOffers() {
+            const grid = document.getElementById('offersGrid');
+            const offers = products.filter(p => p.isOffer);
+            
+            grid.innerHTML = offers.map(product => createProductCard(product)).join('');
+            initializeCarousels();
+        }
+
+        // Renderizar más vendidos
+        function renderBestsellers() {
+            const grid = document.getElementById('bestsellersGrid');
+            const bestsellers = products.filter(p => p.isBestseller);
+            
+            grid.innerHTML = bestsellers.map(product => createProductCard(product)).join('');
+            initializeCarousels();
+        }
+
+        // Crear tarjeta de producto
+        function createProductCard(product) {
+            const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
+            const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
+            const originalPriceHtml = product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : '';
+            
+            return `
+                <div class="product-card" data-category="${product.category}">
+                    ${badgeHtml}
+                    <div class="product-carousel">
+                        <div class="carousel-container" id="carousel-${product.id}">
+                            ${product.images.map(img => `<img src="${img}" alt="${product.name}" class="carousel-image">`).join('')}
+                        </div>
+                        <button class="carousel-nav carousel-prev" onclick="prevImage(${product.id})">❮</button>
+                        <button class="carousel-nav carousel-next" onclick="nextImage(${product.id})">❯</button>
+                    </div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="stars">${starsHtml} <span class="reviews-count">(${product.reviews} reseñas)</span></div>
+                    <div class="product-price">
+                        ${originalPriceHtml}$${product.price}
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+            `;
+        }
+
+        // Inicializar carruseles
+        function initializeCarousels() {
+            products.forEach(product => {
+                currentCarousels[product.id] = 0;
+            });
+        }
+
+        // Navegación del carrusel
+        function nextImage(productId) {
+            const product = products.find(p => p.id === productId);
+            const carousel = document.getElementById(`carousel-${productId}`);
+            
+            currentCarousels[productId] = (currentCarousels[productId] + 1) % product.images.length;
+            carousel.style.transform = `translateX(-${currentCarousels[productId] * 100}%)`;
+        }
+
+        function prevImage(productId) {
+            const product = products.find(p => p.id === productId);
+            const carousel = document.getElementById(`carousel-${productId}`);
+            
+            currentCarousels[productId] = currentCarousels[productId] === 0 ? product.images.length - 1 : currentCarousels[productId] - 1;
+            carousel.style.transform = `translateX(-${currentCarousels[productId] * 100}%)`;
+        }
+
+        // Filtrar productos por categoría
+        function filterProducts(category) {
+            // Actualizar botones activos
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filtrar y mostrar productos
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Agregar al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartUI();
+            
+            // Animación de éxito
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> ¡Agregado!';
+            button.style.background = '#2ed573';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = '';
+            }, 1500);
+        }
+
+        // Actualizar interfaz del carrito
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+
+        // Toggle carrito
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                renderCartItems();
+            }
+        }
+
+        // Renderizar items del carrito
+        function renderCartItems() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Tu carrito está vacío</p>';
+                cartTotal.innerHTML = '';
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.images[0]}" alt="${item.name}">
+                    <div class="item-info">
+                        <div style="font-weight: bold;">${item.name}</div>
+                        <div style="color: #667eea;">${item.price} c/u</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span style="margin: 0 10px; font-weight: bold;">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <div style="font-weight: bold; color: #667eea;">${item.price * item.quantity}</div>
+                    <button onclick="removeFromCart(${item.id})" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            cartTotal.innerHTML = `Total: ${total.toFixed(2)}`;
+        }
+
+        // Actualizar cantidad
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                    renderCartItems();
+                }
+            }
+        }
+
+        // Remover del carrito
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            renderCartItems();
+        }
+
+        // Procesar checkout
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const customerName = formData.get('customerName');
+            const customerPhone = formData.get('customerPhone');
+            const customerAddress = formData.get('customerAddress');
+            const customerNotes = formData.get('customerNotes');
+            
+            // Crear mensaje para WhatsApp
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const productsList = cart.map(item => 
+                `• ${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}`
+            ).join('\n');
+            
+            const message = `🛒 *NUEVA ORDEN - TechStore*\n\n` +
+                          `👤 *Cliente:* ${customerName}\n` +
+                          `📱 *Teléfono:* ${customerPhone}\n` +
+                          `📍 *Dirección:* ${customerAddress}\n\n` +
+                          `🛍️ *Productos:*\n${productsList}\n\n` +
+                          `💰 *Total a Pagar: ${total.toFixed(2)}*\n\n` +
+                          `📝 *Notas:* ${customerNotes || 'Ninguna'}\n\n` +
+                          `¡Gracias por tu compra! 🎉`;
+            
+            // Número de WhatsApp (cambia por tu número)
+            const whatsappNumber = '50493756789'; // Reemplaza con tu número
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Abrir WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Limpiar carrito y cerrar modal
+            cart = [];
+            updateCartUI();
+            toggleCart();
+            this.reset();
+            
+            // Mostrar mensaje de confirmación
+            alert('¡Pedido enviado! Te redirigimos a WhatsApp para confirmar tu orden.');
+        });
+
+        // Cerrar modal al hacer clic fuera
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('cartModal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Auto-rotate carousels (opcional)
+        setInterval(() => {
+            products.forEach(product => {
+                if (Math.random() > 0.7) { // 30% chance to rotate
+                    nextImage(product.id);
+                }
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
