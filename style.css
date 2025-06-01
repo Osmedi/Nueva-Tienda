@@ -1011,4 +1011,8 @@ body.dark-mode .nav-links.active {
     .theme-toggle {
         margin-left: 0;
     }
+    .product-modal-info {
+        display: flex;
+        flex-direction: column;
+    }
 }
