@@ -759,6 +759,29 @@ body.dark-mode .product-modal-sidebar {
             color: #999;
         }
 
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.footer-section ul li i {
+    margin-right: 8px;
+    color: var(--color-secondary);
+    width: 20px;
+    text-align: center;
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .footer-section {
+        margin-bottom: 1.5rem;
+    }
+}
 /* Modal de Producto */
 .product-modal {
     display: none;

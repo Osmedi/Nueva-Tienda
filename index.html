@@ -107,6 +107,17 @@
                     <label for="customerNotes">Notas Adicionales</label>
                     <textarea id="customerNotes" name="customerNotes" rows="3" placeholder="Instrucciones especiales, referencias, etc."></textarea>
                 </div>
+                <div class="form-group">
+    <label for="paymentMethod">Método de Pago *</label>
+    <select id="paymentMethod" name="paymentMethod" required>
+        <option value="">Seleccione un método</option>
+        <option value="bac">Bac (Tarjeta de crédito)</option>
+        <option value="ficohsa">Ficohsa (Tarjeta de crédito)</option>
+        <option value="amex">American Express</option>
+        <option value="transferencia">Transferencia Bancaria</option>
+        <option value="efectivo">Efectivo</option>
+    </select>
+</div>
                 <button type="submit" class="checkout-btn">
                     <i class="fab fa-whatsapp"></i> Finalizar Compra por WhatsApp
                 </button>
@@ -134,45 +145,61 @@
 </section>
     <footer id="contacto">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>TechStore</h3>
-                    <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor servicio al cliente.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Navegación</h3>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#productos">Productos</a></li>
-                        <li><a href="#ofertas">Ofertas</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Categorías</h3>
-                    <ul>
-                        <li><a href="#">Smartphones</a></li>
-                        <li><a href="#">Laptops</a></li>
-                        <li><a href="#">Accesorios</a></li>
-                        <li><a href="#">Gaming</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +504 9999-9999</li>
-                        <li><i class="fas fa-envelope"></i> info@techstore.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> San Pedro Sula, Honduras</li>
-                        <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
-                    </ul>
-                </div>
-            </div>
+ <div class="footer-content">
+    <div class="footer-section">
+        <h3>TechStore</h3>
+        <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor servicio al cliente.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+    
+    <div class="footer-section">
+        <h3>Navegación</h3>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#ofertas">Ofertas</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </div>
+    
+    <div class="footer-section">
+        <h3>Categorías</h3>
+        <ul>
+            <li><a href="#">Smartphones</a></li>
+            <li><a href="#">Laptops</a></li>
+            <li><a href="#">Accesorios</a></li>
+            <li><a href="#">Gaming</a></li>
+        </ul>
+    </div>
+    
+    <div class="footer-section">
+        <h3>Contacto</h3>
+        <ul>
+            <li><i class="fas fa-phone"></i> +504 9999-9999</li>
+            <li><i class="fas fa-envelope"></i> info@techstore.com</li>
+            <li><i class="fas fa-map-marker-alt"></i> San Pedro Sula, Honduras</li>
+            <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
+        </ul>
+    </div>
+    
+    <div class="footer-section">
+        <h3>Pagos y Envíos</h3>
+        <ul>
+            <li><i class="fab fa-cc-visa"></i> Visa</li>
+            <li><i class="fab fa-cc-mastercard"></i> Mastercard</li>
+            <li><i class="fab fa-cc-amex"></i> American Express</li>
+            <li><i class="fas fa-money-bill-wave"></i> Transferencia/Efectivo</li>
+            <li><i class="fas fa-credit-card"></i> Financiamiento Bac/Ficohsa</li>
+            <li><i class="fas fa-truck"></i> Cargo Express</li>
+            <li><i class="fas fa-shipping-fast"></i> Rápido Cargo</li>
+        </ul>
+    </div>
+</div>
             
             <div class="footer-bottom">
                 <p>&copy; 2025 TechStore. Todos los derechos reservados. | Diseñado con ❤️ en Honduras</p>
@@ -544,52 +571,61 @@ function updateQuantity(productId, change) {
     renderCartItems(); // Actualiza la lista en tiempo real
 }
 
-        // Procesar checkout
-        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío');
-                return;
-            }
-            
-            const formData = new FormData(this);
-            const customerName = formData.get('customerName');
-            const customerPhone = formData.get('customerPhone');
-            const customerAddress = formData.get('customerAddress');
-            const customerNotes = formData.get('customerNotes');
-            
-            // Crear mensaje para WhatsApp
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const productsList = cart.map(item => 
-                `• ${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}`
-            ).join('\n');
-            
-            const message = `🛒 *NUEVA ORDEN - TechStore*\n\n` +
-                          `👤 *Cliente:* ${customerName}\n` +
-                          `📱 *Teléfono:* ${customerPhone}\n` +
-                          `📍 *Dirección:* ${customerAddress}\n\n` +
-                          `🛍️ *Productos:*\n${productsList}\n\n` +
-                          `💰 *Total a Pagar: ${total.toFixed(2)}*\n\n` +
-                          `📝 *Notas:* ${customerNotes || 'Ninguna'}\n\n` +
-                          `¡Gracias por tu compra! 🎉`;
-            
-            // Número de WhatsApp (cambia por tu número)
-            const whatsappNumber = '50493756789'; // Reemplaza con tu número
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            
-            // Abrir WhatsApp
-            window.open(whatsappURL, '_blank');
-            
-            // Limpiar carrito y cerrar modal
-            cart = [];
-            updateCartUI();
-            toggleCart();
-            this.reset();
-            
-            // Mostrar mensaje de confirmación
-            alert('¡Pedido enviado! Te redirigimos a WhatsApp para confirmar tu orden.');
-        });
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (cart.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    const customerName = formData.get('customerName');
+    const customerPhone = formData.get('customerPhone');
+    const customerAddress = formData.get('customerAddress');
+    const customerNotes = formData.get('customerNotes');
+    const paymentMethod = formData.get('paymentMethod');
+    
+    // Mapeo de métodos de pago para mostrar texto más descriptivo
+    const paymentMethods = {
+        'bac': 'Tarjeta Bac',
+        'ficohsa': 'Tarjeta Ficohsa',
+        'amex': 'American Express',
+        'transferencia': 'Transferencia Bancaria',
+        'efectivo': 'Efectivo'
+    };
+    
+    // Crear mensaje para WhatsApp
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const productsList = cart.map(item => 
+        `• ${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}`
+    ).join('\n');
+    
+    const message = `🛒 *NUEVA ORDEN - TechStore*\n\n` +
+                  `👤 *Cliente:* ${customerName}\n` +
+                  `📱 *Teléfono:* ${customerPhone}\n` +
+                  `📍 *Dirección:* ${customerAddress}\n` +
+                  `💳 *Método de Pago:* ${paymentMethods[paymentMethod]}\n\n` +
+                  `🛍️ *Productos:*\n${productsList}\n\n` +
+                  `💰 *Total a Pagar: ${total.toFixed(2)}*\n\n` +
+                  `📝 *Notas:* ${customerNotes || 'Ninguna'}\n\n` +
+                  `🚚 *Envío con:* Cargo Express / Rápido Cargo\n\n` +
+                  `¡Gracias por tu compra! 🎉`;
+    
+    // Resto del código permanece igual...
+    const whatsappNumber = '50493756789';
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappURL, '_blank');
+    
+    // Limpiar carrito y cerrar modal
+    cart = [];
+    updateCartUI();
+    toggleCart();
+    this.reset();
+    
+    alert('¡Pedido enviado! Te redirigimos a WhatsApp para confirmar tu orden.');
+});
 
         // Cerrar modal al hacer clic fuera
         window.addEventListener('click', function(e) {
