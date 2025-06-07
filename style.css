@@ -49,7 +49,72 @@ nav {
   padding: 15px 0;
   flex-wrap: nowrap;
 }
+/* Search suggestions styles */
+.search-container {
+    position: relative;
+}
 
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-bg-light);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+}
+
+body.dark-mode .search-suggestions {
+    background: var(--color-dark);
+    border: 1px solid var(--color-accent);
+}
+
+.search-suggestion {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.search-suggestion:hover {
+    background: rgba(194, 71, 10, 0.1);
+}
+
+.search-suggestion img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-suggestion .suggestion-info {
+    flex: 1;
+}
+
+.search-suggestion .suggestion-name {
+    font-weight: 500;
+    color: var(--color-text-dark);
+}
+
+.search-suggestion .suggestion-category {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+body.dark-mode .search-suggestion .suggestion-name {
+    color: var(--color-text-light);
+}
+
+body.dark-mode .search-suggestion .suggestion-category {
+    color: #aaa;
+}
 /* Logo */
 .logo {
   font-size: 1.8rem;
@@ -610,12 +675,22 @@ body.dark-mode .product-modal-sidebar {
         }
 
         .close-cart {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #999;
+position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-secondary);
+    background: rgba(134, 134, 134, 0);
+    backdrop-filter: blur(10px);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgb(133, 133, 133);
         }
 
         .cart-item {

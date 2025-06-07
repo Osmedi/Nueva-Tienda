@@ -25,12 +25,13 @@
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
                 
-                <div class="search-container" id="searchContainer">
-                    <input type="text" id="searchInput" placeholder="Buscar productos...">
-                    <button id="searchButton" class="search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
+                <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
+    <button id="searchButton" class="search-button">
+        <i class="fas fa-search"></i>
+    </button>
+    <div class="search-suggestions" id="searchSuggestions"></div>
+</div>
                 
                 <div class="header-controls">
                     <button id="themeToggle" class="theme-toggle">
@@ -819,25 +820,128 @@ document.getElementById('searchInput').addEventListener('keypress', function(e) 
         performSearch();
     }
 });
-function performSearch() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    if (!searchTerm.trim()) return;
-    
-    const results = products.filter(product => 
-        product.name.toLowerCase().includes(searchTerm) || 
-        product.category.toLowerCase().includes(searchTerm)
-    );
-    
+// Función para mostrar sugerencias
+function showSuggestions(term) {
+    const suggestionsContainer = document.getElementById('searchSuggestions');
+    if (!term || term.length < 2) {
+        suggestionsContainer.style.display = 'none';
+        return;
+    }
+
+    const results = searchProducts(term).slice(0, 5);
+    suggestionsContainer.innerHTML = '';
+
     if (results.length > 0) {
-        const grid = document.getElementById('productsGrid');
-        grid.innerHTML = results.map(product => createProductCard(product)).join('');
-        initializeCarousels();
-        
-        document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+        results.forEach(product => {
+            const suggestion = document.createElement('div');
+            suggestion.className = 'search-suggestion';
+            suggestion.innerHTML = `
+                <img src="${product.images[0]}" alt="${product.name}">
+                <div class="suggestion-info">
+                    <div class="suggestion-name">${product.name}</div>
+                    <div class="suggestion-category">${formatCategory(product.category)}</div>
+                </div>
+            `;
+            suggestion.addEventListener('click', () => {
+                document.getElementById('searchInput').value = product.name;
+                performSearch();
+                suggestionsContainer.style.display = 'none';
+            });
+            suggestionsContainer.appendChild(suggestion);
+        });
+        suggestionsContainer.style.display = 'block';
     } else {
-        alert('No se encontraron productos que coincidan con tu búsqueda');
+        suggestionsContainer.style.display = 'none';
     }
 }
+
+// Formatear categorías
+function formatCategory(category) {
+    const categories = {
+        'smartphones': 'Teléfonos',
+        'laptops': 'Laptops',
+        'accesorios': 'Accesorios',
+        'gaming': 'Gaming'
+    };
+    return categories[category] || category;
+}
+
+// Función de búsqueda mejorada
+const searchProducts = (term) => {
+    if (!term.trim()) return [];
+    
+    const normalizedTerm = term.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
+    return products.map(product => {
+        let score = 0;
+        
+        if (product.name.toLowerCase().includes(normalizedTerm)) score += 5;
+        
+        const nameWords = product.name.toLowerCase().split(' ');
+        if (nameWords.some(word => word.startsWith(normalizedTerm))) score += 4;
+        
+        if (product.category.toLowerCase().includes(normalizedTerm)) score += 3;
+        
+        if (product.name.toLowerCase().includes(normalizedTerm.substring(0, 3))) score += 2;
+        
+        return { ...product, score };
+    })
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(item => {
+        const { score, ...product } = item;
+        return product;
+    });
+};
+
+// Función principal de búsqueda
+function performSearch() {
+    const searchTerm = document.getElementById('searchInput').value.trim();
+    const results = searchProducts(searchTerm);
+    const grid = document.getElementById('productsGrid');
+    
+    if (results.length > 0) {
+        grid.innerHTML = results.map(product => createProductCard(product)).join('');
+        initializeCarousels();
+    } else {
+        grid.innerHTML = `
+            <div class="no-results-message">
+                <p>No encontramos resultados para "${searchTerm}"</p>
+                <button onclick="filterProducts('all')" class="category-btn">
+                    Ver todos los productos
+                </button>
+            </div>
+        `;
+    }
+    
+    document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Event listeners actualizados
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    showSuggestions(this.value);
+    if (this.value.length === 0) renderProducts('all');
+});
+
+document.getElementById('searchButton').addEventListener('click', function(e) {
+    performSearch();
+    document.getElementById('searchSuggestions').style.display = 'none';
+});
+
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        performSearch();
+        document.getElementById('searchSuggestions').style.display = 'none';
+    }
+});
+
+// Cerrar sugerencias al hacer clic fuera
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-container')) {
+        document.getElementById('searchSuggestions').style.display = 'none';
+    }
+});
 
 // Event listeners para la búsqueda
 document.getElementById('searchButton').addEventListener('click', performSearch);
