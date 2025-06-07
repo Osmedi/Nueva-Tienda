@@ -674,6 +674,9 @@ body.dark-mode .product-modal-sidebar {
             position: relative;
         }
 
+        .cart-content h2{
+            margin-top: 20px;
+        }
         .close-cart {
 position: absolute;
     right: 20px;
