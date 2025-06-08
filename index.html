@@ -23,6 +23,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="preloader animate__animated animate__fadeOut animate__delay-2s">
+        <div class="preloader-logo">
+            <img src="images/android-chrome-192x192.png" alt="TechStore" class="preloader-spinner">
+            <div class="preloader-progress"></div>
+        </div>
+    </div>
 <header>
     <div class="container">
         <nav>
@@ -229,6 +235,17 @@
     </footer>
 
     <script>
+        // Preloader
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const preloader = document.querySelector('.preloader');
+        preloader.style.display = 'none';
+        
+        // Activa animaciones del contenido principal
+        document.querySelector('header').classList.add('animate__fadeInDown');
+        document.querySelector('.hero').classList.add('animate__zoomIn');
+    }, 2000); // Tiempo igual a la duración de la animación
+});
         // Productos de muestra
         const products = [
             {
