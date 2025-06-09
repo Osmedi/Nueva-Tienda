@@ -1303,3 +1303,122 @@ body.dark-mode .product-modal-info {
 body.dark-mode .preloader {
     background: var(--color-dark);
 }
+/* Botón de permuta */
+.tradein-btn {
+    background: linear-gradient(45deg, #734026, #c2470a);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.tradein-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(194, 71, 10, 0.4);
+}
+
+/* Modal de permuta - Adaptado a tu tema */
+.tradein-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 36, 0.9); /* Color de tu var(--color-primary) con transparencia */
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+}
+
+.tradein-content {
+    background: var(--color-bg-light); /* Usa tu variable de fondo claro */
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(194, 71, 10, 0.3); /* Borde con tu color secondary */
+}
+
+body.dark-mode .tradein-content {
+    background: var(--color-dark); /* Fondo oscuro de tu tema */
+    border: 1px solid var(--color-accent); /* Borde con tu color accent */
+}
+
+/* Botón de cerrar - Estilo acorde a tu diseño */
+.close-tradein {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--color-secondary); /* Usa tu naranja principal */
+    background: rgba(194, 71, 10, 0.1); /* Fondo semitransparente */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    border: none;
+    backdrop-filter: blur(5px);
+}
+
+.close-tradein:hover {
+    background: var(--color-highlight); /* Tu color highlight (#cc4400) */
+    color: white;
+    transform: rotate(90deg);
+}
+
+body.dark-mode .close-tradein {
+    color: var(--color-highlight);
+    background: rgba(204, 68, 0, 0.2);
+}
+
+/* Campos del formulario - Coherentes con tu diseño */
+.tradein-content input,
+.tradein-content select,
+.tradein-content textarea {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(194, 71, 10, 0.2);
+    color: var(--color-text-dark);
+}
+
+body.dark-mode .tradein-content input,
+body.dark-mode .tradein-content select,
+body.dark-mode .tradein-content textarea {
+    background: rgba(18, 18, 33, 0.9); /* Color de tu var(--color-dark) */
+    border-color: rgba(204, 68, 0, 0.3);
+    color: var(--color-text-light);
+}
+
+/* Botón de WhatsApp - Usando tus colores */
+.submit-tradein {
+    background: linear-gradient(45deg, var(--color-secondary), var(--color-highlight));
+    color: white;
+    /* ... mantén el resto de tus estilos ... */
+}
+
+/* Instrucciones - Estilo coherente */
+.whatsapp-instructions {
+    background: rgba(37, 211, 102, 0.1);
+    border-left: 4px solid #25D366;
+    color: var(--color-text-dark);
+}
+
+body.dark-mode .whatsapp-instructions {
+    background: rgba(37, 211, 102, 0.05);
+    color: var(--color-text-light);
+}
