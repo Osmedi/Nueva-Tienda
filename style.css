@@ -719,6 +719,7 @@ body.dark-mode .product-modal-sidebar {
 
         .cart-content h2{
             margin-top: 20px;
+            color: #cc4400;
         }
         .close-cart {
 position: absolute;
@@ -1336,7 +1337,9 @@ body.dark-mode .preloader {
     backdrop-filter: blur(5px);
     overflow-y: auto;
 }
-
+.permute-dispositive{
+    color:#cc4400;
+}
 .tradein-content {
     background: var(--color-bg-light); /* Usa tu variable de fondo claro */
     margin: 5% auto;
@@ -1404,13 +1407,114 @@ body.dark-mode .tradein-content textarea {
     color: var(--color-text-light);
 }
 
-/* Botón de WhatsApp - Usando tus colores */
-.submit-tradein {
-    background: linear-gradient(45deg, var(--color-secondary), var(--color-highlight));
-    color: white;
-    /* ... mantén el resto de tus estilos ... */
+/* Botón de WhatsApp - Versión Uiverse.io adaptada */
+.whatsapp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s ease-in;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  color: #090909;
+  padding: 0.7em 1.7em 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 12px; /* Ajustado a tu esquema */
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+  width: 100%;
+  margin-top: 15px;
+  font-weight: 600;
 }
 
+.whatsapp-button svg {
+  height: 24px;
+  transition: all 0.3s;
+}
+
+/* Modo oscuro - Adaptado a tu tema */
+body.dark-mode .whatsapp-button {
+  background: var(--color-dark);
+  border-color: var(--color-accent);
+  color: var(--color-text-light);
+  box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -6px -6px 12px rgba(255,255,255,0.05);
+}
+
+/* Efectos hover/active */
+.whatsapp-button:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+}
+
+body.dark-mode .whatsapp-button:active {
+  box-shadow: inset 4px 4px 12px rgba(0,0,0,0.4), inset -4px -4px 12px rgba(255,255,255,0.1);
+}
+
+.whatsapp-button:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.25);
+  top: 100%;
+  width: 140%;
+  height: 180%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+}
+
+.whatsapp-button:after {
+  content: "";
+  position: absolute;
+  left: 55%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.45);
+  top: 180%;
+  width: 160%;
+  height: 190%;
+  background-color: #25D366; /* Verde WhatsApp */
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+}
+
+.whatsapp-button:hover {
+  color: #ffffff;
+  border: 1px solid #25D366;
+}
+
+.whatsapp-button:hover svg {
+  transform: scale(1.1);
+}
+
+body.dark-mode .whatsapp-button:hover {
+  border-color: #25D366;
+}
+
+.whatsapp-button:hover:before {
+  top: -35%;
+  background-color: #25D366;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.whatsapp-button:hover:after {
+  top: -45%;
+  background-color: #25D366;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+/* Integración con tu tema naranja */
+.whatsapp-button {
+  background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+}
+
+body.dark-mode .whatsapp-button {
+  background: linear-gradient(45deg, #1a1a2e, #121221);
+}
 /* Instrucciones - Estilo coherente */
 .whatsapp-instructions {
     background: rgba(37, 211, 102, 0.1);
