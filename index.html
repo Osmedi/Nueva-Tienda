@@ -257,162 +257,41 @@ window.addEventListener('load', function() {
     }, 2000); // Tiempo igual a la duración de la animación
 });
         // Productos de muestra
-        const products = [
-            {
-                id: 1,
-                name: "iPhone 15 Pro Max",
-                price: 1200,
-                originalPrice: 1400,
-                category: "smartphones",
-                images: [
-                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 5,
-                reviews: 128,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-            },
-            {
-                id: 2,
-                name: "MacBook Pro M3",
-                price: 2500,
-                originalPrice: 2800,
-                category: "laptops",
-                images: [
-                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 5,
-                reviews: 89,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-            },
-            {
-                id: 3,
-                name: "AirPods Pro 2",
-                price: 250,
-                originalPrice: 300,
-                category: "accesorios",
-                images: [
-                    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 4,
-                reviews: 256,
-                badge: "Más Vendido",
-                isBestseller: true,
-                isOffer: true
-            },
-            {
-                id: 4,
-                name: "PlayStation 5",
-                price: 500,
-                originalPrice: null,
-                category: "gaming",
-                images: [
-                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 5,
-                reviews: 342,
-                badge: "Más Vendido",
-                isBestseller: true,
-                isOffer: false
-            },
-            {
-                id: 5,
-                name: "Samsung Galaxy S24",
-                price: 900,
-                originalPrice: 1100,
-                category: "smartphones",
-                images: [
-                    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 4,
-                reviews: 167,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-            },
-            {
-                id: 6,
-                name: "Dell XPS 13",
-                price: 1200,
-                originalPrice: null,
-                category: "laptops",
-                images: [
-                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 4,
-                reviews: 93,
-                badge: null,
-                isBestseller: false,
-                isOffer: false
-            },
-            {
-                id: 7,
-                name: "Gaming Mouse RGB",
-                price: 75,
-                originalPrice: 95,
-                category: "accesorios",
-                images: [
-                    "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 4,
-                reviews: 445,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-            },
-            {
-                id: 8,
-                name: "Galaxy A54 5G",
-                price: 350,
-                originalPrice: null,
-                category: "smartphones", 
-                images: [
-                    "https://imgs.search.brave.com/2HsT1oFjTOdjEd0ZSyjkYRQXnEP-RDVvr_gMfxkYi_s/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS53aXJlZC5jb20v/cGhvdG9zLzY0NTUz/MWJmNDBmMWIwZmY1/Nzg0NDQ1MC9tYXN0/ZXIvd18xNjAwLGNf/bGltaXQvU2Ftc3Vu/Zy1HYWxheHktQTU0/LTVHLVJldmlldy1W/aW9sZXQuanBn",
-                    "https://imgs.search.brave.com/GWUFz8Dh_ARghdFbuvWE-HdqobNuDDoRJNBJurCNy08/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZHhvbWFyay5jb20v/d3AtY29udGVudC91/cGxvYWRzL21lZGlh/cy9wb3N0LTE0MjY1/MC9TYW1zdW5nLUdh/bGF4eS1BNTQtNUdf/ZmVhdHVyZWQtaW1h/Z2UtcGFja3Nob3Qt/cmV2aWV3LmpwZw",
-                    "https://imgs.search.brave.com/MeFRB4cc-Yu5tpBsjEkjCqfiAxFhO63YmcPTTHKnohk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZXBob3RvemluZS5j/b20vcmVzaXplL2Fy/dGljbGVzLzM2NDg0/LzEwMDAtUDEwMTAw/MDlfMTY4MzYyOTkw/NC5qcGc_UlRVZEdr/NWNYeUpGQ2dzSlZB/TnRkeFUrY1ZSZEh4/RllGdzFHZXdrMFQx/SllGRXR6ZW41WWRn/dGhISHN2RVZ4Ug"
-                ],
-                rating: 5,
-                reviews: 278,
-                badge: "Más Vendido",
-                isBestseller: true,
-                isOffer: false
-            },
-              {
-                id: 9,
-                name: "Nintendo Switch OLED",
-                price: 350,
-                originalPrice: null,
-                category: "gaming", 
-                images: [
-                    "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop",
-                    "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop&sat=50",
-                    "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop&hue=30"
-                ],
-                rating: 5,
-                reviews: 278,
-                badge: "Más Vendido",
-                isBestseller: true,
-                isOffer: false
-            }
-            
-        ];
+const products = [
+    {
+        id: 1,
+        name: "iPhone 15 Pro Max",
+        price: 1200,
+        originalPrice: 1400,
+        category: "smartphones",
+        images: [
+            "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop&sat=50",
+            "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop&hue=30"
+        ],
+        specs: {
+            pantalla: "6.7 pulgadas Super Retina XDR",
+            procesador: "A17 Pro",
+            almacenamiento: "256GB/512GB/1TB",
+            camara: "Triple cámara 48MP + 12MP + 12MP",
+            bateria: "4422 mAh",
+            sistema: "iOS 17"
+        },
+        features: [
+            "Resistente al agua IP68",
+            "Pantalla ProMotion 120Hz",
+            "Conexión 5G",
+            "Face ID",
+            "Carga inalámbrica MagSafe"
+        ],
+        rating: 5,
+        reviews: 128,
+        badge: "Oferta",
+        isBestseller: true,
+        isOffer: true
+    },
+
+];
 
         let cart = [];
         let currentCarousels = {};
@@ -729,17 +608,6 @@ function openProductModal(productId) {
     const modal = document.getElementById('productModal');
     const modalBody = document.getElementById('productModalBody');
     
-    // Características del producto (puedes personalizar esto)
-    const features = [
-        "Marca: " + product.name.split(' ')[0],
-        "Modelo: " + product.name,
-        "Categoría: " + (product.category === 'smartphones' ? 'Teléfono Inteligente' : 
-                         product.category === 'laptops' ? 'Laptop' : 
-                         product.category === 'accesorios' ? 'Accesorio' : 'Equipo Gaming'),
-        "Garantía: 1 año",
-        "Envío gratis en toda Honduras"
-    ];
-    
     modalBody.innerHTML = `
         <div class="product-modal-images">
             <div class="product-modal-main-image">
@@ -764,29 +632,53 @@ function openProductModal(productId) {
                     ${product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : ''}
                     $${product.price}
                 </div>
-                <div class="product-modal-description">
-                    <p>Descubre el ${product.name}, un producto de alta calidad diseñado para ofrecerte la mejor experiencia tecnológica. Con características innovadoras y un diseño elegante, este producto es perfecto para tus necesidades.</p>
+                
+                <div class="product-modal-specs">
+                    <h3>Especificaciones técnicas</h3>
+                    <div class="specs-grid">
+                        ${Object.entries(product.specs || {}).map(([key, value]) => `
+                            <div class="spec-item">
+                                <span class="spec-key">${key}:</span>
+                                <span class="spec-value">${value}</span>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
+                
                 <div class="product-modal-features">
-                    <h3>Características principales:</h3>
+                    <h3>Características principales</h3>
                     <ul>
-                        ${features.map(feature => `<li>${feature}</li>`).join('')}
+                        ${(product.features || []).map(feature => `<li>${feature}</li>`).join('')}
                     </ul>
                 </div>
+                
                 <button class="add-to-cart" onclick="addToCart(${product.id}); closeProductModal()">
                     <i class="fas fa-cart-plus"></i> Agregar al Carrito
                 </button>
             </div>
             <div class="product-modal-sidebar">
-                <h3>Envío y garantía</h3>
-                <p><i class="fas fa-truck"></i> Envío gratis a todo el país</p>
-                <p><i class="fas fa-shield-alt"></i> Garantía de 1 año</p>
-                <p><i class="fas fa-undo"></i> Devoluciones fáciles en 15 días</p>
-                <p><i class="fas fa-headset"></i> Soporte técnico 24/7</p>
+                <div class="delivery-options">
+                    <h3><i class="fas fa-truck"></i> Opciones de entrega</h3>
+                    <div class="delivery-option">
+                        <i class="fas fa-store"></i> Recogida en tienda: <strong>Gratis</strong>
+                    </div>
+                    <div class="delivery-option">
+                        <i class="fas fa-shipping-fast"></i> Envío estándar: <strong>$5.99 (2-3 días)</strong>
+                    </div>
+                    <div class="delivery-option">
+                        <i class="fas fa-rocket"></i> Envío express: <strong>$9.99 (24 horas)</strong>
+                    </div>
+                </div>
                 
-                <h3 style="margin-top: 1.5rem;">¿Necesitas ayuda?</h3>
+                <div class="warranty-info">
+                    <h3><i class="fas fa-shield-alt"></i> Garantía</h3>
+                    <p>12 meses de garantía del fabricante</p>
+                    <p>30 días para devoluciones</p>
+
+
+                                                   <h3 style="margin-top: 1.5rem;">¿Necesitas ayuda?</h3>
                 <p>Contáctanos para más información sobre este producto:</p>
-  <button type="submit" class="submit-tradein whatsapp-button" onclick="window.open('https://wa.me/50499999999?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20producto%20${encodeURIComponent(product.name)}')">
+                      <button type="submit" class="submit-tradein whatsapp-button" onclick="window.open('https://wa.me/50499999999?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20producto%20${encodeURIComponent(product.name)}')">
     Chatear por WhatsApp
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" fill="#fff"></path>
@@ -796,15 +688,57 @@ function openProductModal(productId) {
         <path clip-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" fill-rule="evenodd" fill="#fff"></path>
     </svg>
 </button>
+                </div>
+                
+                <div class="share-buttons">
+                    <h3>Compartir producto</h3>
+                    <div class="share-icons">
+                        <a href="#" class="share-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="share-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-icon twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="share-icon pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     `;
     
     modal.style.display = 'block';
+    
+    // Configurar botones de compartir
+    setupShareButtons(product);
 }
-
 function closeProductModal() {
     document.getElementById('productModal').style.display = 'none';
+}
+
+function changeProductImage(imgSrc, element) {
+    document.getElementById('productMainImage').src = imgSrc;
+    document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
+        thumb.classList.remove('active');
+    });
+    element.classList.add('active');
+}
+function setupShareButtons(product) {
+    const productUrl = encodeURIComponent(window.location.href.split('#')[0] + `?product=${product.id}`);
+    const productTitle = encodeURIComponent(product.name);
+    const productImage = encodeURIComponent(product.images[0]);
+    
+    // WhatsApp
+    document.querySelector('.share-icons .whatsapp')?.setAttribute('href', 
+        `https://wa.me/?text=Mira%20este%20producto:%20${productTitle}%20${productUrl}`);
+    
+    // Facebook
+    document.querySelector('.share-icons .facebook')?.setAttribute('href', 
+        `https://www.facebook.com/sharer/sharer.php?u=${productUrl}`);
+    
+    // Twitter
+    document.querySelector('.share-icons .twitter')?.setAttribute('href', 
+        `https://twitter.com/intent/tweet?text=Mira%20este%20producto:%20${productTitle}&url=${productUrl}`);
+    
+    // Pinterest
+    document.querySelector('.share-icons .pinterest')?.setAttribute('href', 
+        `https://pinterest.com/pin/create/button/?url=${productUrl}&media=${productImage}&description=${productTitle}`);
 }
 
 function changeProductImage(imgSrc, element) {

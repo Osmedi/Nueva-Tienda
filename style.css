@@ -1510,3 +1510,372 @@ body.dark-mode .whatsapp-instructions {
     background: rgba(37, 211, 102, 0.05);
     color: var(--color-text-light);
 }
+/* ===== ESTILOS PARA IMÁGENES Y CARACTERÍSTICAS ===== */
+.product-carousel {
+    position: relative;
+    margin-bottom: 1rem;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 15px;
+    background: #f5f5f5;
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.carousel-image {
+    min-width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background: #f5f5f5;
+    padding: 10px;
+}
+
+/* Estilos para características */
+.product-features-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0.8rem 0;
+}
+
+.feature-tag {
+    background: rgba(194, 71, 10, 0.1);
+    color: var(--color-secondary);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
+/* Estilos para el modal de producto */
+.product-modal-main-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.product-modal-thumbnail img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.product-modal-features ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.product-modal-features li {
+    padding: 8px 12px;
+    background: rgba(194, 71, 10, 0.05);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.product-modal-features li:before {
+    content: "✓";
+    color: var(--color-secondary);
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* Modo oscuro */
+body.dark-mode .product-carousel,
+body.dark-mode .carousel-image,
+body.dark-mode .product-modal-main-image img,
+body.dark-mode .product-modal-thumbnail img {
+    background: #2a2a2a;
+}
+
+body.dark-mode .feature-tag {
+    background: rgba(204, 68, 0, 0.2);
+    color: #ff9966;
+}
+
+body.dark-mode .product-modal-features li {
+    background: rgba(204, 68, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-carousel {
+        height: 180px;
+    }
+    
+    .carousel-image {
+        height: 180px;
+    }
+    
+    .product-modal-main-image img {
+        height: 300px;
+    }
+    
+    .product-modal-thumbnail img {
+        height: 80px;
+    }
+    
+    .product-modal-features ul {
+        grid-template-columns: 1fr;
+    }
+}
+/* Product Modal Responsive Styles */
+@media (max-width: 768px) {
+    .product-modal-content {
+        margin: 2% auto;
+        padding: 1rem;
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .product-modal-body {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .product-modal-images {
+        flex-direction: column;
+    }
+    
+    .product-modal-main-image img {
+        height: 300px;
+    }
+    
+    .product-modal-thumbnails {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    
+    .product-modal-thumbnail {
+        min-width: 80px;
+    }
+    
+    .product-modal-info {
+        flex-direction: column;
+    }
+    
+    .product-modal-sidebar {
+        margin-top: 1.5rem;
+    }
+    
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .share-icons {
+        justify-content: center;
+    }
+}
+
+/* Nuevos estilos para las especificaciones y compartir */
+/* Alternativa estilo tabla compacta */
+.product-modal-specs {
+    margin: 1.5rem 0;
+}
+
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.specs-table tr:nth-child(even) {
+    background: rgba(194, 71, 10, 0.05);
+}
+
+.specs-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(194, 71, 10, 0.1);
+}
+
+.specs-table td:first-child {
+    font-weight: 600;
+    color: var(--color-secondary);
+    width: 40%;
+}
+
+/* Modo oscuro */
+body.dark-mode .specs-table tr:nth-child(even) {
+    background: rgba(204, 68, 0, 0.1);
+}
+
+body.dark-mode .specs-table td {
+    border-bottom-color: rgba(204, 68, 0, 0.2);
+}
+
+body.dark-mode .specs-table td:first-child {
+    color: var(--color-highlight);
+}
+
+.share-buttons {
+    margin-top: 1.5rem;
+}
+
+.share-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.share-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.share-icon:hover {
+    transform: scale(1.1);
+}
+
+.share-icon.whatsapp { background: #25D366; }
+.share-icon.facebook { background: #3b5998; }
+.share-icon.twitter { background: #1DA1F2; }
+.share-icon.pinterest { background: #E60023; }
+
+.delivery-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 8px;
+    background: rgba(194, 71, 10, 0.05);
+    border-radius: 5px;
+}
+
+.delivery-option i {
+    color: var(--color-secondary);
+}
+
+.warranty-info {
+    margin-top: 1.5rem;
+}
+
+.warranty-info p {
+    margin: 5px 0;
+    padding-left: 5px;
+}
+
+/* Estilos para modo oscuro */
+body.dark-mode .spec-item,
+body.dark-mode .delivery-option {
+    background: rgba(204, 68, 0, 0.1);
+}
+
+body.dark-mode .spec-key {
+    color: var(--color-highlight);
+}
+/* Efecto Temu para las miniaturas */
+.product-modal-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    padding-bottom: 10px;
+}
+
+.product-modal-thumbnails::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.product-modal-thumbnail {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.product-modal-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Para desktop, hacer las miniaturas un poco más grandes */
+@media (min-width: 769px) {
+    .product-modal-thumbnail {
+        width: 100px;
+        height: 100px;
+    }
+}
+/* Estilos para etiquetas de producto */
+.product-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.product-badge.offer {
+    background: rgba(255, 51, 51, 0.8);
+}
+
+.product-badge.bestseller {
+    background: rgba(76, 175, 80, 0.8);
+}
+
+/* Botón "Ver más" */
+.load-more-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.load-more-btn {
+    background: linear-gradient(45deg, var(--color-secondary), var(--color-highlight));
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(194, 71, 10, 0.3);
+}
+
+.load-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(194, 71, 10, 0.4);
+}
+
+/* Modo oscuro */
+body.dark-mode .load-more-btn {
+    box-shadow: 0 4px 15px rgba(204, 68, 0, 0.5);
+}
+
+body.dark-mode .product-badge {
+    backdrop-filter: blur(10px);
+}
