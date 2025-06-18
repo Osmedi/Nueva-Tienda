@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MobileExpressHN - Tu Mejor Opcion</title>
-       <!-- Favicon  -->
+    <!-- Favicon  -->
     <link rel="icon" href="images/favicon-32x32.png" type="image/x-icon">
     <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
-    
+
     <!-- Para dispositivos Apple -->
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    
+
     <!-- Para Android/Chrome -->
     <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png">
-    
+
     <!-- Para Windows Metro -->
     <meta name="msapplication-TileImage" content="mstile-150x150.png">
     <meta name="theme-color" content="#c2470a"> <!-- Color de tu tema -->
@@ -22,65 +23,64 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="preloader animate__animated animate__fadeOut animate__delay-2s">
         <div class="preloader-logo">
-            <img src="images/android-chrome-192x192.png" alt="MobileExpressHN - Tu Mejor Opcion" class="preloader-spinner">
+            <img src="images/android-chrome-192x192.png" alt="MobileExpressHN - Tu Mejor Opcion"
+                class="preloader-spinner">
             <div class="preloader-progress"></div>
         </div>
     </div>
-<header>
-    <div class="container">
-        <nav>
-           <a href="#" class="logo">
-    <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true" 
-         alt="MobileExpressHN - Tu Mejor Opcion" 
-         class="logo-img"
-         width="160"
-         height="40">
-</a>
-            
-            <button class="mobile-menu-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <div class="nav-content" id="navContent">
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#productos">Productos</a></li>
-                    <li><a href="#ofertas">Ofertas</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-                
-                <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
-    <button id="searchButton" class="search-button">
-        <i class="fas fa-search"></i>
-    </button>
-    <div class="search-suggestions" id="searchSuggestions"></div>
-</div>
-                
-                <div class="header-controls">
-                    <button id="themeToggle" class="theme-toggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <button id="tradeInBtn" class="tradein-btn">
-    <i class="fas fa-sync-alt"></i> Permuta tu dispositivo
-</button>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true"
+                        alt="MobileExpressHN - Tu Mejor Opcion" class="logo-img" width="160" height="40">
+                </a>
+
+                <button class="mobile-menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="nav-content" id="navContent">
+                    <ul class="nav-links" id="navLinks">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#ofertas">Ofertas</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
+                        <button id="searchButton" class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <div class="search-suggestions" id="searchSuggestions"></div>
+                    </div>
+
+                    <div class="header-controls">
+                        <button id="themeToggle" class="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button id="tradeInBtn" class="tradein-btn">
+                            <i class="fas fa-sync-alt"></i> Permuta tu dispositivo
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
+    </header>
+    <!-- Carrito flotante (fuera del header) -->
+    <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
     </div>
-</header>
-<!-- Carrito flotante (fuera del header) -->
-<div class="cart-icon" onclick="toggleCart()">
-    <i class="fas fa-shopping-cart"></i>
-    <span class="cart-count" id="cartCount">0</span>
-</div>
     <main class="container">
         <section class="hero" id="inicio">
             <h1>¡Bienvenido a Mobile Express HN!</h1>
-            <p>Los mejores productos tecnológicos al mejor precio</p>
+            <p>Los mejores productos tecnológicos al mejor precio <br> #MobileExpressTuMejorOpcion</p>
         </section>
 
         <section class="categories">
@@ -120,7 +120,7 @@
             <h2>🛒 Tu Carrito de Compras</h2>
             <div id="cartItems"></div>
             <div id="cartTotal" style="font-size: 1.5rem; font-weight: bold; margin: 1rem 0; text-align: right;"></div>
-            
+
             <form class="checkout-form" id="checkoutForm">
                 <div class="form-group">
                     <label for="customerName">Nombre Completo *</label>
@@ -136,108 +136,122 @@
                 </div>
                 <div class="form-group">
                     <label for="customerNotes">Notas Adicionales</label>
-                    <textarea id="customerNotes" name="customerNotes" rows="3" placeholder="Instrucciones especiales, referencias, etc."></textarea>
+                    <textarea id="customerNotes" name="customerNotes" rows="3"
+                        placeholder="Instrucciones especiales, referencias, etc."></textarea>
                 </div>
                 <div class="form-group">
-    <label for="paymentMethod">Método de Pago *</label>
-    <select id="paymentMethod" name="paymentMethod" required>
-        <option value="">Seleccione un método</option>
-        <option value="bac">Bac (Tarjeta de crédito)</option>
-        <option value="ficohsa">Ficohsa (Tarjeta de crédito)</option>
-        <option value="amex">American Express</option>
-        <option value="transferencia">Transferencia Bancaria</option>
-        <option value="efectivo">Efectivo</option>
-    </select>
-</div>
-  <button type="submit" class="submit-tradein whatsapp-button">
-    Finalizar compra por WhatsApp
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" fill="#fff"></path>
-        <path d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z" fill="#fff"></path>
-        <path d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z" fill="#cfd8dc"></path>
-        <path d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z" fill="#40c351"></path>
-        <path clip-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" fill-rule="evenodd" fill="#fff"></path>
-    </svg>
-</button>
+                    <label for="paymentMethod">Método de Pago *</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="">Seleccione un método</option>
+                        <option value="bac">Bac (Tarjeta de crédito)</option>
+                        <option value="ficohsa">Ficohsa (Tarjeta de crédito)</option>
+                        <option value="amex">American Express</option>
+                        <option value="transferencia">Transferencia Bancaria</option>
+                        <option value="efectivo">Efectivo</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-tradein whatsapp-button">
+                    Finalizar compra por WhatsApp
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"
+                            fill="#fff"></path>
+                        <path
+                            d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"
+                            fill="#fff"></path>
+                        <path
+                            d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"
+                            fill="#cfd8dc"></path>
+                        <path
+                            d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"
+                            fill="#40c351"></path>
+                        <path clip-rule="evenodd"
+                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
+                            fill-rule="evenodd" fill="#fff"></path>
+                    </svg>
+                </button>
             </form>
         </div>
     </div>
     <!-- Agrega esto antes del footer -->
 
-<!-- Modal de Detalles del Producto -->
-<div id="productModal" class="product-modal">
-    <div class="product-modal-content">
-        <span class="close-product-modal" onclick="closeProductModal()">&times;</span>
-        <div class="product-modal-body" id="productModalBody">
-            <!-- Contenido se llenará dinámicamente -->
+    <!-- Modal de Detalles del Producto -->
+    <div id="productModal" class="product-modal">
+        <div class="product-modal-content">
+            <span class="close-product-modal" onclick="closeProductModal()">&times;</span>
+            <div class="product-modal-body" id="productModalBody">
+                <!-- Contenido se llenará dinámicamente -->
+            </div>
         </div>
     </div>
-</div>
-<section class="location-section" id="ubicacion">
-    <h2 class="section-title">📍 Nuestra Ubicación</h2>
-    <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.227770518637!2d-87.9535827240178!3d15.61474795813077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f665c5f207a1c3f%3A0x3c4c4b4b4b4b4b4b!2sJ26X%2BV83%2C%20Choloma%2C%20Cort%C3%A9s!5e0!3m2!1sen!2shn!4v1719876543210" 
-                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+    <section class="location-section" id="ubicacion">
+        <h2 class="section-title">📍 Nuestra Ubicación</h2>
+        <div class="map-container">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.227770518637!2d-87.9535827240178!3d15.61474795813077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f665c5f207a1c3f%3A0x3c4c4b4b4b4b4b4b!2sJ26X%2BV83%2C%20Choloma%2C%20Cort%C3%A9s!5e0!3m2!1sen!2shn!4v1719876543210"
+                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-</section>
+        </div>
+    </section>
     <footer id="contacto">
         <div class="container">
- <div class="footer-content">
-    <div class="footer-section">
-        <h3>MobileExpressHN</h3>
-        <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor servicio al cliente.</p>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/MobileExpressHN"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/mobile.expresshn?igsh=ODdsMW41ZG43eGNr"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="https://wa.me/50496811650"><i class="fab fa-whatsapp"></i></a>
-        </div>
-    </div>
-    
-    <div class="footer-section">
-        <h3>Navegación</h3>
-        <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#productos">Productos</a></li>
-            <li><a href="#ofertas">Ofertas</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
-    </div>
-    
-    <div class="footer-section">
-        <h3>Categorías</h3>
-        <ul>
-            <li><a href="#">Smartphones</a></li>
-            <li><a href="#">Laptops</a></li>
-            <li><a href="#">Accesorios</a></li>
-            <li><a href="#">Gaming</a></li>
-        </ul>
-    </div>
-    
-    <div class="footer-section">
-        <h3>Contacto</h3>
-        <ul>
-            <li><i class="fas fa-phone"></i> +504 9681-1650</li>
-            <li><i class="fas fa-envelope"></i> mobileexpresshn@gmail.com</li>
-            <li><i class="fas fa-map-marker-alt"></i> San Pedro Sula, Honduras</li>
-            <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
-        </ul>
-    </div>
-    
-    <div class="footer-section">
-        <h3>Pagos y Envíos</h3>
-        <ul>
-            <li><i class="fab fa-cc-visa"></i> Visa</li>
-            <li><i class="fab fa-cc-mastercard"></i> Mastercard</li>
-            <li><i class="fab fa-cc-amex"></i> American Express</li>
-            <li><i class="fas fa-money-bill-wave"></i> Transferencia/Efectivo</li>
-            <li><i class="fas fa-credit-card"></i> Financiamiento Bac/Ficohsa</li>
-            <li><i class="fas fa-truck"></i> Cargo Express</li>
-            <li><i class="fas fa-shipping-fast"></i> Rápido Cargo</li>
-        </ul>
-    </div>
-</div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MobileExpressHN</h3>
+                    <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor
+                        servicio al cliente.</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/MobileExpressHN"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/mobile.expresshn?igsh=ODdsMW41ZG43eGNr"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/50496811650"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#ofertas">Ofertas</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Categorías</h3>
+                    <ul>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Accesorios</a></li>
+                        <li><a href="#">Gaming</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +504 9681-1650</li>
+                        <li><i class="fas fa-envelope"></i> mobileexpresshn@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> San Pedro Sula, Honduras</li>
+                        <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Pagos y Envíos</h3>
+                    <ul>
+                        <li><i class="fab fa-cc-visa"></i> Visa</li>
+                        <li><i class="fab fa-cc-mastercard"></i> Mastercard</li>
+                        <li><i class="fab fa-cc-amex"></i> American Express</li>
+                        <li><i class="fas fa-money-bill-wave"></i> Transferencia/Efectivo</li>
+                        <li><i class="fas fa-credit-card"></i> Financiamiento Bac/Ficohsa</li>
+                        <li><i class="fas fa-truck"></i> Cargo Express</li>
+                        <li><i class="fas fa-shipping-fast"></i> Rápido Cargo</li>
+                    </ul>
+                </div>
+            </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 MobileExpressHN. Todos los derechos reservados. | Diseñado por <a href=""></a></p>
             </div>
@@ -246,16 +260,16 @@
 
     <script>
         // Preloader
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        const preloader = document.querySelector('.preloader');
-        preloader.style.display = 'none';
-        
-        // Activa animaciones del contenido principal
-        document.querySelector('header').classList.add('animate__fadeInDown');
-        document.querySelector('.hero').classList.add('animate__zoomIn');
-    }, 2000); // Tiempo igual a la duración de la animación
-});
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const preloader = document.querySelector('.preloader');
+                preloader.style.display = 'none';
+
+                // Activa animaciones del contenido principal
+                document.querySelector('header').classList.add('animate__fadeInDown');
+                document.querySelector('.hero').classList.add('animate__zoomIn');
+            }, 2000); // Tiempo igual a la duración de la animación
+        });
 
 
 
@@ -266,89 +280,164 @@ window.addEventListener('load', function() {
 
 
 
-//======================================================================================================
-//                                         PRODUCTOS
-const products = [
-    {
-        id: 1,
-        name: "iPhone 16",
-        price: 23500,
-        originalPrice: 32995,
-        category: "smartphones",
-        images: [
-            "https://imgs.search.brave.com/Cl18TjDASWf9_eCPh8yESWcUHsTy4hKUsEzhZDBciEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF0/Zm9ybS50aGV2ZXJn/ZS5jb20vd3AtY29u/dGVudC91cGxvYWRz/L3NpdGVzLzIvY2hv/cnVzL3VwbG9hZHMv/Y2hvcnVzX2Fzc2V0/L2ZpbGUvMjU2MTI4/OTUvRFNDMDgzMjJf/cHJvY2Vzc2VkLmpw/Zz9xdWFsaXR5PTkw/JnN0cmlwPWFsbCZj/cm9wPTAsMCwxMDAs/MTAwJnc9MjQwMA",
-            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016.png?updatedAt=1750208665062",
-            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.3.png?updatedAt=1750208661858"
-        ],
-specs: {
-    pantalla: "6.1 pulgadas Super Retina XDR OLED",
-    procesador: "A18",
-    almacenamiento: "128GB",
-    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
-    bateria: "Hasta 22 horas de reproducción de vídeo",
-    sistema: "iOS 18"
-},
-features: [
-    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
-    "Dynamic Island",
-    "Conexión 5G",
-    "Face ID",
-    "Carga inalámbrica MagSafe hasta 25W",
-    "Control de Cámara",
-    "Apple Intelligence",
-    "Ceramic Shield",
-    "Conector USB-C"
-],
-        rating: 5,
-        reviews: 8,
-        badge: "Oferta",
-        isBestseller: true,
-        isOffer: true
-    },
+        //======================================================================================================
+        //                                         PRODUCTOS
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 16",
+                price: 23500,
+                originalPrice: 32995,
+                category: "smartphones",
+                images: [
+                    "https://imgs.search.brave.com/Cl18TjDASWf9_eCPh8yESWcUHsTy4hKUsEzhZDBciEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF0/Zm9ybS50aGV2ZXJn/ZS5jb20vd3AtY29u/dGVudC91cGxvYWRz/L3NpdGVzLzIvY2hv/cnVzL3VwbG9hZHMv/Y2hvcnVzX2Fzc2V0/L2ZpbGUvMjU2MTI4/OTUvRFNDMDgzMjJf/cHJvY2Vzc2VkLmpw/Zz9xdWFsaXR5PTkw/JnN0cmlwPWFsbCZj/cm9wPTAsMCwxMDAs/MTAwJnc9MjQwMA",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016.png?updatedAt=1750208665062",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.3.png?updatedAt=1750208661858"
+                ],
+                specs: {
+                    pantalla: "6.1 pulgadas Super Retina XDR OLED",
+                    procesador: "A18",
+                    almacenamiento: "128GB",
+                    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
+                    bateria: "Hasta 22 horas de reproducción de vídeo",
+                    sistema: "iOS 18"
+                },
+                features: [
+                    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
+                    "Dynamic Island",
+                    "Conexión 5G",
+                    "Face ID",
+                    "Carga inalámbrica MagSafe hasta 25W",
+                    "Control de Cámara",
+                    "Apple Intelligence",
+                    "Ceramic Shield",
+                    "Conector USB-C"
+                ],
+                rating: 5,
+                reviews: 8,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+            },
 
 
 
-    {
-        id: 2,
-        name: "iPhone 16 Plus",
-        price: 23500,
-        originalPrice: 32995,
-        category: "smartphones",
-        images: [
-            "https://www.apple.com/newsroom/images/2024/09/apple-introduces-iphone-16-and-iphone-16-plus/article/geo/Apple-iPhone-16-hero-geo-240909_inline.jpg.large.jpg",
-            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.2.png?updatedAt=1750208662170",
-            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%20plus%20(2).png?updatedAt=1750208661623"
-        ],
-specs: {
-    pantalla: "6.7 pulgadas Super Retina XDR OLED",
-    procesador: "A18",
-    almacenamiento: "256GB",
-    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
-    bateria: "Hasta 27 horas de reproducción de vídeo",
-    sistema: "iOS 18",
-    Color: "Black/Azul Marine"
-},
-features: [
-    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
-    "Dynamic Island",
-    "Conexión 5G",
-    "Face ID",
-    "Carga inalámbrica MagSafe hasta 25W",
-    "Control de Cámara",
-    "Apple Intelligence",
-    "Ceramic Shield",
-    "Conector USB-C"
-],
-        rating: 5,
-        reviews: 8,
-        badge: "Oferta",
-        isBestseller: true,
-        isOffer: true
-    },
+            {
+                id: 2,
+                name: "iPhone 16 Plus",
+                price: 30500,
+                originalPrice: 32995,
+                category: "smartphones",
+                images: [
+                    "https://www.apple.com/newsroom/images/2024/09/apple-introduces-iphone-16-and-iphone-16-plus/article/geo/Apple-iPhone-16-hero-geo-240909_inline.jpg.large.jpg",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.2.png?updatedAt=1750208662170",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%20plus%20(2).png?updatedAt=1750208661623"
+                ],
+                specs: {
+                    pantalla: "6.7 pulgadas Super Retina XDR OLED",
+                    procesador: "A18",
+                    almacenamiento: "256GB",
+                    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
+                    bateria: "Hasta 27 horas de reproducción de vídeo",
+                    sistema: "iOS 18",
+                    Color: "Black/Azul Marine"
+                },
+                features: [
+                    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
+                    "Dynamic Island",
+                    "Conexión 5G",
+                    "Face ID",
+                    "ESIM",
+                    "Carga inalámbrica MagSafe hasta 25W",
+                    "Control de Cámara",
+                    "Apple Intelligence",
+                    "Ceramic Shield",
+                    "Conector USB-C"
+                ],
+                rating: 4,
+                reviews: 3,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+            },
 
-];
+            {
+                id: 3,
+                name: "iPhone 13 Pro Max",
+                price: 17500,
+                originalPrice: 32995,
+                category: "smartphones",
+                images: [
+                    "https://aitexpresshn.com/wp-content/uploads/2022/08/IP13PM.png",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20Pro%20Max%201.1.png?updatedAt=1750208659453",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20Max%20(3).png?updatedAt=1750208659347"
+                ],
+                "specs": {
+                    "pantalla": "6.7 pulgadas Super Retina XDR con ProMotion (120Hz)",
+                    "procesador": "A15 Bionic",
+                    "almacenamiento": "256GB/128GB",
+                    "camara": "Triple cámara de 12MP (Gran Angular ƒ/1.5, Ultra Gran Angular ƒ/1.8, Teleobjetivo ƒ/2.8) + escáner LiDAR",
+                    "bateria": "4352 mAh (hasta 28 horas de reproducción de video)",
+                    "sistema": "iOS 15 (actualizable a versiones posteriores, como iOS 18)"
+                },
+                "features": [
+                    "Resistencia al agua y polvo IP68",
+                    "Pantalla ProMotion de 120Hz",
+                    "Conexión 5G",
+                    "Face ID",
+                    "Carga inalámbrica MagSafe",
+                    "Modo Cine para grabación de video",
+                    "Estabilización óptica de imagen por desplazamiento de sensor"
+                ],
+                rating: 5,
+                reviews: 3,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+                
+            },
 
-//======================================================================================================
+            {
+                id: 4,
+                name: "iPhone 16 Pro",
+                price: 30500,
+                originalPrice: 32995,
+                category: "smartphones",
+                images: [
+                    "https://alephksa.com/cdn/shop/files/iPhone_15_Pro_Max_White_Titanium_PDP_Image_Position-1__en-ME_bc410689-d575-4652-83ef-c10175430a7d.jpg?v=1694760888&width=823",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20Pro%20Max%201.1.png?updatedAt=1750208659453",
+                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20Max%20(3).png?updatedAt=1750208659347"
+                ],
+                "specs": {
+                    "pantalla": "6.3 pulgadas Super Retina XDR con ProMotion (1-120Hz)",
+                    "procesador": "A18 Pro",
+                    "almacenamiento": "128GB",
+                    "camara": "Triple cámara: 48MP Principal (ƒ/1.78), 48MP Ultra Gran Angular (ƒ/2.2), 12MP Teleobjetivo (5x zoom óptico, ƒ/2.8) + escáner LiDAR",
+                    "bateria": "Estimada en ~3577 mAh (hasta 22 horas de reproducción de video streaming)",
+                    "sistema": "iOS 18",
+                    "color": "Desert Titanium/Titanium White"
+                },
+                "features": [
+                    "Diseño de titanio",
+                    "Resistencia al agua y polvo IP68",
+                    "Conectividad 5G (mmWave y sub-6 GHz)",
+                    "Face ID",
+                    "Carga inalámbrica MagSafe",
+                    "Puerto USB-C (USB 3.2)",
+                    "Botón de Acción personalizable",
+                    "Apple Intelligence (características de IA)",
+                    "Cámara Ultra Gran Angular de 48MP mejorada",
+                    "Video 4K hasta 120fps con Dolby Vision"
+                ],
+                rating: 4,
+                reviews: 3,
+                badge: "Oferta",
+                isBestseller: true,
+                isOffer: true
+            },
+        ];
+
+        //======================================================================================================
 
 
 
@@ -368,7 +457,7 @@ features: [
         let currentCarousels = {};
 
         // Inicializar la página
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             renderProducts('all');
             renderOffers();
             renderBestsellers();
@@ -379,7 +468,7 @@ features: [
         function renderProducts(category = 'all') {
             const grid = document.getElementById('productsGrid');
             const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
-            
+
             grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
             initializeCarousels();
         }
@@ -388,7 +477,7 @@ features: [
         function renderOffers() {
             const grid = document.getElementById('offersGrid');
             const offers = products.filter(p => p.isOffer);
-            
+
             grid.innerHTML = offers.map(product => createProductCard(product)).join('');
             initializeCarousels();
         }
@@ -397,7 +486,7 @@ features: [
         function renderBestsellers() {
             const grid = document.getElementById('bestsellersGrid');
             const bestsellers = products.filter(p => p.isBestseller);
-            
+
             grid.innerHTML = bestsellers.map(product => createProductCard(product)).join('');
             initializeCarousels();
         }
@@ -407,7 +496,7 @@ features: [
             const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
             const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
             const originalPriceHtml = product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : '';
-            
+
             return `
                 <div class="product-card" data-category="${product.category}">
                     ${badgeHtml}
@@ -441,7 +530,7 @@ features: [
         function nextImage(productId) {
             const product = products.find(p => p.id === productId);
             const carousel = document.getElementById(`carousel-${productId}`);
-            
+
             currentCarousels[productId] = (currentCarousels[productId] + 1) % product.images.length;
             carousel.style.transform = `translateX(-${currentCarousels[productId] * 100}%)`;
         }
@@ -449,7 +538,7 @@ features: [
         function prevImage(productId) {
             const product = products.find(p => p.id === productId);
             const carousel = document.getElementById(`carousel-${productId}`);
-            
+
             currentCarousels[productId] = currentCarousels[productId] === 0 ? product.images.length - 1 : currentCarousels[productId] - 1;
             carousel.style.transform = `translateX(-${currentCarousels[productId] * 100}%)`;
         }
@@ -459,7 +548,7 @@ features: [
             // Actualizar botones activos
             document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             // Filtrar y mostrar productos
             const cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
@@ -475,21 +564,21 @@ features: [
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
-            
+
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                cart.push({...product, quantity: 1});
+                cart.push({ ...product, quantity: 1 });
             }
-            
+
             updateCartUI();
-            
+
             // Animación de éxito
             const button = event.target;
             const originalText = button.innerHTML;
             button.innerHTML = '<i class="fas fa-check"></i> ¡Agregado!';
             button.style.background = '#2ed573';
-            
+
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.style.background = '';
@@ -505,43 +594,43 @@ features: [
         }
 
         // Toggle carrito
-      // Modifica la función toggleCart para el carrito flotante
-function toggleCart() {
-    const modal = document.getElementById('cartModal');
-    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-    
-    // Asegúrate de renderizar los items cada vez que se abre el carrito
-    if (modal.style.display === 'block') {
-        renderCartItems();
-    }
-    
-    event.stopPropagation();
-}
+        // Modifica la función toggleCart para el carrito flotante
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
 
-// Cierra el carrito al hacer clic fuera
-document.addEventListener('click', function(e) {
-    const cartModal = document.getElementById('cartModal');
-    const cartIcon = document.querySelector('.cart-icon');
-    
-    if (!e.target.closest('.cart-content') && 
-        !e.target.closest('.cart-icon') && 
-        cartModal.style.display === 'block') {
-        cartModal.style.display = 'none';
-    }
-});
+            // Asegúrate de renderizar los items cada vez que se abre el carrito
+            if (modal.style.display === 'block') {
+                renderCartItems();
+            }
+
+            event.stopPropagation();
+        }
+
+        // Cierra el carrito al hacer clic fuera
+        document.addEventListener('click', function (e) {
+            const cartModal = document.getElementById('cartModal');
+            const cartIcon = document.querySelector('.cart-icon');
+
+            if (!e.target.closest('.cart-content') &&
+                !e.target.closest('.cart-icon') &&
+                cartModal.style.display === 'block') {
+                cartModal.style.display = 'none';
+            }
+        });
         // Renderizar items del carrito
         function renderCartItems() {
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
-            
+
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Tu carrito está vacío</p>';
                 cartTotal.innerHTML = '';
                 return;
             }
-            
+
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
+
             cartItems.innerHTML = cart.map(item => `
                 <div class="cart-item">
                     <img src="${item.images[0]}" alt="${item.name}">
@@ -560,91 +649,91 @@ document.addEventListener('click', function(e) {
                     </button>
                 </div>
             `).join('');
-            
+
             cartTotal.innerHTML = `Total: ${total.toFixed(2)}`;
         }
 
         // Actualizar cantidad
-function updateQuantity(productId, change) {
-    event.stopPropagation(); // ¡Evita que el carrito se cierre!
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            removeFromCart(productId);
-        } else {
+        function updateQuantity(productId, change) {
+            event.stopPropagation(); // ¡Evita que el carrito se cierre!
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                    renderCartItems(); // Actualiza la lista en tiempo real
+                }
+            }
+        }
+
+        // Remover del carrito
+        function removeFromCart(productId) {
+            event.stopPropagation(); // Evita que el modal se cierre
+            cart = cart.filter(item => item.id !== productId);
             updateCartUI();
             renderCartItems(); // Actualiza la lista en tiempo real
         }
-    }
-}
 
-        // Remover del carrito
-     function removeFromCart(productId) {
-    event.stopPropagation(); // Evita que el modal se cierre
-    cart = cart.filter(item => item.id !== productId);
-    updateCartUI();
-    renderCartItems(); // Actualiza la lista en tiempo real
-}
+        document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (cart.length === 0) {
-        alert('Tu carrito está vacío');
-        return;
-    }
-    
-    const formData = new FormData(this);
-    const customerName = formData.get('customerName');
-    const customerPhone = formData.get('customerPhone');
-    const customerAddress = formData.get('customerAddress');
-    const customerNotes = formData.get('customerNotes');
-    const paymentMethod = formData.get('paymentMethod');
-    
-    // Mapeo de métodos de pago para mostrar texto más descriptivo
-    const paymentMethods = {
-        'bac': 'Tarjeta Bac',
-        'ficohsa': 'Tarjeta Ficohsa',
-        'amex': 'American Express',
-        'transferencia': 'Transferencia Bancaria',
-        'efectivo': 'Efectivo'
-    };
-    
-    // Crear mensaje para WhatsApp
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const productsList = cart.map(item => 
-        `• ${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}`
-    ).join('\n');
-    
-    const message = `🛒 *NUEVA ORDEN - MOBILE EXPRESS HN*\n\n` +
-                  `👤 *Cliente:* ${customerName}\n` +
-                  `📱 *Teléfono:* ${customerPhone}\n` +
-                  `📍 *Dirección:* ${customerAddress}\n` +
-                  `💳 *Método de Pago:* ${paymentMethods[paymentMethod]}\n\n` +
-                  `🛍️ *Productos:*\n${productsList}\n\n` +
-                  `💰 *Total a Pagar: L.${total.toFixed(2)}*\n\n` +
-                  `📝 *Notas:* ${customerNotes || 'Ninguna'}\n\n` +
-                  `🚚 *Envío con:* Cargo Express / Rápido Cargo\n\n` +
-                  `¡Gracias por tu compra! 🎉`;
-    
-    // Resto del código permanece igual...
-    const whatsappNumber = '50496811650';
-    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    
-    window.open(whatsappURL, '_blank');
-    
-    // Limpiar carrito y cerrar modal
-    cart = [];
-    updateCartUI();
-    toggleCart();
-    this.reset();
-    
-    alert('¡Pedido enviado! Te redirigimos a WhatsApp para confirmar tu orden.');
-});
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+
+            const formData = new FormData(this);
+            const customerName = formData.get('customerName');
+            const customerPhone = formData.get('customerPhone');
+            const customerAddress = formData.get('customerAddress');
+            const customerNotes = formData.get('customerNotes');
+            const paymentMethod = formData.get('paymentMethod');
+
+            // Mapeo de métodos de pago para mostrar texto más descriptivo
+            const paymentMethods = {
+                'bac': 'Tarjeta Bac',
+                'ficohsa': 'Tarjeta Ficohsa',
+                'amex': 'American Express',
+                'transferencia': 'Transferencia Bancaria',
+                'efectivo': 'Efectivo'
+            };
+
+            // Crear mensaje para WhatsApp
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const productsList = cart.map(item =>
+                `• ${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}`
+            ).join('\n');
+
+            const message = `🛒 *NUEVA ORDEN - MOBILE EXPRESS HN*\n\n` +
+                `👤 *Cliente:* ${customerName}\n` +
+                `📱 *Teléfono:* ${customerPhone}\n` +
+                `📍 *Dirección:* ${customerAddress}\n` +
+                `💳 *Método de Pago:* ${paymentMethods[paymentMethod]}\n\n` +
+                `🛍️ *Productos:*\n${productsList}\n\n` +
+                `💰 *Total a Pagar: L.${total.toFixed(2)}*\n\n` +
+                `📝 *Notas:* ${customerNotes || 'Ninguna'}\n\n` +
+                `🚚 *Envío con:* Cargo Express / Rápido Cargo\n\n` +
+                `¡Gracias por tu compra! 🎉`;
+
+            // Resto del código permanece igual...
+            const whatsappNumber = '50496811650';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+            window.open(whatsappURL, '_blank');
+
+            // Limpiar carrito y cerrar modal
+            cart = [];
+            updateCartUI();
+            toggleCart();
+            this.reset();
+
+            alert('¡Pedido enviado! Te redirigimos a WhatsApp para confirmar tu orden.');
+        });
 
         // Cerrar modal al hacer clic fuera
-        window.addEventListener('click', function(e) {
+        window.addEventListener('click', function (e) {
             const modal = document.getElementById('cartModal');
             if (e.target === modal) {
                 modal.style.display = 'none';
@@ -674,12 +763,12 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
             });
         }, 5000);
         // Agrega estas funciones al script existente
-function openProductModal(productId) {
-    const product = products.find(p => p.id === productId);
-    const modal = document.getElementById('productModal');
-    const modalBody = document.getElementById('productModalBody');
-    
-    modalBody.innerHTML = `
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('productModal');
+            const modalBody = document.getElementById('productModalBody');
+
+            modalBody.innerHTML = `
         <div class="product-modal-images">
             <div class="product-modal-main-image">
                 <img src="${product.images[0]}" alt="${product.name}" id="productMainImage">
@@ -773,60 +862,60 @@ function openProductModal(productId) {
             </div>
         </div>
     `;
-    
-    modal.style.display = 'block';
-    
-    // Configurar botones de compartir
-    setupShareButtons(product);
-}
-function closeProductModal() {
-    document.getElementById('productModal').style.display = 'none';
-}
 
-function changeProductImage(imgSrc, element) {
-    document.getElementById('productMainImage').src = imgSrc;
-    document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
-        thumb.classList.remove('active');
-    });
-    element.classList.add('active');
-}
-function setupShareButtons(product) {
-    const productUrl = encodeURIComponent(window.location.href.split('#')[0] + `?product=${product.id}`);
-    const productTitle = encodeURIComponent(product.name);
-    const productImage = encodeURIComponent(product.images[0]);
-    
-    // WhatsApp
-    document.querySelector('.share-icons .whatsapp')?.setAttribute('href', 
-        `https://wa.me/?text=Mira%20este%20producto:%20${productTitle}%20${productUrl}`);
-    
-    // Facebook
-    document.querySelector('.share-icons .facebook')?.setAttribute('href', 
-        `https://www.facebook.com/sharer/sharer.php?u=${productUrl}`);
-    
-    // Twitter
-    document.querySelector('.share-icons .twitter')?.setAttribute('href', 
-        `https://twitter.com/intent/tweet?text=Mira%20este%20producto:%20${productTitle}&url=${productUrl}`);
-    
-    // Pinterest
-    document.querySelector('.share-icons .pinterest')?.setAttribute('href', 
-        `https://pinterest.com/pin/create/button/?url=${productUrl}&media=${productImage}&description=${productTitle}`);
-}
+            modal.style.display = 'block';
 
-function changeProductImage(imgSrc, element) {
-    document.getElementById('productMainImage').src = imgSrc;
-    document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
-        thumb.classList.remove('active');
-    });
-    element.classList.add('active');
-}
+            // Configurar botones de compartir
+            setupShareButtons(product);
+        }
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
 
-// Modifica la función createProductCard para que el clic en la tarjeta abra el modal
-function createProductCard(product) {
-    const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
-    const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
-    const originalPriceHtml = product.originalPrice ? `<span class="original-price">L.${product.originalPrice}</span>` : '';
-    
-    return `
+        function changeProductImage(imgSrc, element) {
+            document.getElementById('productMainImage').src = imgSrc;
+            document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+        function setupShareButtons(product) {
+            const productUrl = encodeURIComponent(window.location.href.split('#')[0] + `?product=${product.id}`);
+            const productTitle = encodeURIComponent(product.name);
+            const productImage = encodeURIComponent(product.images[0]);
+
+            // WhatsApp
+            document.querySelector('.share-icons .whatsapp')?.setAttribute('href',
+                `https://wa.me/?text=Mira%20este%20producto:%20${productTitle}%20${productUrl}`);
+
+            // Facebook
+            document.querySelector('.share-icons .facebook')?.setAttribute('href',
+                `https://www.facebook.com/sharer/sharer.php?u=${productUrl}`);
+
+            // Twitter
+            document.querySelector('.share-icons .twitter')?.setAttribute('href',
+                `https://twitter.com/intent/tweet?text=Mira%20este%20producto:%20${productTitle}&url=${productUrl}`);
+
+            // Pinterest
+            document.querySelector('.share-icons .pinterest')?.setAttribute('href',
+                `https://pinterest.com/pin/create/button/?url=${productUrl}&media=${productImage}&description=${productTitle}`);
+        }
+
+        function changeProductImage(imgSrc, element) {
+            document.getElementById('productMainImage').src = imgSrc;
+            document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // Modifica la función createProductCard para que el clic en la tarjeta abra el modal
+        function createProductCard(product) {
+            const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
+            const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
+            const originalPriceHtml = product.originalPrice ? `<span class="original-price">L.${product.originalPrice}</span>` : '';
+
+            return `
         <div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
             ${badgeHtml}
             <div class="product-carousel">
@@ -846,143 +935,143 @@ function createProductCard(product) {
             </button>
         </div>
     `;
-}
-
-// Agrega esto al final del script para cerrar modales al hacer clic fuera
-window.addEventListener('click', function(e) {
-    const productModal = document.getElementById('productModal');
-    if (e.target === productModal) {
-        productModal.style.display = 'none';
-    }
-    
-    const cartModal = document.getElementById('cartModal');
-    if (e.target === cartModal) {
-        cartModal.style.display = 'none';
-    }
-});
-// Tema oscuro/claro
-const themeToggle = document.getElementById('themeToggle');
-const currentTheme = localStorage.getItem('theme') || 'light';
-
-// Aplicar tema guardado
-if (currentTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-}
-
-// Alternar tema
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    
-    themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-});
-
-// Cierra modales al hacer clic fuera (actualizado para ambos modales)
-window.addEventListener('click', function(e) {
-    const modals = ['cartModal', 'productModal'];
-    modals.forEach(modalId => {
-        const modal = document.getElementById(modalId);
-        if (e.target === modal) {
-            modal.style.display = 'none';
         }
-    });
-});
 
-// Función de búsqueda
-document.getElementById('searchButton').addEventListener('click', performSearch);
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
-});
-// Función para mostrar sugerencias
-function showSuggestions(term) {
-    const suggestionsContainer = document.getElementById('searchSuggestions');
-    if (!term || term.length < 2) {
-        suggestionsContainer.style.display = 'none';
-        return;
-    }
+        // Agrega esto al final del script para cerrar modales al hacer clic fuera
+        window.addEventListener('click', function (e) {
+            const productModal = document.getElementById('productModal');
+            if (e.target === productModal) {
+                productModal.style.display = 'none';
+            }
 
-    const results = searchProducts(term).slice(0, 5);
-    suggestionsContainer.innerHTML = '';
+            const cartModal = document.getElementById('cartModal');
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        });
+        // Tema oscuro/claro
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
 
-    if (results.length > 0) {
-        results.forEach(product => {
-            const suggestion = document.createElement('div');
-            suggestion.className = 'search-suggestion';
-            suggestion.innerHTML = `
+        // Aplicar tema guardado
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Alternar tema
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Cierra modales al hacer clic fuera (actualizado para ambos modales)
+        window.addEventListener('click', function (e) {
+            const modals = ['cartModal', 'productModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Función de búsqueda
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        // Función para mostrar sugerencias
+        function showSuggestions(term) {
+            const suggestionsContainer = document.getElementById('searchSuggestions');
+            if (!term || term.length < 2) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+
+            const results = searchProducts(term).slice(0, 5);
+            suggestionsContainer.innerHTML = '';
+
+            if (results.length > 0) {
+                results.forEach(product => {
+                    const suggestion = document.createElement('div');
+                    suggestion.className = 'search-suggestion';
+                    suggestion.innerHTML = `
                 <img src="${product.images[0]}" alt="${product.name}">
                 <div class="suggestion-info">
                     <div class="suggestion-name">${product.name}</div>
                     <div class="suggestion-category">${formatCategory(product.category)}</div>
                 </div>
             `;
-            suggestion.addEventListener('click', () => {
-                document.getElementById('searchInput').value = product.name;
-                performSearch();
+                    suggestion.addEventListener('click', () => {
+                        document.getElementById('searchInput').value = product.name;
+                        performSearch();
+                        suggestionsContainer.style.display = 'none';
+                    });
+                    suggestionsContainer.appendChild(suggestion);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
                 suggestionsContainer.style.display = 'none';
-            });
-            suggestionsContainer.appendChild(suggestion);
-        });
-        suggestionsContainer.style.display = 'block';
-    } else {
-        suggestionsContainer.style.display = 'none';
-    }
-}
+            }
+        }
 
-// Formatear categorías
-function formatCategory(category) {
-    const categories = {
-        'smartphones': 'Teléfonos',
-        'laptops': 'Laptops',
-        'accesorios': 'Accesorios',
-        'gaming': 'Gaming'
-    };
-    return categories[category] || category;
-}
+        // Formatear categorías
+        function formatCategory(category) {
+            const categories = {
+                'smartphones': 'Teléfonos',
+                'laptops': 'Laptops',
+                'accesorios': 'Accesorios',
+                'gaming': 'Gaming'
+            };
+            return categories[category] || category;
+        }
 
-// Función de búsqueda mejorada
-const searchProducts = (term) => {
-    if (!term.trim()) return [];
-    
-    const normalizedTerm = term.toLowerCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    
-    return products.map(product => {
-        let score = 0;
-        
-        if (product.name.toLowerCase().includes(normalizedTerm)) score += 5;
-        
-        const nameWords = product.name.toLowerCase().split(' ');
-        if (nameWords.some(word => word.startsWith(normalizedTerm))) score += 4;
-        
-        if (product.category.toLowerCase().includes(normalizedTerm)) score += 3;
-        
-        if (product.name.toLowerCase().includes(normalizedTerm.substring(0, 3))) score += 2;
-        
-        return { ...product, score };
-    })
-    .filter(item => item.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .map(item => {
-        const { score, ...product } = item;
-        return product;
-    });
-};
+        // Función de búsqueda mejorada
+        const searchProducts = (term) => {
+            if (!term.trim()) return [];
 
-// Función principal de búsqueda
-function performSearch() {
-    const searchTerm = document.getElementById('searchInput').value.trim();
-    const results = searchProducts(searchTerm);
-    const grid = document.getElementById('productsGrid');
-    
-    if (results.length > 0) {
-        grid.innerHTML = results.map(product => createProductCard(product)).join('');
-        initializeCarousels();
-    } else {
-        grid.innerHTML = `
+            const normalizedTerm = term.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            return products.map(product => {
+                let score = 0;
+
+                if (product.name.toLowerCase().includes(normalizedTerm)) score += 5;
+
+                const nameWords = product.name.toLowerCase().split(' ');
+                if (nameWords.some(word => word.startsWith(normalizedTerm))) score += 4;
+
+                if (product.category.toLowerCase().includes(normalizedTerm)) score += 3;
+
+                if (product.name.toLowerCase().includes(normalizedTerm.substring(0, 3))) score += 2;
+
+                return { ...product, score };
+            })
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .map(item => {
+                    const { score, ...product } = item;
+                    return product;
+                });
+        };
+
+        // Función principal de búsqueda
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            const results = searchProducts(searchTerm);
+            const grid = document.getElementById('productsGrid');
+
+            if (results.length > 0) {
+                grid.innerHTML = results.map(product => createProductCard(product)).join('');
+                initializeCarousels();
+            } else {
+                grid.innerHTML = `
             <div class="no-results-message">
                 <p>No encontramos resultados para "${searchTerm}"</p>
                 <button onclick="filterProducts('all')" class="category-btn">
@@ -990,221 +1079,233 @@ function performSearch() {
                 </button>
             </div>
         `;
-    }
-    
-    document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
-}
+            }
 
-// Event listeners actualizados
-document.getElementById('searchInput').addEventListener('input', function(e) {
-    showSuggestions(this.value);
-    if (this.value.length === 0) renderProducts('all');
-});
+            document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+        }
 
-document.getElementById('searchButton').addEventListener('click', function(e) {
-    performSearch();
-    document.getElementById('searchSuggestions').style.display = 'none';
-});
+        // Event listeners actualizados
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            showSuggestions(this.value);
+            if (this.value.length === 0) renderProducts('all');
+        });
 
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        performSearch();
-        document.getElementById('searchSuggestions').style.display = 'none';
-    }
-});
+        document.getElementById('searchButton').addEventListener('click', function (e) {
+            performSearch();
+            document.getElementById('searchSuggestions').style.display = 'none';
+        });
 
-// Cerrar sugerencias al hacer clic fuera
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-container')) {
-        document.getElementById('searchSuggestions').style.display = 'none';
-    }
-});
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+                document.getElementById('searchSuggestions').style.display = 'none';
+            }
+        });
 
-// Event listeners para la búsqueda
-document.getElementById('searchButton').addEventListener('click', performSearch);
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
-});
-// Actualiza la función toggleMenu
-function toggleMenu() {
-    const navContent = document.getElementById('navContent');
-    navContent.classList.toggle('active');
-    
-    // Detener la propagación del evento para evitar que se cierre inmediatamente
-    event.stopPropagation();
-}
+        // Cerrar sugerencias al hacer clic fuera
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('searchSuggestions').style.display = 'none';
+            }
+        });
 
-// Cierra el menú al hacer clic fuera
-document.addEventListener('click', function(e) {
-    const navContent = document.getElementById('navContent');
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    
-    if (!e.target.closest('.nav-content') && 
-        !e.target.closest('.mobile-menu-toggle') && 
-        navContent.classList.contains('active')) {
-        navContent.classList.remove('active');
-    }
-});
-function toggleSearch() {
-    const search = document.getElementById('searchContainer');
-    search.classList.toggle('active');
-    
-    // Cierra el menú si está abierto
-    document.getElementById('navLinks').classList.remove('active');
-    
-    // Enfoca el input al abrir
-    if (search.classList.contains('active')) {
-        document.getElementById('searchInput').focus();
-    }
-}
+        // Event listeners para la búsqueda
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        // Actualiza la función toggleMenu
+        function toggleMenu() {
+            const navContent = document.getElementById('navContent');
+            navContent.classList.toggle('active');
 
-// Cierra elementos al hacer clic fuera
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.mobile-menu-toggle') && 
-        !e.target.closest('.nav-links')) {
-        document.getElementById('navLinks').classList.remove('active');
-    }
-    
-    if (!e.target.closest('.search-mobile-toggle') && 
-        !e.target.closest('.search-container')) {
-        document.getElementById('searchContainer').classList.remove('active');
-    }
-});
-// Event listeners para la búsqueda
-document.getElementById('searchButton').addEventListener('click', performSearch);
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
-});
+            // Detener la propagación del evento para evitar que se cierre inmediatamente
+            event.stopPropagation();
+        }
 
-// Cierra elementos al hacer clic fuera
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.mobile-menu-toggle') && 
-        !e.target.closest('.nav-links')) {
-        document.querySelector('.nav-links').classList.remove('active');
-    }
-});
-// Modal de permuta simplificado
-document.addEventListener('DOMContentLoaded', function() {
-    const tradeInBtn = document.getElementById('tradeInBtn');
-    const tradeInModal = document.getElementById('tradeInModal');
-    const closeBtn = document.querySelector('.close-tradein');
-    
-  
-// Cerrar modal
-closeBtn.addEventListener('click', function() {
-    tradeInModal.style.display = 'none';
-    document.body.classList.remove('modal-open');
-});
-tradeInBtn.addEventListener('click', function() {
-    tradeInModal.style.display = 'block';
-    // Forzar actualización de estilos si hay cambios dinámicos
-    document.body.classList.add('modal-open'); 
-});
-// Clic fuera del modal
-window.addEventListener('click', function(e) {
-    if (e.target === tradeInModal) {
-        tradeInModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-});
-    
-    // Enviar a WhatsApp
-    document.getElementById('tradeInForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = {
-            model: document.getElementById('deviceModel').value,
-            storage: document.getElementById('deviceStorage').value,
-            battery: document.getElementById('batteryHealth').value,
-            network: document.getElementById('networkType').value,
-            condition: document.getElementById('deviceCondition').value,
-            notes: document.getElementById('additionalNotes').value
-        };
-        
-        const message = `📱 *SOLICITUD DE PERMUTA - MobileExpressHN* 📱\n\n` +
-                      `*Modelo:* ${formData.model}\n` +
-                      `*Almacenamiento:* ${formData.storage}GB\n` +
-                      `*Batería:* ${formData.battery}%\n` +
-                      `*Red:* ${formData.network}\n` +
-                      `*Estado:* ${formData.condition}\n` +
-                      `*Notas:* ${formData.notes || 'Ninguna'}\n\n` +
-                      `ℹ️ *Por favor envía fotos del dispositivo en este chat*`;
-        
-        const whatsappNumber = "50493756789";
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
-        
-        this.reset();
-        tradeInModal.style.display = 'none';
-    });
-});
+        // Cierra el menú al hacer clic fuera
+        document.addEventListener('click', function (e) {
+            const navContent = document.getElementById('navContent');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+
+            if (!e.target.closest('.nav-content') &&
+                !e.target.closest('.mobile-menu-toggle') &&
+                navContent.classList.contains('active')) {
+                navContent.classList.remove('active');
+            }
+        });
+        function toggleSearch() {
+            const search = document.getElementById('searchContainer');
+            search.classList.toggle('active');
+
+            // Cierra el menú si está abierto
+            document.getElementById('navLinks').classList.remove('active');
+
+            // Enfoca el input al abrir
+            if (search.classList.contains('active')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        // Cierra elementos al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mobile-menu-toggle') &&
+                !e.target.closest('.nav-links')) {
+                document.getElementById('navLinks').classList.remove('active');
+            }
+
+            if (!e.target.closest('.search-mobile-toggle') &&
+                !e.target.closest('.search-container')) {
+                document.getElementById('searchContainer').classList.remove('active');
+            }
+        });
+        // Event listeners para la búsqueda
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Cierra elementos al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mobile-menu-toggle') &&
+                !e.target.closest('.nav-links')) {
+                document.querySelector('.nav-links').classList.remove('active');
+            }
+        });
+        // Modal de permuta simplificado
+        document.addEventListener('DOMContentLoaded', function () {
+            const tradeInBtn = document.getElementById('tradeInBtn');
+            const tradeInModal = document.getElementById('tradeInModal');
+            const closeBtn = document.querySelector('.close-tradein');
+
+
+            // Cerrar modal
+            closeBtn.addEventListener('click', function () {
+                tradeInModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            });
+            tradeInBtn.addEventListener('click', function () {
+                tradeInModal.style.display = 'block';
+                // Forzar actualización de estilos si hay cambios dinámicos
+                document.body.classList.add('modal-open');
+            });
+            // Clic fuera del modal
+            window.addEventListener('click', function (e) {
+                if (e.target === tradeInModal) {
+                    tradeInModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Enviar a WhatsApp
+            document.getElementById('tradeInForm')?.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    model: document.getElementById('deviceModel').value,
+                    storage: document.getElementById('deviceStorage').value,
+                    battery: document.getElementById('batteryHealth').value,
+                    network: document.getElementById('networkType').value,
+                    condition: document.getElementById('deviceCondition').value,
+                    notes: document.getElementById('additionalNotes').value
+                };
+
+                const message = `📱 *SOLICITUD DE PERMUTA - MobileExpressHN* 📱\n\n` +
+                    `*Modelo:* ${formData.model}\n` +
+                    `*Almacenamiento:* ${formData.storage}GB\n` +
+                    `*Batería:* ${formData.battery}%\n` +
+                    `*Red:* ${formData.network}\n` +
+                    `*Estado:* ${formData.condition}\n` +
+                    `*Notas:* ${formData.notes || 'Ninguna'}\n\n` +
+                    `ℹ️ *Por favor envía fotos del dispositivo en este chat*`;
+
+                const whatsappNumber = "50493756789";
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+
+                this.reset();
+                tradeInModal.style.display = 'none';
+            });
+        });
     </script>
     <div id="tradeInModal" class="tradein-modal">
-    <div class="tradein-content">
-        <span class="close-tradein">&times;</span>
-        <h2 class="permute-dispositive"><i class="fas fa-sync-alt"></i> Permuta tu dispositivo</h2>
-        
-        <form id="tradeInForm">
-            <div class="form-group">
-                <label for="deviceModel">Modelo del dispositivo *</label>
-                <input type="text" id="deviceModel" required placeholder="Ej: iPhone 12 Pro Max">
-            </div>
-            
-            <div class="form-group">
-                <label for="deviceStorage">Almacenamiento (GB) *</label>
-                <input type="number" id="deviceStorage" required placeholder="Ej: 128">
-            </div>
-            
-            <div class="form-group">
-                <label for="batteryHealth">Salud de la batería (%) *</label>
-                <input type="number" id="batteryHealth" min="0" max="100" required placeholder="Ej: 85">
-            </div>
-            
-            <div class="form-group">
-                <label for="networkType">Tipo de red *</label>
-                <select id="networkType" required>
-                    <option value="">Seleccione...</option>
-                    <option value="4G">4G LTE</option>
-                    <option value="5G">5G</option>
-                    <option value="3G">3G</option>
-                    <option value="Desbloqueado">Desbloqueado</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="deviceCondition">Estado del dispositivo *</label>
-                <select id="deviceCondition" required>
-                    <option value="">Seleccione...</option>
-                    <option value="Excelente">Excelente (sin rayones)</option>
-                    <option value="Bueno">Bueno (pequeños rayones)</option>
-                    <option value="Regular">Regular (defectos visibles)</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="additionalNotes">Notas adicionales</label>
-                <textarea id="additionalNotes" placeholder="Accesorios incluidos..."></textarea>
-            </div>
-            
-            <div class="whatsapp-instructions">
-                <p><i class="fas fa-info-circle"></i> Envíanos fotos del dispositivo por WhatsApp después de enviar este formulario</p>
-            </div>
-            
-            <button type="submit" class="submit-tradein whatsapp-button">
-    Enviar por WhatsApp
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" fill="#fff"></path>
-        <path d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z" fill="#fff"></path>
-        <path d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z" fill="#cfd8dc"></path>
-        <path d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z" fill="#40c351"></path>
-        <path clip-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" fill-rule="evenodd" fill="#fff"></path>
-    </svg>
-</button>
-        </form>
+        <div class="tradein-content">
+            <span class="close-tradein">&times;</span>
+            <h2 class="permute-dispositive"><i class="fas fa-sync-alt"></i> Permuta tu dispositivo</h2>
+
+            <form id="tradeInForm">
+                <div class="form-group">
+                    <label for="deviceModel">Modelo del dispositivo *</label>
+                    <input type="text" id="deviceModel" required placeholder="Ej: iPhone 12 Pro Max">
+                </div>
+
+                <div class="form-group">
+                    <label for="deviceStorage">Almacenamiento (GB) *</label>
+                    <input type="number" id="deviceStorage" required placeholder="Ej: 128">
+                </div>
+
+                <div class="form-group">
+                    <label for="batteryHealth">Salud de la batería (%) *</label>
+                    <input type="number" id="batteryHealth" min="0" max="100" required placeholder="Ej: 85">
+                </div>
+
+                <div class="form-group">
+                    <label for="networkType">Tipo de red *</label>
+                    <select id="networkType" required>
+                        <option value="">Seleccione...</option>
+                        <option value="4G">4G LTE</option>
+                        <option value="5G">5G</option>
+                        <option value="3G">3G</option>
+                        <option value="Desbloqueado">Desbloqueado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="deviceCondition">Estado del dispositivo *</label>
+                    <select id="deviceCondition" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Excelente">Excelente (sin rayones)</option>
+                        <option value="Bueno">Bueno (pequeños rayones)</option>
+                        <option value="Regular">Regular (defectos visibles)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalNotes">Notas adicionales</label>
+                    <textarea id="additionalNotes" placeholder="Accesorios incluidos..."></textarea>
+                </div>
+
+                <div class="whatsapp-instructions">
+                    <p><i class="fas fa-info-circle"></i> Envíanos fotos del dispositivo por WhatsApp después de enviar
+                        este formulario</p>
+                </div>
+
+                <button type="submit" class="submit-tradein whatsapp-button">
+                    Enviar por WhatsApp
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"
+                            fill="#fff"></path>
+                        <path
+                            d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"
+                            fill="#fff"></path>
+                        <path
+                            d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"
+                            fill="#cfd8dc"></path>
+                        <path
+                            d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"
+                            fill="#40c351"></path>
+                        <path clip-rule="evenodd"
+                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
+                            fill-rule="evenodd" fill="#fff"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
-</div>
 </body>
+
 </html>
