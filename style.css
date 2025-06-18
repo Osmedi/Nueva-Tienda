@@ -895,7 +895,7 @@ body.dark-mode .form-group select {
         }
 
         .footer-section ul li a:hover {
-            color: #667eea;
+            color: #cc4400;
         }
 
         .social-icons {
@@ -1034,7 +1034,7 @@ body.dark-mode .form-group select {
 }
 
 .product-modal-thumbnail:hover, .product-modal-thumbnail.active {
-    border-color: #667eea;
+    border-color: #c2470a73;
 }
 
 .product-modal-thumbnail img {
@@ -1074,7 +1074,7 @@ body.dark-mode .product-modal-title {
 .product-modal-price {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #667eea;
+    color: #c2470a;
     margin: 1rem 0;
 }
 

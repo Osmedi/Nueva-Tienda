@@ -277,8 +277,8 @@ const products = [
         category: "smartphones",
         images: [
             "https://imgs.search.brave.com/Cl18TjDASWf9_eCPh8yESWcUHsTy4hKUsEzhZDBciEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF0/Zm9ybS50aGV2ZXJn/ZS5jb20vd3AtY29u/dGVudC91cGxvYWRz/L3NpdGVzLzIvY2hv/cnVzL3VwbG9hZHMv/Y2hvcnVzX2Fzc2V0/L2ZpbGUvMjU2MTI4/OTUvRFNDMDgzMjJf/cHJvY2Vzc2VkLmpw/Zz9xdWFsaXR5PTkw/JnN0cmlwPWFsbCZj/cm9wPTAsMCwxMDAs/MTAwJnc9MjQwMA",
-            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.2.png?updatedAt=1750208662170",
-            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%20plus%20(2).png?updatedAt=1750208661623"
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016.png?updatedAt=1750208665062",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.3.png?updatedAt=1750208661858"
         ],
 specs: {
     pantalla: "6.1 pulgadas Super Retina XDR OLED",
@@ -287,6 +287,46 @@ specs: {
     camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
     bateria: "Hasta 22 horas de reproducción de vídeo",
     sistema: "iOS 18"
+},
+features: [
+    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
+    "Dynamic Island",
+    "Conexión 5G",
+    "Face ID",
+    "Carga inalámbrica MagSafe hasta 25W",
+    "Control de Cámara",
+    "Apple Intelligence",
+    "Ceramic Shield",
+    "Conector USB-C"
+],
+        rating: 5,
+        reviews: 8,
+        badge: "Oferta",
+        isBestseller: true,
+        isOffer: true
+    },
+
+
+
+    {
+        id: 2,
+        name: "iPhone 16 Plus",
+        price: 23500,
+        originalPrice: 32995,
+        category: "smartphones",
+        images: [
+            "https://www.apple.com/newsroom/images/2024/09/apple-introduces-iphone-16-and-iphone-16-plus/article/geo/Apple-iPhone-16-hero-geo-240909_inline.jpg.large.jpg",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.2.png?updatedAt=1750208662170",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%20plus%20(2).png?updatedAt=1750208661623"
+        ],
+specs: {
+    pantalla: "6.7 pulgadas Super Retina XDR OLED",
+    procesador: "A18",
+    almacenamiento: "256GB",
+    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
+    bateria: "Hasta 27 horas de reproducción de vídeo",
+    sistema: "iOS 18",
+    Color: "Black/Azul Marine"
 },
 features: [
     "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
@@ -694,10 +734,10 @@ function openProductModal(productId) {
                         <i class="fas fa-store"></i> Recogida en tienda: <strong>Gratis</strong>
                     </div>
                     <div class="delivery-option">
-                        <i class="fas fa-shipping-fast"></i> Envío estándar: <strong>$5.99 (2-3 días)</strong>
+                        <i class="fas fa-shipping-fast"></i> Envío estándar: <strong>L100 - 200 (demora 24 Hrs)</strong>
                     </div>
                     <div class="delivery-option">
-                        <i class="fas fa-rocket"></i> Envío express: <strong>$9.99 (24 horas)</strong>
+                        <i class="fas fa-rocket"></i> Envío a Roatan: <strong>L1500 (24 horas)</strong>
                     </div>
                 </div>
                 
@@ -709,7 +749,7 @@ function openProductModal(productId) {
 
                                                    <h3 style="margin-top: 1.5rem;">¿Necesitas ayuda?</h3>
                 <p>Contáctanos para más información sobre este producto:</p>
-                      <button type="submit" class="submit-tradein whatsapp-button" onclick="window.open('https://wa.me/50499999999?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20producto%20${encodeURIComponent(product.name)}')">
+                      <button type="submit" class="submit-tradein whatsapp-button" onclick="window.open('https://wa.me/50496811650?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20producto%20${encodeURIComponent(product.name)}')">
     Chatear por WhatsApp
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" fill="#fff"></path>
@@ -784,7 +824,7 @@ function changeProductImage(imgSrc, element) {
 function createProductCard(product) {
     const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
     const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
-    const originalPriceHtml = product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : '';
+    const originalPriceHtml = product.originalPrice ? `<span class="original-price">L.${product.originalPrice}</span>` : '';
     
     return `
         <div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
@@ -799,7 +839,7 @@ function createProductCard(product) {
             <h3 class="product-title">${product.name}</h3>
             <div class="stars">${starsHtml} <span class="reviews-count">(${product.reviews} reseñas)</span></div>
             <div class="product-price">
-    ${originalPriceHtml}$${product.price}
+    ${originalPriceHtml}L.${product.price}
 </div>
             <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
                 <i class="fas fa-cart-plus"></i> Agregar al Carrito
