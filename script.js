@@ -562,12 +562,21 @@ let isVideoPlaying = true;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    loadTheme();
-    renderProducts();
-    initializeEventListeners();
-    setTimeout(() => {
-        document.querySelector('.preloader').style.display = 'none';
-    }, 2000);
+    try {
+        loadTheme();
+        renderProducts();
+        initializeEventListeners();
+    } catch (error) {
+        console.error("Error al inicializar:", error);
+    } finally {
+        setTimeout(() => {
+            const preloader = document.querySelector('.preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }
+        }, 2000);
+    }
 });
 
 // Theme Toggle
@@ -762,8 +771,11 @@ function removeFromCart(productId) {
 function toggleCart() {
     const modal = document.getElementById('cartModal');
     modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    
+    if (modal.style.display === 'block') {
+        updateCart();
+    }
 }
-
 // Product Modal
 function openProductModal(productId) {
     const product = products.find(p => p.id === productId);

@@ -1960,6 +1960,7 @@ footer {
   font-size: 1.2rem;
   box-shadow: var(--shadow-md);
   transition: var(--transition);
+  margin-right: 1px;
 }
 
 .scroll-top-btn:hover {
