@@ -905,7 +905,6 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
     message += `══════════════════════════\n`;
     message += `💰 *Resumen de Pagos*\n`;
     message += `▸ Subtotal: L.${subtotal.toFixed(2)}\n`;
-    message += `▸ ISV (15%): L.${tax.toFixed(2)}\n`;
     message += `▸ *TOTAL A PAGAR: L.${total.toFixed(2)}*\n\n`;
     message += `📦 *Información de Envío*\n`;
     message += `▸ Tiempo estimado: 24-48 horas\n`;
@@ -913,7 +912,7 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
     message += `¡Gracias por tu compra en MobileExpressHN! 💜\n`;
     message += `Para seguimiento de tu pedido, contactanos por este medio`;
 
-    const whatsappUrl = `https://wa.me/+50450496811650?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/+50496811650?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     
     // Mostrar notificación de pedido realizado
