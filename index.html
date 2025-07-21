@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MobileExpressHN - Tu Mejor Opcion</title>
-    <!-- Favicon  -->
+     <!-- Favicon  -->
     <link rel="icon" href="images/favicon-32x32.png" type="image/x-icon">
     <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
 
@@ -18,1718 +16,426 @@
 
     <!-- Para Windows Metro -->
     <meta name="msapplication-TileImage" content="mstile-150x150.png">
-    <meta name="theme-color" content="#c2470a"> <!-- Color de tu tema -->
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta name="theme-color" content="#c2470a"> 
+    <title>MobileExpressHN - Smartphones y Consolas de Lujo</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="preloader animate__animated animate__fadeOut animate__delay-2s">
-        <div class="preloader-logo">
-            <img src="images/android-chrome-192x192.png" alt="MobileExpressHN - Tu Mejor Opcion"
-                class="preloader-spinner">
-            <div class="preloader-progress"></div>
+    <!-- Preloader -->
+     <!-- <div class="preloader">
+        <div class="loader">
+            <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true" alt="MobileExpressHN Logo">
         </div>
-    </div>
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">
-                    <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true"
-                        alt="MobileExpressHN - Tu Mejor Opcion" class="logo-img" width="160" height="40">
-                </a>
+    </div> -->
 
-                <button class="mobile-menu-toggle" onclick="toggleMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <div class="nav-content" id="navContent">
-                    <ul class="nav-links" id="navLinks">
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#productos">Productos</a></li>
-                        <li><a href="#ofertas">Ofertas</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-
+    <!-- Header -->
+    <header class="glass-header">
+        <nav class="container">
+            <div class="logo">
+                <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true" alt="MobileExpressHN Logo" class="logo-img">
+                <span class="logo-text">MobileExpressHN</span>
+            </div>
+            <div class="nav-content">
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Inicio</a></li>
+                    <li><a href="#brands" class="nav-link">Marcas</a></li>
+                    <li><a href="#products" class="nav-link">Productos</a></li>
+                    <li><a href="#offers" class="nav-link">Ofertas</a></li>
+                    <li><a href="#contact" class="nav-link">Contacto</a></li>
+                </ul>
+                <div class="header-actions">
                     <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
-                        <button id="searchButton" class="search-button">
-                            <i class="fas fa-search"></i>
-                        </button>
+                        <input type="text" id="searchInput" placeholder="Buscar dispositivos...">
+                        <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
                         <div class="search-suggestions" id="searchSuggestions"></div>
                     </div>
-
-                    <div class="header-controls">
-                        <button id="themeToggle" class="theme-toggle">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                        <button id="tradeInBtn" class="tradein-btn">
-                            <i class="fas fa-sync-alt"></i> Permuta tu dispositivo
-                        </button>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- Carrito flotante (fuera del header) -->
-    <div class="cart-icon" onclick="toggleCart()">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count" id="cartCount">0</span>
+                    <div class="action-buttons">
+                      <label class="theme-switch">
+  <input type="checkbox" class="theme-switch__checkbox" id="theme-checkbox">
+  <div class="theme-switch__container">
+    <div class="theme-switch__clouds"></div>
+    <div class="theme-switch__stars-container">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M135.831 3.00688C135.055 3.85027 134.111 4.29946 133 4.35447C134.111 4.40947 135.055 4.85867 135.831 5.71123C136.607 6.55462 136.996 7.56303 136.996 8.72727C136.996 7.95722 137.172 7.25134 137.525 6.59129C137.886 5.93124 138.372 5.39954 138.98 5.00535C139.598 4.60199 140.268 4.39114 141 4.35447C139.88 4.2903 138.936 3.85027 138.16 3.00688C137.384 2.16348 136.996 1.16425 136.996 0C136.996 1.16425 136.607 2.16348 135.831 3.00688ZM31 23.3545C32.1114 23.2995 33.0551 22.8503 33.8313 22.0069C34.6075 21.1635 34.9956 20.1642 34.9956 19C34.9956 20.1642 35.3837 21.1635 36.1599 22.0069C36.9361 22.8503 37.8798 23.2903 39 23.3545C38.2679 23.3911 37.5976 23.602 36.9802 24.0053C36.3716 24.3995 35.8864 24.9312 35.5248 25.5913C35.172 26.2513 34.9956 26.9572 34.9956 27.7273C34.9956 26.563 34.6075 25.5546 33.8313 24.7112C33.0551 23.8587 32.1114 23.4095 31 23.3545ZM0 36.3545C1.11136 36.2995 2.05513 35.8503 2.83131 35.0069C3.6075 34.1635 3.99559 33.1642 3.99559 32C3.99559 33.1642 4.38368 34.1635 5.15987 35.0069C5.93605 35.8503 6.87982 36.2903 8 36.3545C7.26792 36.3911 6.59757 36.602 5.98015 37.0053C5.37155 37.3995 4.88644 37.9312 4.52481 38.5913C4.172 39.2513 3.99559 39.9572 3.99559 40.7273C3.99559 39.563 3.6075 38.5546 2.83131 37.7112C2.05513 36.8587 1.11136 36.4095 0 36.3545ZM56.8313 24.0069C56.0551 24.8503 55.1114 25.2995 54 25.3545C55.1114 25.4095 56.0551 25.8587 56.8313 26.7112C57.6075 27.5546 57.9956 28.563 57.9956 29.7273C57.9956 28.9572 58.172 28.2513 58.5248 27.5913C58.8864 26.9312 59.3716 26.3995 59.9802 26.0053C60.5976 25.602 61.2679 25.3911 62 25.3545C60.8798 25.2903 59.9361 24.8503 59.1599 24.0069C58.3837 23.1635 57.9956 22.1642 57.9956 21C57.9956 22.1642 57.6075 23.1635 56.8313 24.0069ZM81 25.3545C82.1114 25.2995 83.0551 24.8503 83.8313 24.0069C84.6075 23.1635 84.9956 22.1642 84.9956 21C84.9956 22.1642 85.3837 23.1635 86.1599 24.0069C86.9361 24.8503 87.8798 25.2903 89 25.3545C88.2679 25.3911 87.5976 25.602 86.9802 26.0053C86.3716 26.3995 85.8864 26.9312 85.5248 27.5913C85.172 28.2513 84.9956 28.9572 84.9956 29.7273C84.9956 28.563 84.6075 27.5546 83.8313 26.7112C83.0551 25.8587 82.1114 25.4095 81 25.3545ZM136 36.3545C137.111 36.2995 138.055 35.8503 138.831 35.0069C139.607 34.1635 139.996 33.1642 139.996 32C139.996 33.1642 140.384 34.1635 141.16 35.0069C141.936 35.8503 142.88 36.2903 144 36.3545C143.268 36.3911 142.598 36.602 141.98 37.0053C141.372 37.3995 140.886 37.9312 140.525 38.5913C140.172 39.2513 139.996 39.9572 139.996 40.7273C139.996 39.563 139.607 38.5546 138.831 37.7112C138.055 36.8587 137.111 36.4095 136 36.3545ZM101.831 49.0069C101.055 49.8503 100.111 50.2995 99 50.3545C100.111 50.4095 101.055 50.8587 101.831 51.7112C102.607 52.5546 102.996 53.563 102.996 54.7273C102.996 53.9572 103.172 53.2513 103.525 52.5913C103.886 51.9312 104.372 51.3995 104.98 51.0053C105.598 50.602 106.268 50.3911 107 50.3545C105.88 50.2903 104.936 49.8503 104.16 49.0069C103.384 48.1635 102.996 47.1642 102.996 46C102.996 47.1642 102.607 48.1635 101.831 49.0069Z" fill="currentColor"></path>
+      </svg>
     </div>
-    <main class="container">
-        <section class="hero" id="inicio">
-            <h1>¡Bienvenido a Mobile Express HN!</h1>
-            <p>Los mejores productos tecnológicos al mejor precio <br> #MobileExpressTuMejorOpcion</p>
-        </section>
-
-        <section class="categories">
-            <button class="category-btn active" onclick="filterProducts('all')">Todos</button>
-            <button class="category-btn" onclick="filterProducts('smartphones')">Smartphones</button>
-            <button class="category-btn" onclick="filterProducts('laptops')">Laptops</button>
-            <button class="category-btn" onclick="filterProducts('accesorios')">Accesorios</button>
-            <button class="category-btn" onclick="filterProducts('gaming')">Gaming</button>
-        </section>
-
-        <section class="products-section" id="ofertas">
-            <h2 class="section-title">🔥 Ofertas Especiales</h2>
-            <div class="products-grid" id="offersGrid">
-            </div>
-        </section>
-
-        <section class="products-section" id="bestsellers">
-            <h2 class="section-title">⭐ Los Más Vendidos</h2>
-            <div class="products-grid" id="bestsellersGrid">
-            </div>
-        </section>
-
-        <section class="products-section" id="productos">
-            <h2 class="section-title">📱 Todos los Productos</h2>
-                        <div class="products-grid" id="productsGrid">
-            <div class="products-grid" id="productsGrid">
-
-            </div>
-        </section>
-    </main>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="cart-modal">
-        <div class="cart-content">
-            <span class="close-cart" onclick="toggleCart()">&times;</span>
-            <h2>🛒 Tu Carrito de Compras</h2>
-            <div id="cartItems"></div>
-            <div id="cartTotal" style="font-size: 1.5rem; font-weight: bold; margin: 1rem 0; text-align: right;"></div>
-
-            <form class="checkout-form" id="checkoutForm">
-                <div class="form-group">
-                    <label for="customerName">Nombre Completo *</label>
-                    <input type="text" id="customerName" name="customerName" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerPhone">Teléfono *</label>
-                    <input type="tel" id="customerPhone" name="customerPhone" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerAddress">Dirección de Entrega *</label>
-                    <input type="text" id="customerAddress" name="customerAddress" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerNotes">Notas Adicionales</label>
-                    <textarea id="customerNotes" name="customerNotes" rows="3"
-                        placeholder="Instrucciones especiales, referencias, etc."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="paymentMethod">Método de Pago *</label>
-                    <select id="paymentMethod" name="paymentMethod" required>
-                        <option value="">Seleccione un método</option>
-                        <option value="bac">Bac (Tarjeta de crédito)</option>
-                        <option value="ficohsa">Ficohsa (Tarjeta de crédito)</option>
-                        <option value="amex">American Express</option>
-                        <option value="transferencia">Transferencia Bancaria</option>
-                        <option value="efectivo">Efectivo</option>
-                    </select>
-                </div>
-                <button type="submit" class="submit-tradein whatsapp-button">
-                    Finalizar compra por WhatsApp
-                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"
-                            fill="#fff"></path>
-                        <path
-                            d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"
-                            fill="#fff"></path>
-                        <path
-                            d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"
-                            fill="#cfd8dc"></path>
-                        <path
-                            d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"
-                            fill="#40c351"></path>
-                        <path clip-rule="evenodd"
-                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
-                            fill-rule="evenodd" fill="#fff"></path>
-                    </svg>
-                </button>
-            </form>
+    <div class="theme-switch__circle-container">
+      <div class="theme-switch__sun-moon-container">
+        <div class="theme-switch__moon">
+          <div class="theme-switch__spot"></div>
+          <div class="theme-switch__spot"></div>
+          <div class="theme-switch__spot"></div>
         </div>
-    </div>
-    <!-- Agrega esto antes del footer -->
-
-    <!-- Modal de Detalles del Producto -->
-    <div id="productModal" class="product-modal">
-        <div class="product-modal-content">
-            <span class="close-product-modal" onclick="closeProductModal()">&times;</span>
-            <div class="product-modal-body" id="productModalBody">
-                <!-- Contenido se llenará dinámicamente -->
-            </div>
-        </div>
-    </div>
-    <section>
-        <!-- <<< class="location-section" id="ubicacion" -->
-        <h2 class="section-title">📍 Nuestra Ubicación proximamente tienda fisica</h2>
-        <!-- <div class="map-container">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.227770518637!2d-87.9535827240178!3d15.61474795813077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f665c5f207a1c3f%3A0x3c4c4b4b4b4b4b4b!2sJ26X%2BV83%2C%20Choloma%2C%20Cort%C3%A9s!5e0!3m2!1sen!2shn!4v1719876543210"
-                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div> -->
-    </section>
-    <footer id="contacto">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>MobileExpressHN</h3>
-                    <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor
-                        servicio al cliente.</p>
-                    <div class="social-icons">
-                        <a href="https://www.facebook.com/MobileExpressHN"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/mobile.expresshn?igsh=ODdsMW41ZG43eGNr"><i
-                                class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="https://wa.me/50496811650"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Navegación</h3>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#productos">Productos</a></li>
-                        <li><a href="#ofertas">Ofertas</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Categorías</h3>
-                    <ul>
-                        <li><a href="#">Smartphones</a></li>
-                        <li><a href="#">Laptops</a></li>
-                        <li><a href="#">Accesorios</a></li>
-                        <li><a href="#">Gaming</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +504 9681-1650</li>
-                        <li><i class="fas fa-envelope"></i> mobileexpresshn@gmail.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Tegucigalpa, Honduras</li>
-                        <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Pagos y Envíos</h3>
-                    <ul>
-                        <li><i class="fab fa-cc-visa"></i> Visa</li>
-                        <li><i class="fab fa-cc-mastercard"></i> Mastercard</li>
-                        <li><i class="fab fa-cc-amex"></i> American Express</li>
-                        <li><i class="fas fa-money-bill-wave"></i> Transferencia/Efectivo</li>
-                        <li><i class="fas fa-credit-card"></i> Financiamiento Bac/Ficohsa</li>
-                        <li><i class="fas fa-truck"></i> Cargo Express</li>
-                        <li><i class="fas fa-shipping-fast"></i> Rápido Cargo</li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Agrega esto justo antes del footer-bottom -->
-<div class="footer-credits">
-  <div class="e-card playing">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    
-    <div class="infotop">
-      <img src="https://github.com/Osmedi/recursos/blob/main/file_00000000c99061f984516e23affba8f2%20(1)(1).png?raw=true" alt="80" width="80">
-      <div class="name">Desarrollado por</div>
-      <div class="title">OsmediLopez</div>
-      <div class="social-links">
-        <a href="https://github.com/Osmedi" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.instagram.com/osmedilopez?igsh=amJlbWdpdHZuZW9m" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="" target="_blank"><i class="fas fa-globe"></i></a>
       </div>
     </div>
   </div>
-</div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 MobileExpressHN. Todos los derechos reservados. | Diseñado por <a href=""></a></p>
+</label>
+                        <button class="tradein-btn" onclick="toggleTradeInModal()"><i class="fas fa-sync-alt"></i> Permuta</button>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        </nav>
+    </header>
+
+    <!-- Floating Cart -->
+    <div class="floating-cart">
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top">
+        <button class="scroll-top-btn"><i class="fas fa-arrow-up"></i></button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <video autoplay muted loop class="hero-video">
+            <source src="" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
+        <button class="video-toggle"><i class="fas fa-pause"></i></button>
+        <div class="hero-content">
+            <h1 class="hero-title">Descubre tu <span class="highlight">Dispositivo Perfecto</span></h1>
+            <p class="hero-subtitle">Explora nuestra colección de smartphones y consolas de lujo al mejor precio</p>
+            <div class="hero-cta">
+                <a href="#products" class="btn-primary"><i class="fas fa-mobile-alt"></i> Ver Productos</a>
+                <a href="#offers" class="btn-secondary"><i class="fas fa-tags"></i> Ofertas Especiales</a>
             </div>
         </div>
-    </footer>
-
-    <script>
-        
-        // Preloader
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                const preloader = document.querySelector('.preloader');
-                preloader.style.display = 'none';
-
-                // Activa animaciones del contenido principal
-                document.querySelector('header').classList.add('animate__fadeInDown');
-                document.querySelector('.hero').classList.add('animate__zoomIn');
-            }, 2000); // Tiempo igual a la duración de la animación
-        });
-
-
-
-
-
-
-
-
-
-
-        //======================================================================================================
-        //                                         PRODUCTOS
-        const products = [
-            {
-                id: 1,
-                name: "iPhone 16",
-                price: 23500,
-                originalPrice: 32995,
-                category: "smartphones",
-                images: [
-                    "https://imgs.search.brave.com/Cl18TjDASWf9_eCPh8yESWcUHsTy4hKUsEzhZDBciEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF0/Zm9ybS50aGV2ZXJn/ZS5jb20vd3AtY29u/dGVudC91cGxvYWRz/L3NpdGVzLzIvY2hv/cnVzL3VwbG9hZHMv/Y2hvcnVzX2Fzc2V0/L2ZpbGUvMjU2MTI4/OTUvRFNDMDgzMjJf/cHJvY2Vzc2VkLmpw/Zz9xdWFsaXR5PTkw/JnN0cmlwPWFsbCZj/cm9wPTAsMCwxMDAs/MTAwJnc9MjQwMA",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016.png?updatedAt=1750208665062",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.3.png?updatedAt=1750208661858"
-                ],
-                specs: {
-                    pantalla: "6.1 pulgadas Super Retina XDR OLED",
-                    procesador: "A18",
-                    almacenamiento: "128GB",
-                    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
-                    bateria: "Hasta 22 horas de reproducción de vídeo",
-                    sistema: "iOS 18"
-                },
-                features: [
-                    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
-                    "Dynamic Island",
-                    "Conexión 5G",
-                    "Face ID",
-                    "Carga inalámbrica MagSafe hasta 25W",
-                    "Control de Cámara",
-                    "Apple Intelligence",
-                    "Ceramic Shield",
-                    "Conector USB-C"
-                ],
-                rating: 5,
-                reviews: 8,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-            },
-
-
-
-            {
-                id: 2,
-                name: "iPhone 16 Plus",
-                price: 30500,
-                originalPrice: 32995,
-                category: "smartphones",
-                images: [
-                    "https://www.apple.com/newsroom/images/2024/09/apple-introduces-iphone-16-and-iphone-16-plus/article/geo/Apple-iPhone-16-hero-geo-240909_inline.jpg.large.jpg",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%201.2.png?updatedAt=1750208662170",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2016%20plus%20(2).png?updatedAt=1750208661623"
-                ],
-                specs: {
-                    pantalla: "6.7 pulgadas Super Retina XDR OLED",
-                    procesador: "A18",
-                    almacenamiento: "256GB",
-                    camara: "Cámara dual: Fusion 48MP + Ultra gran angular 12MP",
-                    bateria: "Hasta 27 horas de reproducción de vídeo",
-                    sistema: "iOS 18",
-                    Color: "Black/Azul Marine"
-                },
-                features: [
-                    "Resistente al agua IP68 (hasta 6 metros por 30 minutos)",
-                    "Dynamic Island",
-                    "Conexión 5G",
-                    "Face ID",
-                    "ESIM",
-                    "Carga inalámbrica MagSafe hasta 25W",
-                    "Control de Cámara",
-                    "Apple Intelligence",
-                    "Ceramic Shield",
-                    "Conector USB-C"
-                ],
-                rating: 4,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-            },
-
-
-        
-            {
-                id: 4,
-                name: "iPhone 13",
-                price: 13800,
-                originalPrice: 32999,
-                category: "smartphones",
-                images: [
-                    "https://m.media-amazon.com/images/I/71MKNCEgE6L.jpg",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20normal%20%20128gb%20(2).png?updatedAt=1750208659812",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20normal%20%20128gb%20(3).png?updatedAt=1750208659482"
-                ],
-                "specs": {
-                    "pantalla": "6.1 pulgadas Super Retina XDR",
-                    "procesador": "A15 Bionic (con GPU de 5 núcleos)",
-                    "almacenamiento": "128GB",
-                    "camara": "Doble cámara de 12MP (Gran Angular ƒ/1.5, Ultra Gran Angular ƒ/2.4)",
-                    "bateria": "3279 mAh (hasta 20 horas de reproducción de video)",
-                    "sistema": "iOS 16 (actualizable a versiones posteriores, como iOS 18)"
-                },
-                "features": [
-                    "Resistencia al agua y polvo IP68",
-                    "Conexión 5G",
-                    "Face ID",
-                    "Carga inalámbrica MagSafe",
-                    "Modo Cine (hasta 4K Dolby Vision a 30 fps)",
-                    "Modo Acción para videos estables",
-                    "Detección de Accidentes (Crash Detection)",
-                    "Emergencia SOS vía satélite"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-
-            },
-
-
-            {
-                id: 5,
-                name: "iPhone 13 Pro Max",
-                price: 17500,
-                originalPrice: 32995,
-                category: "smartphones",
-                images: [
-                    "https://aitexpresshn.com/wp-content/uploads/2022/08/IP13PM.png",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20Pro%20Max%201.1.png?updatedAt=1750208659453",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2013%20Max%20(3).png?updatedAt=1750208659347"
-                ],
-                "specs": {
-                    "pantalla": "6.7 pulgadas Super Retina XDR con ProMotion (120Hz)",
-                    "procesador": "A15 Bionic",
-                    "almacenamiento": "256GB/128GB",
-                    "camara": "Triple cámara de 12MP (Gran Angular ƒ/1.5, Ultra Gran Angular ƒ/1.8, Teleobjetivo ƒ/2.8) + escáner LiDAR",
-                    "bateria": "4352 mAh (hasta 28 horas de reproducción de video)",
-                    "sistema": "iOS 15 (actualizable a versiones posteriores, como iOS 18)"
-                },
-                "features": [
-                    "Resistencia al agua y polvo IP68",
-                    "Pantalla ProMotion de 120Hz",
-                    "Conexión 5G",
-                    "Face ID",
-                    "Carga inalámbrica MagSafe",
-                    "Modo Cine para grabación de video",
-                    "Estabilización óptica de imagen por desplazamiento de sensor"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-
-            },
-
-            {
-                id: 6,
-                name: "iPhone 11 Pro Max",
-                price: 10500,
-                originalPrice: 45995,
-                category: "smartphones",
-                images: [
-                    "https://m.media-amazon.com/images/I/51-7KEQ9kbL.jpg",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2011%20Pro%20Max%20512%20GB.png?updatedAt=1750208658685",
-                    "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2011%20Pro%20Max%20512%20GB%20(2).png?updatedAt=1750208657856"
-                ],
-                "specs": {
-                    "pantalla": "6.7 pulgadas Super Retina XDR con ProMotion (120Hz)",
-                    "procesador": "A15 Bionic",
-                    "almacenamiento": "512GB",
-                    "camara": "Triple cámara de 12MP (Gran Angular ƒ/1.5, Ultra Gran Angular ƒ/1.8, Teleobjetivo ƒ/2.8) + escáner LiDAR",
-                    "bateria": "4352 mAh (hasta 28 horas de reproducción de video)",
-                    "sistema": "iOS 15 (actualizable a versiones posteriores, como iOS 18)",
-                    "color": "Gold/SpaceGray"
-                },
-                "features": [
-                    "Resistencia al agua y polvo IP68",
-                    "Pantalla ProMotion de 120Hz",
-                    "Conexión 5G",
-                    "Face ID",
-                    "Carga inalámbrica MagSafe",
-                    "Modo Cine para grabación de video",
-                    "Estabilización óptica de imagen por desplazamiento de sensor"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-
-            },
-
-            {
-                id: 7,
-                name: "Xbox Series S",
-                price: 7800,
-                originalPrice: 13990,
-                category: "gaming",
-                images: [
-                    "https://imgs.search.brave.com/HAXMB60v2mMibIxW99mJKC3P7OLYA9F0IEQivWXJZ2Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jbXMt/YXNzZXRzLnhib3hz/ZXJ2aWNlcy5jb20v/YXNzZXRzLzA3L2E5/LzA3YTkzODQ2LTIw/YzYtNGNjZC05YjBh/LTg4NzE4YTk5Zjg5/NC5wbmc_bj0zODk5/NjRfSGVyby1HYWxs/ZXJ5LTBfQTJfODU3/eDY3Ni5wbmc",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/XBOX%20ONE%20SERIES%20S%20512%20GB%20(2)%20(1).png?updatedAt=1750299209952",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/XBOX%20ONE%20SERIES%20S%20512%20GB%20(1).png?updatedAt=1750299209922"
-                ],
-                "specs": {
-                    "procesador": "CPU: 8 núcleos Zen 2 personalizados a 3.6 GHz (3.4 GHz con SMT) | GPU: RDNA 2 personalizada de 4 TFLOPS, 20 CUs a 1.565 GHz",
-                    "memoria": "10 GB GDDR6 (8 GB a 224 GB/s, 2 GB a 56 GB/s)",
-                    "almacenamiento": "SSD NVMe personalizado de 512 GB (362 GB utilizables aproximadamente)",
-                    "resolucion_juego": "1440p (QHD), reescalado a 4K para medios",
-                    "rendimiento": "Hasta 120 FPS",
-                    "unidad_optica": "Ninguna (solo digital)",
-                    "sonido": "L-PCM hasta 7.1, Dolby Digital 5.1, DTS 5.1, Dolby TrueHD con Atmos",
-                    "color": "Gold/SpaceGray"
-                },
-                "features": [
-                    "Arquitectura Xbox Velocity (para tiempos de carga ultrarrápidos y Quick Resume)",
-                    "Ray Tracing acelerado por hardware",
-                    "Soporte para Variable Rate Shading (VRS)",
-                    "Soporte para Variable Refresh Rate (VRR)",
-                    "Modo de baja latencia automática (ALLM)",
-                    "Compatible con miles de juegos de cuatro generaciones de Xbox",
-                    "Smart Delivery (asegura la mejor versión del juego para tu consola)",
-                    "Expansión de almacenamiento mediante tarjetas de expansión Seagate específicas (se venden por separado, en 512GB, 1TB y 2TB)",
-                    "Compatible con discos duros externos USB 3.1 (solo para juegos de Xbox One, Xbox 360 y Xbox original, o para almacenar juegos de Series S/X y moverlos al SSD interno para jugar)"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-
-            },
-
-
-            {
-                id: 8,
-                name: "Samsung Galaxy S25 Ultra",
-                price: 38700,
-                originalPrice: 41999,
-                category: "smartphones",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image-removebg-preview.png?updatedAt=1750300888615",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Samsung%20S25%20U%20(2)%20(1).png?updatedAt=1750299206113",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Samsung%20S25%20U%20(5)%20(1).png?updatedAt=1750299207870"
-                ],
-                "specs": {
-                    "pantalla": "6.9 pulgadas Dynamic AMOLED 2X, QHD+ (3120 x 1440 píxeles), 120Hz adaptativos (LTPO), hasta 2600 nits de brillo máximo",
-                    "procesador": "Qualcomm Snapdragon 8 Gen 4 para Galaxy (u Exynos 2500 en algunas regiones)",
-                    "almacenamiento": "512GB (UFS 4.0)",
-                    "ram": "12GB (LPDDR5X)",
-                    "camara": "Cuádruple cámara trasera: 200MP Principal (f/1.7, OIS), 50MP Ultra Gran Angular (f/2.2), 50MP Teleobjetivo periscopio (5x zoom óptico, f/3.4, OIS), 10MP Teleobjetivo (3x zoom óptico, f/2.4, OIS) | Cámara frontal: 12MP (f/2.2)",
-                    "bateria": "5000 mAh",
-                    "sistema": "Android 15 con One UI 7",
-                    "color": "Blue Titanium/Grey Titanium/White Titanium"
-                },
-                "features": [
-                    "S Pen integrado",
-                    "Diseño con marco de titanio",
-                    "Resistencia al agua y polvo IP68",
-                    "Conectividad 5G (mmWave y sub-6 GHz)",
-                    "Wi-Fi 7",
-                    "Bluetooth 5.4",
-                    "Carga rápida de 45W (por cable)",
-                    "Carga inalámbrica rápida de 25W (Qi2)",
-                    "PowerShare inalámbrico",
-                    "Seguridad con Samsung Knox",
-                    "Funciones avanzadas de Galaxy AI (Inteligencia Artificial)",
-                    "Grabación de video 8K a 30fps"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-
-            },
-
-            {
-                id: 9,
-                name: "Samsung Galaxy S24 Ultra",
-                price: 29500,
-                originalPrice: 41995,
-                category: "smartphones",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image.png?updatedAt=1750301807901",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Samsung%20Galaxy%20S24%20Ultral%20(3)%20(1).png?updatedAt=17502992054253",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Samsung%20Galaxy%20S24%20Ultral%20(1).png?updatedAt=1750299205214"
-                ],
-                "specs": {
-                    "pantalla": "6.9 pulgadas Dynamic AMOLED 2X, QHD+ (3120 x 1440 píxeles), 120Hz adaptativos (LTPO), hasta 2600 nits de brillo máximo",
-                    "procesador": "Qualcomm Snapdragon 8 Gen 3 para Galaxy",
-                    "almacenamiento": "512GB (UFS 4.0)",
-                    "ram": "12GB (LPDDR5X)",
-                    "camara": "Cuádruple cámara trasera: 200MP Principal (f/1.7, OIS), 50MP Ultra Gran Angular (f/2.2), 50MP Teleobjetivo periscopio (5x zoom óptico, f/3.4, OIS), 10MP Teleobjetivo (3x zoom óptico, f/2.4, OIS) | Cámara frontal: 12MP (f/2.2)",
-                    "bateria": "5000 mAh",
-                    "sistema": "Android 15 con One UI 7"
-                },
-                "features": [
-                    "S Pen integrado",
-                    "Diseño con marco de titanio",
-                    "Resistencia al agua y polvo IP68",
-                    "Conectividad 5G (mmWave y sub-6 GHz)",
-                    "Wi-Fi 7",
-                    "Bluetooth 5.4",
-                    "Carga rápida de 45W (por cable)",
-                    "Carga inalámbrica rápida de 25W (Qi2)",
-                    "PowerShare inalámbrico",
-                    "Seguridad con Samsung Knox",
-                    "Funciones avanzadas de Galaxy AI (Inteligencia Artificial)",
-                    "Grabación de video 8K a 30fps"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-
-            },
-
-            {
-                id: 10,
-                name: "Samsung Galaxy S22 Ultra",
-                price: 17500,
-                originalPrice: 22353,
-                category: "smartphones",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image-removebg-preview%20(3).png?updatedAt=1750302666204",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Samsung%20Galaxy%20S22%20Ultra%20(1).png?updatedAt=1750299205034",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Samsung%20S22%20U%20(1).png?updatedAt=1750299205581"
-                ],
-                "specs": {
-                    "pantalla": "6.8 pulgadas Dynamic AMOLED 2X, Quad HD+ (3088 x 1440 píxeles), 120Hz adaptativos (LTPO), hasta 1750 nits de brillo máximo",
-                    "procesador": "Qualcomm Snapdragon 8 Gen 1 (para la mayoría de regiones, incluyendo América Latina) o Samsung Exynos 2200 (para Europa y otras regiones)",
-                    "almacenamiento": "256GB (UFS 3.1)",
-                    "ram": "12GB (LPDDR5)",
-                    "camara": "Cuádruple cámara trasera: 108MP Principal (f/1.8, OIS), 12MP Ultra Gran Angular (f/2.2), 10MP Teleobjetivo (3x zoom óptico, f/2.4, OIS), 10MP Teleobjetivo periscopio (10x zoom óptico, f/4.9, OIS) | Cámara frontal: 40MP (f/2.2)",
-                    "bateria": "5000 mAh",
-                    "sistema": "Android 12 (actualizable a versiones posteriores, como Android 15 y One UI 7.0)",
-                    "colores": "Negro&Protector"
-
-                },
-                "features": [
-                    "S Pen integrado (primer Galaxy S con S Pen incorporado)",
-                    "Incluye caja, cable & protector",
-                    "Resistencia al agua y polvo IP68",
-                    "Conectividad 5G",
-                    "Wi-Fi 6E",
-                    "Bluetooth 5.2",
-                    "Carga rápida de 45W (por cable)",
-                    "Carga inalámbrica rápida de 15W",
-                    "PowerShare inalámbrico",
-                    "Sensor de huellas ultrasónico en pantalla",
-                    "Diseño con marco de aluminio Armor Aluminum y Gorilla Glass Victus+",
-                    "Grabación de video 8K a 24fps"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-
-            },
-
-
-            {
-                id: 11,
-                name: "Google Pixel 9 Pro XL",
-                price: 25500,
-                originalPrice: 35989,
-                category: "smartphones",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image-removebg-preview%20(4).png?updatedAt=1750303963753",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Google%20Pixel%209%20pro%20xl%20256gb%2016%20ram%20tensor%20g4%20(1).png?updatedAt=1750299196038",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Google%20Pixel%209%20pro%20xl%20256%20gb%2016%20ram%20tensor%20g4%20(2)%20(1).png?updatedAt=1750299194408"
-                ],
-                "specs": {
-                    "pantalla": "6.8 pulgadas Super Actua OLED (LTPO), 1344 x 2992 píxeles, 1-120Hz adaptativos, HDR10+, hasta 3000 nits de brillo máximo",
-                    "procesador": "Google Tensor G4 con coprocesador de seguridad Titan M2",
-                    "almacenamiento": "256GB (UFS 4.0)",
-                    "ram": "16GB (LPDDR5X)",
-                    "camara": "Triple cámara trasera profesional: 50MP Principal (f/1.68, OIS), 48MP Ultra Gran Angular (f/1.7, con Macro Focus), 48MP Teleobjetivo (5x zoom óptico, f/2.8, OIS, hasta 30x Super Res Zoom) | Cámara frontal: 42MP (f/2.2, autofocus)",
-                    "bateria": "5060 mAh (típica)",
-                    "sistema": "Android 14 (con garantía de 7 años de actualizaciones de OS y seguridad, recibiendo hasta Android 21)"
-                },
-                "features": [
-                    "Diseño con marco de aluminio y cristal Gorilla Glass Victus 2",
-                    "Resistencia al agua y polvo IP68",
-                    "Conectividad 5G (sub-6 GHz y mmWave)",
-                    "Wi-Fi 7",
-                    "Bluetooth 5.4",
-                    "NFC",
-                    "Puerto USB-C (USB 3.2)",
-                    "Lector de huellas ultrasónico bajo la pantalla",
-                    "Altavoces estéreo",
-                    "Carga rápida de 37W (por cable, hasta 70% en 30 minutos con cargador de 45W de Google, se vende por separado)",
-                    "Carga inalámbrica rápida de 23W (Qi-certified)",
-                    "Carga inalámbrica inversa (Battery Share)",
-                    "Funcionalidades avanzadas de Google AI con Gemini integrado",
-                    "Modo de baja latencia automática (ALLM)",
-                    "Video 8K a 30fps",
-                    "Conexión satelital de emergencia (Emergency SOS via Satellite)",
-                    "Sensor de temperatura trasero"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-
-            },
-
-            {
-                id: 12,
-                name: "ASUS ROG Phone 8 Pro",
-                price: 31000,
-                originalPrice: 35989,
-                category: "gaming",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image-removebg-preview%20(5).png?updatedAt=1750304669417",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/ASUS%20RogPhone%208%20PRO%20Color%20Negro%20512%20gb%2016ram%20(1).png?updatedAt=1750299194592",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/ASUS%20RogPhone%208%20PRO%20Color%20Negro%20512%20gb%2016ram%20(4)%20(1).png?updatedAt=1750299193868"
-                ],
-
-                "specs": {
-                    "pantalla": "6.78 pulgadas Samsung Flexible AMOLED (LTPO), Full HD+ (2400 x 1080 píxeles), 1-120Hz adaptativos (hasta 165Hz para juegos), HDR10+, brillo pico de 2500 nits",
-                    "procesador": "Qualcomm Snapdragon 8 Gen 3 (Octa-core a 3.3 GHz)",
-                    "almacenamiento": "512GB (UFS 4.0)",
-                    "ram": "16GB (LPDDR5X)",
-                    "camara": "Triple cámara trasera: 50MP Principal (Sony IMX890, f/1.9, OIS con Gimbal Híbrido de 6 ejes), 13MP Ultra Gran Angular (f/2.2, 120° FOV), 32MP Teleobjetivo (f/2.4, OIS, 3x zoom óptico) | Cámara frontal: 32MP (f/2.2)",
-                    "bateria": "5500 mAh",
-                    "sistema": "Android 14 con ROG UI"
-                },
-                "features": [
-                    "Diseño Phantom Black",
-                    "Resistencia al agua y polvo IP68",
-                    "AirTriggers ultrasónicos (botones laterales para juegos)",
-                    "Conectividad 5G",
-                    "Wi-Fi 7",
-                    "Bluetooth 5.4",
-                    "Jack de auriculares de 3.5mm",
-                    "Altavoces estéreo con Dirac Virtuo",
-                    "Carga rápida de 65W (por cable)",
-                    "Carga inalámbrica de 15W (Qi)",
-                    "Sistema de enfriamiento GameCool 8",
-                    "Iluminación Aura RGB programable en la parte trasera (mini-LED programables)",
-                    "Grabación de video 8K a 24fps",
-                    "Compatible con accesorios de juego externos (como el AeroActive Cooler X, se vende por separado)"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: false,
-                isOffer: true
-            },
-
-            {
-                id: 13,
-                name: "Apple Watch Ultra 2",
-                price: 20500,
-                originalPrice: 30995,
-                category: "accesorios",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/image-removebg-preview%20(6).png?updatedAt=1750305257076",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/7q5yJcsk6PYvebMfKdcLpR-removebg-preview.png?updatedAt=1750305420724",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/Apple%20Whatch%20Ultra%202%20GEN%2048%20mm%20(1).png?updatedAt=1750299194643"
-                ],
-
-                "specs": {
-                    "pantalla": "Always-On Retina LTPO2 OLED, 49mm (410 x 502 píxeles), 1185 mm² de área de pantalla, hasta 3000 nits de brillo máximo",
-                    "procesador": "S9 SiP con procesador de doble núcleo de 64 bits y Neural Engine de 4 núcleos",
-                    "almacenamiento": "64GB",
-                    "bateria": "Hasta 36 horas de uso normal, hasta 72 horas en modo de bajo consumo",
-                    "sistema": "watchOS 10 (actualizable a versiones posteriores como watchOS 11.5)",
-                    "dimensiones": "49mm (alto) x 44mm (ancho) x 14.4mm (grosor)",
-                    "peso": "61.4 gramos (titanio natural) / 61.8 gramos (titanio negro)"
-                },
-                "features": [
-                    "Caja de titanio de grado aeroespacial",
-                    "Resistencia al agua de 100m (apto para buceo recreativo hasta 40m)",
-                    "Resistencia al polvo IP6X",
-                    "Certificación MIL-STD 810H",
-                    "Botón de Acción personalizable",
-                    "Sirena de 86 decibelios",
-                    "GPS de doble frecuencia y precisión (L1+L5)",
-                    "Conectividad celular (LTE y UMTS)",
-                    "Wi-Fi 4 (802.11n)",
-                    "Bluetooth 5.3",
-                    "Chip de banda ultraancha de segunda generación",
-                    "Sensores de: oxígeno en sangre, ECG (electrocardiograma), frecuencia cardíaca óptica de tercera generación, temperatura (muñeca y agua), profundidad, altímetro siempre activo, acelerómetro de alta fuerza G, giroscopio de alto rango dinámico, sensor de luz ambiental",
-                    "Detección de accidentes y detección de caídas",
-                    "Emergencia SOS y llamada de emergencia internacional",
-                    "Nuevos gestos: 'Doble Toque' (Double Tap)",
-                    "Siri en el dispositivo (procesamiento más rápido)",
-                    "Modo Noche automático en la esfera Wayfinder",
-                    "Brújula con puntos de referencia y función Retornar (Backtrack)",
-                    "Temperatura del agua y medidor de profundidad para buceo",
-                    "Carbono neutral (con ciertas combinaciones de correa)"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-            },
-
-            {
-                id: 14,
-                name: "Samsung Galaxy Watch Ultra",
-                price: 20500,
-                originalPrice: 17944,
-                category: "accesorios",
-                images: [
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/descarga.png?updatedAt=1750305959078",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image-removebg-preview%20(7).png?updatedAt=1750306277371",
-                    "https://ik.imagekit.io/anr5mu99tt/New%20Folder/image-removebg-preview%20(8).png?updatedAt=1750306277431"
-                ],
-
-                "specs": {
-                    "pantalla": "1.5 pulgadas Super AMOLED (480 x 480 píxeles), Always On Display, brillo máximo de 3000 nits, cristal de zafiro",
-                    "procesador": "Exynos W1000 (3 nm)",
-                    "memoria": "2 GB RAM",
-                    "almacenamiento": "32GB",
-                    "bateria": "590 mAh (hasta 60 horas en uso normal, más con ahorro de energía)",
-                    "sistema": "Wear OS Powered by Samsung (Wear OS 5) con One UI Watch 6",
-                    "dimensiones": "47.4 x 47.4 x 12.1 mm",
-                    "peso": "60.5 g"
-                },
-                "features": [
-                    "Diseño de titanio (Titanium Silver, Titanium Gray, Titanium White)",
-                    "Resistencia al agua 10 ATM (hasta 100m) y certificación IP68",
-                    "Certificación de durabilidad MIL-STD-810H",
-                    "GPS de doble banda (L1+L5) para mayor precisión",
-                    "Botón de Acción personalizable",
-                    "Sensores BioActive (frecuencia cardíaca óptica, ECG, análisis de impedancia bioeléctrica para composición corporal)",
-                    "Sensor de temperatura",
-                    "Detección de apnea del sueño",
-                    "Conectividad LTE (celular) estándar",
-                    "Wi-Fi (2.4 GHz y 5 GHz)",
-                    "Bluetooth 5.3",
-                    "NFC para Samsung Pay/Google Wallet",
-                    "Carga inalámbrica rápida de 10W",
-                    "Funcionalidades de Galaxy AI integradas (como Energy Score y sugerencias personalizadas)",
-                    "Monitoreo avanzado de sueño y salud"
-                ],
-                rating: 5,
-                reviews: 3,
-                badge: "Oferta",
-                isBestseller: true,
-                isOffer: true
-            },
-
-
-
-        ];
-
-
-
-
-
-        //======================================================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        let cart = [];
-        let currentCarousels = {};
-
-        // Inicializar la página
-        document.addEventListener('DOMContentLoaded', function () {
-            renderProducts('all');
-            renderOffers();
-            renderBestsellers();
-            updateCartUI();
-        });
-
-        // Renderizar productos
-        function renderProducts(category = 'all') {
-            const grid = document.getElementById('productsGrid');
-            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
-
-            grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
-            initializeCarousels();
-        }
-
-        // Renderizar ofertas
-        function renderOffers() {
-            const grid = document.getElementById('offersGrid');
-            const offers = products.filter(p => p.isOffer);
-
-            grid.innerHTML = offers.map(product => createProductCard(product)).join('');
-            initializeCarousels();
-        }
-
-        // Renderizar más vendidos
-        function renderBestsellers() {
-            const grid = document.getElementById('bestsellersGrid');
-            const bestsellers = products.filter(p => p.isBestseller);
-
-            grid.innerHTML = bestsellers.map(product => createProductCard(product)).join('');
-            initializeCarousels();
-        }
-
-        // Crear tarjeta de producto
-        function createProductCard(product) {
-            const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
-            const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
-            const originalPriceHtml = product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : '';
-
-            return `
-                <div class="product-card" data-category="${product.category}">
-                    ${badgeHtml}
-                    <div class="product-carousel">
-                        <div class="carousel-container" id="carousel-${product.id}">
-                            ${product.images.map(img => `<img src="${img}" alt="${product.name}" class="carousel-image">`).join('')}
+        <a href="#brands" class="hero-scroll"><i class="fas fa-chevron-down"></i></a>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section" id="brands">
+        <div class="container">
+            <h2 class="section-title">Nuestras <span>Marcas</span></h2>
+            <div class="brands-grid">
+                <div class="brand-card" onclick="filterProductsByBrand('Apple')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="brand-logo">
+                    <h3>Apple</h3>
+                    <p>Innovación y diseño premium</p>
+                </div>
+                <div class="brand-card" onclick="filterProductsByBrand('Samsung')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung" class="brand-logo">
+                    <h3>Samsung</h3>
+                    <p>Tecnología avanzada</p>
+                </div>
+                <div class="brand-card" onclick="filterProductsByBrand('Google')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="brand-logo">
+                    <h3>Google Pixel</h3>
+                    <p>Experiencia Android pura</p>
+                </div>
+                <div class="brand-card" onclick="filterProductsByBrand('Asus')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg" alt="Asus" class="brand-logo">
+                    <h3>Asus</h3>
+                    <p>Potencia para gamers</p>
+                </div>
+                <div class="brand-card" onclick="filterProductsByBrand('Microsoft')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Xbox" class="brand-logo">
+                    <h3>Xbox</h3>
+                    <p>Entretenimiento sin límites</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Nuestras <span>Categorías</span></h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterProducts('all')">
+                    <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Todos</h3>
+                </div>
+                <div class="category-card" onclick="filterProducts('smartphones')">
+                    <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Smartphones</h3>
+                </div>
+                <div class="category-card" onclick="filterProducts('consolas')">
+                    <div class="category-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3>Consolas</h3>
+                </div>
+                <div class="category-card" onclick="filterProducts('accesorios')">
+                    <div class="category-icon"><i class="fas fa-headphones"></i></div>
+                    <h3>Accesorios</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal Filter Section -->
+    <section class="minimal-filter-section">
+        <div class="container minimal-filter-container">
+            <div class="filter-dropdown">
+                <button class="filter-toggle" onclick="toggleFilterDropdown()">
+                    <i class="fas fa-filter"></i> Filtros
+                </button>
+                <div class="filter-dropdown-content" id="filterDropdown">
+                    <div class="filter-option">
+                        <label>Categoría</label>
+                        <select id="categoryFilter">
+                            <option value="all">Todas las categorías</option>
+                            <option value="smartphones">Smartphones</option>
+                            <option value="consolas">Consolas</option>
+                            <option value="accesorios">Accesorios</option>
+                        </select>
+                    </div>
+                    <div class="filter-option">
+                        <label>Precio máximo</label>
+                        <select id="priceFilter">
+                            <option value="0">Cualquier precio</option>
+                            <option value="5000">L.5,000</option>
+                            <option value="10000">L.10,000</option>
+                            <option value="15000">L.15,000</option>
+                            <option value="20000">L.20,000</option>
+                            <option value="30000">L.30,000+</option>
+                        </select>
+                    </div>
+                    <div class="filter-option">
+                        <label>Ordenar por</label>
+                        <select id="sortFilter">
+                            <option value="default">Recomendados</option>
+                            <option value="price-asc">Precio: Menor a Mayor</option>
+                            <option value="price-desc">Precio: Mayor a Menor</option>
+                            <option value="rating">Mejor Valorados</option>
+                        </select>
+                    </div>
+                    <button class="apply-filter-btn" onclick="applyMinimalFilters()">Aplicar</button>
+                </div>
+            </div>
+            <div class="active-filters" id="activeFilters"></div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="products-section bg-accent" id="offers">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ofertas <span>Especiales</span></h2>
+                <div class="section-decorator">
+                    <div class="decorator-line"></div>
+                    <div class="decorator-dot"></div>
+                    <div class="decorator-line"></div>
+                </div>
+            </div>
+            <div class="products-grid" id="offersGrid"></div>
+        </div>
+    </section>
+
+    <!-- Bestsellers Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Los Más <span>Vendidos</span></h2>
+                <div class="section-decorator">
+                    <div class="decorator-line"></div>
+                    <div class="decorator-dot"></div>
+                    <div class="decorator-line"></div>
+                </div>
+            </div>
+            <div class="products-grid" id="bestsellersGrid"></div>
+        </div>
+    </section>
+
+    <!-- All Products Section -->
+    <section class="products-section" id="productsSection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Todos los <span>Productos</span></h2>
+                <div class="section-decorator">
+                    <div class="decorator-line"></div>
+                    <div class="decorator-dot"></div>
+                    <div class="decorator-line"></div>
+                </div>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Productos Originales</h3>
+                    <p>Todos nuestros dispositivos son 100% originales con garantía</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h3>Envío Rápido</h3>
+                    <p>Recibe tu pedido en 24-48 horas en todo el país</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                    <h3>Garantía</h3>
+                    <p>Todos nuestros productos incluyen garantía</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Nuestro equipo está disponible para ayudarte</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleCart()">&times;</span>
+            <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: L.0.00</div>
+            <div class="checkout-form">
+                <h3>Información de Envío</h3>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <input type="text" id="customerName" required placeholder=" ">
+                        <label>Nombre Completo *</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="customerPhone" required placeholder=" ">
+                        <label>Teléfono *</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="customerAddress" required placeholder=" ">
+                        <label>Dirección *</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="customerNotes" placeholder=" "></textarea>
+                        <label>Notas Adicionales</label>
+                    </div>
+                    <h3>Método de Pago</h3>
+                    <div class="payment-methods">
+                        <div class="payment-option">
+                            <input type="radio" name="paymentMethod" id="paymentBac" value="Tarjeta Bac" required>
+                            <label for="paymentBac"><i class="fas fa-credit-card"></i> Tarjeta Bac</label>
                         </div>
-                        <button class="carousel-nav carousel-prev" onclick="prevImage(${product.id})">❮</button>
-                        <button class="carousel-nav carousel-next" onclick="nextImage(${product.id})">❯</button>
+                        <div class="payment-option">
+                            <input type="radio" name="paymentMethod" id="paymentFicohsa" value="Tarjeta Ficohsa">
+                            <label for="paymentFicohsa"><i class="fas fa-credit-card"></i> Tarjeta Ficohsa</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="paymentMethod" id="paymentAmex" value="American Express">
+                            <label for="paymentAmex"><i class="fas fa-credit-card"></i> American Express</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="paymentMethod" id="paymentTransfer" value="Transferencia">
+                            <label for="paymentTransfer"><i class="fas fa-university"></i> Transferencia</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="paymentMethod" id="paymentCash" value="Efectivo">
+                            <label for="paymentCash"><i class="fas fa-money-bill-wave"></i> Efectivo</label>
+                        </div>
                     </div>
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="stars">${starsHtml} <span class="reviews-count">(${product.reviews} reseñas)</span></div>
-                    <div class="product-price">
-                        ${originalPriceHtml}L.${product.price}
-                    </div>
-                    <button class="add-to-cart" onclick="addToCart(${product.id})">
-                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
-                    </button>
-                </div>
-            `;
-        }
-
-        // Inicializar carruseles
-        function initializeCarousels() {
-            products.forEach(product => {
-                currentCarousels[product.id] = 0;
-            });
-        }
-
-        // Navegación del carrusel
-        function nextImage(productId) {
-            const product = products.find(p => p.id === productId);
-            const carousel = document.getElementById(`carousel-${productId}`);
-
-            currentCarousels[productId] = (currentCarousels[productId] + 1) % product.images.length;
-            carousel.style.transform = `translateX(-${currentCarousels[productId] * 100}%)`;
-        }
-
-        function prevImage(productId) {
-            const product = products.find(p => p.id === productId);
-            const carousel = document.getElementById(`carousel-${productId}`);
-
-            currentCarousels[productId] = currentCarousels[productId] === 0 ? product.images.length - 1 : currentCarousels[productId] - 1;
-            carousel.style.transform = `translateX(-${currentCarousels[productId] * 100}%)`;
-        }
-
-        // Filtrar productos por categoría
-        function filterProducts(category) {
-            // Actualizar botones activos
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Filtrar y mostrar productos
-            const cards = document.querySelectorAll('.product-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Agregar al carrito
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-
-            updateCartUI();
-
-            // Animación de éxito
-            const button = event.target;
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-check"></i> ¡Agregado!';
-            button.style.background = '#2ed573';
-
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = '';
-            }, 1500);
-        }
-
-        // Actualizar interfaz del carrito
-        function updateCartUI() {
-            const cartCount = document.getElementById('cartCount');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
-        }
-
-        // Toggle carrito
-        // Modifica la función toggleCart para el carrito flotante
-        function toggleCart() {
-            const modal = document.getElementById('cartModal');
-            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-
-            // Asegúrate de renderizar los items cada vez que se abre el carrito
-            if (modal.style.display === 'block') {
-                renderCartItems();
-            }
-
-            event.stopPropagation();
-        }
-
-        // Cierra el carrito al hacer clic fuera
-        document.addEventListener('click', function (e) {
-            const cartModal = document.getElementById('cartModal');
-            const cartIcon = document.querySelector('.cart-icon');
-
-            if (!e.target.closest('.cart-content') &&
-                !e.target.closest('.cart-icon') &&
-                cartModal.style.display === 'block') {
-                cartModal.style.display = 'none';
-            }
-        });
-        // Renderizar items del carrito
-        function renderCartItems() {
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Tu carrito está vacío</p>';
-                cartTotal.innerHTML = '';
-                return;
-            }
-
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <img src="${item.images[0]}" alt="${item.name}">
-                    <div class="item-info">
-                        <div style="font-weight: bold;">${item.name}</div>
-                        <div style="color: #667eea;">${item.price} c/u</div>
-                    </div>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                        <span style="margin: 0 10px; font-weight: bold;">${item.quantity}</span>
-                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                    </div>
-                    <div style="font-weight: bold; color: #667eea;">L.${item.price * item.quantity}</div>
-                    <button onclick="removeFromCart(${item.id})" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-left: 10px;">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
-
-            cartTotal.innerHTML = `Total: ${total.toFixed(2)}`;
-        }
-
-        // Actualizar cantidad
-        function updateQuantity(productId, change) {
-            event.stopPropagation(); // ¡Evita que el carrito se cierre!
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
-                    updateCartUI();
-                    renderCartItems(); // Actualiza la lista en tiempo real
-                }
-            }
-        }
-
-        // Remover del carrito
-        function removeFromCart(productId) {
-            event.stopPropagation(); // Evita que el modal se cierre
-            cart = cart.filter(item => item.id !== productId);
-            updateCartUI();
-            renderCartItems(); // Actualiza la lista en tiempo real
-        }
-
-        document.getElementById('checkoutForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío');
-                return;
-            }
-
-            const formData = new FormData(this);
-            const customerName = formData.get('customerName');
-            const customerPhone = formData.get('customerPhone');
-            const customerAddress = formData.get('customerAddress');
-            const customerNotes = formData.get('customerNotes');
-            const paymentMethod = formData.get('paymentMethod');
-
-            // Mapeo de métodos de pago para mostrar texto más descriptivo
-            const paymentMethods = {
-                'bac': 'Tarjeta Bac',
-                'ficohsa': 'Tarjeta Ficohsa',
-                'amex': 'American Express',
-                'transferencia': 'Transferencia Bancaria',
-                'efectivo': 'Efectivo'
-            };
-
-            // Crear mensaje para WhatsApp
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const productsList = cart.map(item =>
-                `• ${item.name} x${item.quantity} = ${(item.price * item.quantity).toFixed(2)}`
-            ).join('\n');
-
-            const message = `🛒 *NUEVA ORDEN - MOBILE EXPRESS HN*\n\n` +
-                `👤 *Cliente:* ${customerName}\n` +
-                `📱 *Teléfono:* ${customerPhone}\n` +
-                `📍 *Dirección:* ${customerAddress}\n` +
-                `💳 *Método de Pago:* ${paymentMethods[paymentMethod]}\n\n` +
-                `🛍️ *Productos:*\n${productsList}\n\n` +
-                `💰 *Total a Pagar: L.${total.toFixed(2)}*\n\n` +
-                `📝 *Notas:* ${customerNotes || 'Ninguna'}\n\n` +
-                `🚚 *Envío con:* Cargo Express / Rápido Cargo\n\n` +
-                `¡Gracias por tu compra! 🎉`;
-
-            // Resto del código permanece igual...
-            const whatsappNumber = '50496811650';
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
-            window.open(whatsappURL, '_blank');
-
-            // Limpiar carrito y cerrar modal
-            cart = [];
-            updateCartUI();
-            toggleCart();
-            this.reset();
-
-            alert('¡Pedido enviado! Te redirigimos a WhatsApp para confirmar tu orden.');
-        });
-
-        // Cerrar modal al hacer clic fuera
-        window.addEventListener('click', function (e) {
-            const modal = document.getElementById('cartModal');
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Smooth scroll para navegación
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Auto-rotate carousels (opcional)
-        setInterval(() => {
-            products.forEach(product => {
-                if (Math.random() > 0.7) { // 30% chance to rotate
-                    nextImage(product.id);
-                }
-            });
-        }, 5000);
-        // Agrega estas funciones al script existente
-        function openProductModal(productId) {
-            const product = products.find(p => p.id === productId);
-            const modal = document.getElementById('productModal');
-            const modalBody = document.getElementById('productModalBody');
-
-            modalBody.innerHTML = `
-        <div class="product-modal-images">
-            <div class="product-modal-main-image">
-                <img src="${product.images[0]}" alt="${product.name}" id="productMainImage">
-            </div>
-            <div class="product-modal-thumbnails">
-                ${product.images.map((img, index) => `
-                    <div class="product-modal-thumbnail ${index === 0 ? 'active' : ''}" 
-                         onclick="changeProductImage('${img}', this)">
-                        <img src="${img}" alt="${product.name}">
-                    </div>
-                `).join('')}
+                    <button type="submit" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Finalizar por WhatsApp</button>
+                </form>
             </div>
         </div>
-        <div class="product-modal-info">
-            <div class="product-modal-details">
-                <h2 class="product-modal-title">${product.name}</h2>
-                <div class="stars">${'★'.repeat(product.rating)}${'☆'.repeat(5 - product.rating)} 
-                    <span class="reviews-count">(${product.reviews} reseñas)</span>
-                </div>
-                <div class="product-modal-price">
-                    ${product.originalPrice ? `<span class="original-price">L.${product.originalPrice}</span>` : ''}
-                    L.${product.price}
-                </div>
-                
-                <div class="product-modal-specs">
-                    <h3>Especificaciones técnicas</h3>
-                    <div class="specs-grid">
-                        ${Object.entries(product.specs || {}).map(([key, value]) => `
-                            <div class="spec-item">
-                                <span class="spec-key">${key}:</span>
-                                <span class="spec-value">${value}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <div class="product-modal-features">
-                    <h3>Características principales</h3>
-                    <ul>
-                        ${(product.features || []).map(feature => `<li>${feature}</li>`).join('')}
-                    </ul>
-                </div>
-                
-                <button class="add-to-cart" onclick="addToCart(${product.id}); closeProductModal()">
-                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
-                </button>
-            </div>
-            <div class="product-modal-sidebar">
-                <div class="delivery-options">
-                    <h3><i class="fas fa-truck"></i> Opciones de entrega</h3>
-                    <div class="delivery-option">
-                        <i class="fas fa-store"></i> Recogida en tienda: <strong>Gratis</strong>
-                    </div>
-                    <div class="delivery-option">
-                        <i class="fas fa-shipping-fast"></i> Envío estándar: <strong>L100 - 200 (demora 24 Hrs)</strong>
-                    </div>
-                    <div class="delivery-option">
-                        <i class="fas fa-rocket"></i> Envío a Roatan: <strong>L1500 (24 horas)</strong>
-                    </div>
-                </div>
-                
-                <div class="warranty-info">
-                    <h3><i class="fas fa-shield-alt"></i> Garantía</h3>
-                    <p>12 meses de garantía del fabricante</p>
-                    <p>30 días para devoluciones</p>
+    </div>
 
-
-                                                   <h3 style="margin-top: 1.5rem;">¿Necesitas ayuda?</h3>
-                <p>Contáctanos para más información sobre este producto:</p>
-                      <button type="submit" class="submit-tradein whatsapp-button" onclick="window.open('https://wa.me/50496811650?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20producto%20${encodeURIComponent(product.name)}')">
-    Chatear por WhatsApp
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" fill="#fff"></path>
-        <path d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z" fill="#fff"></path>
-        <path d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z" fill="#cfd8dc"></path>
-        <path d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z" fill="#40c351"></path>
-        <path clip-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" fill-rule="evenodd" fill="#fff"></path>
-    </svg>
-</button>
-                </div>
-                
-                <div class="share-buttons">
-                    <h3>Compartir producto</h3>
-                    <div class="share-icons">
-                        <a href="#" class="share-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="share-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="share-icon twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="share-icon pinterest"><i class="fab fa-pinterest-p"></i></a>
-                    </div>
-                </div>
-            </div>
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content product-modal-content">
+            <span class="close-modal" onclick="closeProductModal()">&times;</span>
+            <div class="product-modal-body" id="productModalBody"></div>
         </div>
-    `;
+    </div>
 
-            modal.style.display = 'block';
-
-            // Configurar botones de compartir
-            setupShareButtons(product);
-        }
-        function closeProductModal() {
-            document.getElementById('productModal').style.display = 'none';
-        }
-
-        function changeProductImage(imgSrc, element) {
-            document.getElementById('productMainImage').src = imgSrc;
-            document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
-                thumb.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-        function setupShareButtons(product) {
-            const productUrl = encodeURIComponent(window.location.href.split('#')[0] + `?product=${product.id}`);
-            const productTitle = encodeURIComponent(product.name);
-            const productImage = encodeURIComponent(product.images[0]);
-
-            // WhatsApp
-            document.querySelector('.share-icons .whatsapp')?.setAttribute('href',
-                `https://wa.me/?text=Mira%20este%20producto:%20${productTitle}%20${productUrl}`);
-
-            // Facebook
-            document.querySelector('.share-icons .facebook')?.setAttribute('href',
-                `https://www.facebook.com/sharer/sharer.php?u=${productUrl}`);
-
-            // Twitter
-            document.querySelector('.share-icons .twitter')?.setAttribute('href',
-                `https://twitter.com/intent/tweet?text=Mira%20este%20producto:%20${productTitle}&url=${productUrl}`);
-
-            // Pinterest
-            document.querySelector('.share-icons .pinterest')?.setAttribute('href',
-                `https://pinterest.com/pin/create/button/?url=${productUrl}&media=${productImage}&description=${productTitle}`);
-        }
-
-        function changeProductImage(imgSrc, element) {
-            document.getElementById('productMainImage').src = imgSrc;
-            document.querySelectorAll('.product-modal-thumbnail').forEach(thumb => {
-                thumb.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-
-        // Modifica la función createProductCard para que el clic en la tarjeta abra el modal
-        function createProductCard(product) {
-            const starsHtml = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
-            const badgeHtml = product.badge ? `<div class="product-badge ${product.badge === 'Más Vendido' ? 'bestseller' : ''}">${product.badge}</div>` : '';
-            const originalPriceHtml = product.originalPrice ? `<span class="original-price">L.${product.originalPrice}</span>` : '';
-
-            return `
-        <div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
-            ${badgeHtml}
-            <div class="product-carousel">
-                <div class="carousel-container" id="carousel-${product.id}">
-                    ${product.images.map(img => `<img src="${img}" alt="${product.name}" class="carousel-image">`).join('')}
-                </div>
-                <button class="carousel-nav carousel-prev" onclick="event.stopPropagation(); prevImage(${product.id})">❮</button>
-                <button class="carousel-nav carousel-next" onclick="event.stopPropagation(); nextImage(${product.id})">❯</button>
-            </div>
-            <h3 class="product-title">${product.name}</h3>
-            <div class="stars">${starsHtml} <span class="reviews-count">(${product.reviews} reseñas)</span></div>
-            <div class="product-price">
-    ${originalPriceHtml}L.${product.price}
-</div>
-            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
-                <i class="fas fa-cart-plus"></i> Agregar al Carrito
-            </button>
-        </div>
-    `;
-        }
-
-        // Agrega esto al final del script para cerrar modales al hacer clic fuera
-        window.addEventListener('click', function (e) {
-            const productModal = document.getElementById('productModal');
-            if (e.target === productModal) {
-                productModal.style.display = 'none';
-            }
-
-            const cartModal = document.getElementById('cartModal');
-            if (e.target === cartModal) {
-                cartModal.style.display = 'none';
-            }
-        });
-        // Tema oscuro/claro
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'light';
-
-        // Aplicar tema guardado
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-
-        // Alternar tema
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-
-            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-
-        // Cierra modales al hacer clic fuera (actualizado para ambos modales)
-        window.addEventListener('click', function (e) {
-            const modals = ['cartModal', 'productModal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        });
-
-        // Función de búsqueda
-        document.getElementById('searchButton').addEventListener('click', performSearch);
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-        // Función para mostrar sugerencias
-        function showSuggestions(term) {
-            const suggestionsContainer = document.getElementById('searchSuggestions');
-            if (!term || term.length < 2) {
-                suggestionsContainer.style.display = 'none';
-                return;
-            }
-
-            const results = searchProducts(term).slice(0, 5);
-            suggestionsContainer.innerHTML = '';
-
-            if (results.length > 0) {
-                results.forEach(product => {
-                    const suggestion = document.createElement('div');
-                    suggestion.className = 'search-suggestion';
-                    suggestion.innerHTML = `
-                <img src="${product.images[0]}" alt="${product.name}">
-                <div class="suggestion-info">
-                    <div class="suggestion-name">${product.name}</div>
-                    <div class="suggestion-category">${formatCategory(product.category)}</div>
-                </div>
-            `;
-                    suggestion.addEventListener('click', () => {
-                        document.getElementById('searchInput').value = product.name;
-                        performSearch();
-                        suggestionsContainer.style.display = 'none';
-                    });
-                    suggestionsContainer.appendChild(suggestion);
-                });
-                suggestionsContainer.style.display = 'block';
-            } else {
-                suggestionsContainer.style.display = 'none';
-            }
-        }
-
-        // Formatear categorías
-        function formatCategory(category) {
-            const categories = {
-                'smartphones': 'Teléfonos',
-                'laptops': 'Laptops',
-                'accesorios': 'Accesorios',
-                'gaming': 'Gaming'
-            };
-            return categories[category] || category;
-        }
-
-        // Función de búsqueda mejorada
-        const searchProducts = (term) => {
-            if (!term.trim()) return [];
-
-            const normalizedTerm = term.toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-            return products.map(product => {
-                let score = 0;
-
-                if (product.name.toLowerCase().includes(normalizedTerm)) score += 5;
-
-                const nameWords = product.name.toLowerCase().split(' ');
-                if (nameWords.some(word => word.startsWith(normalizedTerm))) score += 4;
-
-                if (product.category.toLowerCase().includes(normalizedTerm)) score += 3;
-
-                if (product.name.toLowerCase().includes(normalizedTerm.substring(0, 3))) score += 2;
-
-                return { ...product, score };
-            })
-                .filter(item => item.score > 0)
-                .sort((a, b) => b.score - a.score)
-                .map(item => {
-                    const { score, ...product } = item;
-                    return product;
-                });
-        };
-
-        // Función principal de búsqueda
-        function performSearch() {
-            const searchTerm = document.getElementById('searchInput').value.trim();
-            const results = searchProducts(searchTerm);
-            const grid = document.getElementById('productsGrid');
-
-            if (results.length > 0) {
-                grid.innerHTML = results.map(product => createProductCard(product)).join('');
-                initializeCarousels();
-            } else {
-                grid.innerHTML = `
-            <div class="no-results-message">
-                <p>No encontramos resultados para "${searchTerm}"</p>
-                <button onclick="filterProducts('all')" class="category-btn">
-                    Ver todos los productos
-                </button>
-            </div>
-        `;
-            }
-
-            document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Event listeners actualizados
-        document.getElementById('searchInput').addEventListener('input', function (e) {
-            showSuggestions(this.value);
-            if (this.value.length === 0) renderProducts('all');
-        });
-
-        document.getElementById('searchButton').addEventListener('click', function (e) {
-            performSearch();
-            document.getElementById('searchSuggestions').style.display = 'none';
-        });
-
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                performSearch();
-                document.getElementById('searchSuggestions').style.display = 'none';
-            }
-        });
-
-        // Cerrar sugerencias al hacer clic fuera
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.search-container')) {
-                document.getElementById('searchSuggestions').style.display = 'none';
-            }
-        });
-
-        // Event listeners para la búsqueda
-        document.getElementById('searchButton').addEventListener('click', performSearch);
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-        // Actualiza la función toggleMenu
-        function toggleMenu() {
-            const navContent = document.getElementById('navContent');
-            navContent.classList.toggle('active');
-
-            // Detener la propagación del evento para evitar que se cierre inmediatamente
-            event.stopPropagation();
-        }
-
-        // Cierra el menú al hacer clic fuera
-        document.addEventListener('click', function (e) {
-            const navContent = document.getElementById('navContent');
-            const menuToggle = document.querySelector('.mobile-menu-toggle');
-
-            if (!e.target.closest('.nav-content') &&
-                !e.target.closest('.mobile-menu-toggle') &&
-                navContent.classList.contains('active')) {
-                navContent.classList.remove('active');
-            }
-        });
-        function toggleSearch() {
-            const search = document.getElementById('searchContainer');
-            search.classList.toggle('active');
-
-            // Cierra el menú si está abierto
-            document.getElementById('navLinks').classList.remove('active');
-
-            // Enfoca el input al abrir
-            if (search.classList.contains('active')) {
-                document.getElementById('searchInput').focus();
-            }
-        }
-
-        // Cierra elementos al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.mobile-menu-toggle') &&
-                !e.target.closest('.nav-links')) {
-                document.getElementById('navLinks').classList.remove('active');
-            }
-
-            if (!e.target.closest('.search-mobile-toggle') &&
-                !e.target.closest('.search-container')) {
-                document.getElementById('searchContainer').classList.remove('active');
-            }
-        });
-        // Event listeners para la búsqueda
-        document.getElementById('searchButton').addEventListener('click', performSearch);
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-
-        // Cierra elementos al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.mobile-menu-toggle') &&
-                !e.target.closest('.nav-links')) {
-                document.querySelector('.nav-links').classList.remove('active');
-            }
-        });
-        // Modal de permuta simplificado
-        document.addEventListener('DOMContentLoaded', function () {
-            const tradeInBtn = document.getElementById('tradeInBtn');
-            const tradeInModal = document.getElementById('tradeInModal');
-            const closeBtn = document.querySelector('.close-tradein');
-
-
-            // Cerrar modal
-            closeBtn.addEventListener('click', function () {
-                tradeInModal.style.display = 'none';
-                document.body.classList.remove('modal-open');
-            });
-            tradeInBtn.addEventListener('click', function () {
-                tradeInModal.style.display = 'block';
-                // Forzar actualización de estilos si hay cambios dinámicos
-                document.body.classList.add('modal-open');
-            });
-            // Clic fuera del modal
-            window.addEventListener('click', function (e) {
-                if (e.target === tradeInModal) {
-                    tradeInModal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            // Enviar a WhatsApp
-            document.getElementById('tradeInForm')?.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const formData = {
-                    model: document.getElementById('deviceModel').value,
-                    storage: document.getElementById('deviceStorage').value,
-                    battery: document.getElementById('batteryHealth').value,
-                    network: document.getElementById('networkType').value,
-                    condition: document.getElementById('deviceCondition').value,
-                    notes: document.getElementById('additionalNotes').value
-                };
-
-                const message = `📱 *SOLICITUD DE PERMUTA - MobileExpressHN* 📱\n\n` +
-                    `*Modelo:* ${formData.model}\n` +
-                    `*Almacenamiento:* ${formData.storage}GB\n` +
-                    `*Batería:* ${formData.battery}%\n` +
-                    `*Red:* ${formData.network}\n` +
-                    `*Estado:* ${formData.condition}\n` +
-                    `*Notas:* ${formData.notes || 'Ninguna'}\n\n` +
-                    `ℹ️ *Por favor envía fotos del dispositivo en este chat*`;
-                    `*_Solicitud de permuta desde la web_*`;
-
-                const whatsappNumber = "50496811650";
-                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
-
-                this.reset();
-                tradeInModal.style.display = 'none';
-            });
-        });
-    </script>
-    <div id="tradeInModal" class="tradein-modal">
-        <div class="tradein-content">
-            <span class="close-tradein">&times;</span>
-            <h2 class="permute-dispositive"><i class="fas fa-sync-alt"></i> Permuta tu dispositivo</h2>
-
+    <!-- Trade-In Modal -->
+    <div class="modal" id="tradeInModal">
+        <div class="modal-content tradein-content">
+            <span class="close-modal" onclick="closeTradeInModal()">&times;</span>
+            <h2><i class="fas fa-sync-alt"></i> Permuta tu Dispositivo</h2>
             <form id="tradeInForm">
                 <div class="form-group">
-                    <label for="deviceModel">Modelo del dispositivo *</label>
-                    <input type="text" id="deviceModel" required placeholder="Ej: iPhone 12 Pro Max">
+                    <input type="text" id="deviceBrand" required placeholder=" ">
+                    <label>Marca del Dispositivo *</label>
                 </div>
-
                 <div class="form-group">
-                    <label for="deviceStorage">Almacenamiento (GB) *</label>
-                    <input type="number" id="deviceStorage" required placeholder="Ej: 128">
+                    <input type="text" id="deviceName" required placeholder=" ">
+                    <label>Modelo del Dispositivo *</label>
                 </div>
-
                 <div class="form-group">
-                    <label for="batteryHealth">Salud de la batería (%) *</label>
-                    <input type="number" id="batteryHealth" min="0" max="100" required placeholder="Ej: 85">
+                    <input type="number" id="deviceStorage" required placeholder=" ">
+                    <label>Almacenamiento (GB) *</label>
                 </div>
-
                 <div class="form-group">
-                    <label for="networkType">Tipo de red *</label>
-                    <select id="networkType" required>
-                        <option value="">Seleccione...</option>
-                        <option value="4G">4G LTE</option>
-                        <option value="5G">5G</option>
-                        <option value="3G">3G</option>
-                        <option value="Desbloqueado">Desbloqueado</option>
+                    <select id="condition" required>
+                        <option value="" disabled selected></option>
+                        <option value="Excelente">Excelente (sin uso)</option>
+                        <option value="Bueno">Bueno (poco uso)</option>
+                        <option value="Regular">Regular (uso visible)</option>
                     </select>
+                    <label>Estado del Dispositivo *</label>
                 </div>
-
                 <div class="form-group">
-                    <label for="deviceCondition">Estado del dispositivo *</label>
-                    <select id="deviceCondition" required>
-                        <option value="">Seleccione...</option>
-                        <option value="Excelente">Excelente (sin rayones)</option>
-                        <option value="Bueno">Bueno (pequeños rayones)</option>
-                        <option value="Regular">Regular (defectos visibles)</option>
-                    </select>
+                    <textarea id="additionalNotes" placeholder=" "></textarea>
+                    <label>Notas Adicionales</label>
                 </div>
-
-                <div class="form-group">
-                    <label for="additionalNotes">Notas adicionales</label>
-                    <textarea id="additionalNotes" placeholder="Accesorios incluidos..."></textarea>
+                <div class="form-note">
+                    <i class="fab fa-whatsapp"></i> Envíanos fotos del dispositivo por WhatsApp
                 </div>
-
-                <div class="whatsapp-instructions">
-                    <p><i class="fas fa-info-circle"></i> Envíanos fotos del dispositivo por WhatsApp después de enviar
-                        este formulario</p>
-                </div>
-
-                <button type="submit" class="submit-tradein whatsapp-button">
-                    Enviar por WhatsApp
-                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"
-                            fill="#fff"></path>
-                        <path
-                            d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"
-                            fill="#fff"></path>
-                        <path
-                            d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"
-                            fill="#cfd8dc"></path>
-                        <path
-                            d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"
-                            fill="#40c351"></path>
-                        <path clip-rule="evenodd"
-                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
-                            fill-rule="evenodd" fill="#fff"></path>
-                    </svg>
-                </button>
+                <button type="submit" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Enviar Solicitud</button>
             </form>
         </div>
     </div>
-</body>
 
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true" alt="MobileExpressHN Logo" class="footer-logo">
+                <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor servicio al cliente.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/MobileExpressHN" target="_blank" class="share-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/mobile.expresshn?igsh=ODdsMW41ZG43eGNr" target="_blank" class="share-icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/50496811650" target="_blank" class="share-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Categorías</h3>
+                <ul>
+                    <li><a href="#products" onclick="filterProducts('smartphones')">Smartphones</a></li>
+                    <li><a href="#products" onclick="filterProducts('consolas')">Consolas</a></li>
+                    <li><a href="#products" onclick="filterProducts('accesorios')">Accesorios</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#">Garantías</a></li>
+                    <li><a href="#">Asesoría Técnica</a></li>
+                    <li><a href="#">Soporte Post-Venta</a></li>
+                    <li><a href="#" onclick="toggleTradeInModal()">Permutas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contacto</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-phone"></i> +504 9681-1650
+</li>
+                    <li><i class="fas fa-envelope"></i> mobileexpresshn@gmail.com
+</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Tegucigalpa, Honduras
+</li>
+                    <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+           © 2025 MobileExpressHN. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>
