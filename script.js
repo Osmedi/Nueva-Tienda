@@ -542,7 +542,127 @@ const products = [
         isBestseller: true,
         isOnOffer: true,
         badge: "Oferta"
-    }
+    },
+    {
+        id: 15,
+        name: "MacBook Pro 16 inch (2019)",
+        brand: "Apple",
+        category: "laptops",
+        price: 18500, // Precio estimado reacondicionado/usado (puede variar significativamente)
+        originalPrice: 2399, // Precio de lanzamiento original para esta configuración
+        rating: 4,
+        reviews: 2,
+        images: [
+            "https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111932_sp809mbp16touch-space-2019.jpeg",
+            "https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111932_sp809-mbp16touch-silver-2019.jpeg",
+            "https://intaglaptops.com/cdn/shop/files/s-l1600.webp?v=1730468299"
+        ],
+        description: "La MacBook Pro de 16 pulgadas de 2019 es una potente laptop diseñada para profesionales, con una impresionante pantalla Retina, teclado Magic Keyboard rediseñado y rendimiento excepcional para tareas exigentes.",
+        specs: {
+            pantalla: "16 pulgadas Retina display (3072 x 1920)",
+            procesador: "Intel Core i7 de 6 núcleos a 2.6GHz (Turbo Boost hasta 4.5GHz)",
+            almacenamiento: "512GB SSD",
+            ram: "16GB DDR4 a 2666MHz",
+            graficos: "AMD Radeon Pro 5300M con 4GB GDDR6 y Intel UHD Graphics 630",
+            bateria: "Hasta 11 horas de navegación web inalámbrica",
+            sistema: "macOS",
+            color: "Gris espacial, Plata"
+        },
+        features: [
+            "Exelente estado 10 de 10",
+            "Cubo&cable ORIGINAL",
+            "Touch Bar y Touch ID",
+            "Teclado Magic Keyboard rediseñado",
+            "Sistema de sonido de seis altavoces de alta fidelidad",
+            "Matriz de tres micrófonos con calidad de estudio",
+            "Cuatro puertos Thunderbolt 3 (USB-C)",
+            "Motor Neural Engine de Apple",
+            "Tecnología True Tone"
+        ],
+        isBestseller: false,
+        isOnOffer: true,
+        badge: "Usado/Reacondicionado"
+    },
+    {
+    id: 16,
+    name: "iPhone 16e",
+    brand: "Apple",
+    category: "smartphones",
+    price: 16500, 
+    originalPrice: 20000, 
+    rating: 4.5, 
+    reviews: 1, 
+    images: [
+        "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-color-lineup-back-250219_inline.jpg.large.jpg", 
+        "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-front-and-back-250219_inline.jpg.large.jpg", 
+        "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-Visual-Intelligence-250219_inline.jpg.large.jpg" 
+    ],
+    description: "Este iPhone 16e de 128GB se encuentra en un estado impecable, completamente nítido y sin detalles estéticos. Ofrece el rendimiento y las características que esperas de un iPhone, a un precio accesible.",
+    specs: {
+        pantalla: "6.1 pulgadas Super Retina XDR OLED",
+        procesador: "A17 Bionic", 
+        almacenamiento: "128GB",
+        camara: "Cámara dual: 48MP principal + Ultra gran angular 12MP",
+        bateria: "Hasta 20 horas de reproducción de vídeo",
+        sistema: "iOS 18",
+        color: "Negro"
+    },
+    features: [
+        "Estado completamente nítido sin detalles",
+        "Garantía de 30 días",
+        "Resistente al agua IP68",
+        "Dynamic Island",
+        "Conexión 5G",
+        "Face ID",
+        "Carga inalámbrica",
+        "Ceramic Shield"
+    ],
+    isBestseller: true,
+    isOnOffer: true,
+    badge: "Excelente estado + Garantía"
+},
+{
+
+    id: 17,
+    name: "iPhone 15 Pro Max",
+    brand: "Apple",
+    category: "smartphones",
+    price: 25500, 
+    rating: 4.9,
+    reviews: 120, 
+    images: [
+        "https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/iphone-15-pro-max.png", 
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWHxVFT15qeyw6lCZzcjdb0Aj2GjjAyZCFP3HIvMIfcA5kUvY4EEqCtBhP3PZOlEBkQH4&usqp=CAU", 
+        "https://i.blogs.es/2c60a7/iphone-15-pro-y-iphone-15-pro-max-primeras-impresiones-applesfera-19/1366_2000.jpeg", 
+    ],
+    description: "Este iPhone 15 Pro Max de 512GB se encuentra en un estado impecable, sin detalles estéticos y con la batería al 100%. Disponible en los tres colores originales de titanio (Natural, Azul, Blanco, Negro) y compatible con ambas redes (libre de fábrica). Disfruta de la máxima potencia y capacidad de almacenamiento.",
+    specs: {
+        pantalla: "6.7 pulgadas Super Retina XDR OLED con ProMotion",
+        procesador: "A17 Pro Bionic",
+        almacenamiento: "512GB",
+        camara: "Sistema de cámara Pro avanzado: Principal de 48MP, Ultra Gran Angular de 12MP, Teleobjetivo de 12MP con zoom óptico 5x",
+        bateria: "100% de capacidad, hasta 29 horas de reproducción de vídeo",
+        sistema: "iOS 17 (actualizable a iOS 18)",
+        colores_disponibles: ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+        redes: "Ambas redes (GSM y CDMA, libre de fábrica)"
+    },
+    features: [
+        "Batería al 100%",
+        "Sin detalles estéticos",
+        "Disponible en Natural Titanium, Blue Titanium, White Titanium y Black Titanium",
+        "Compatible con ambas redes (libre de fábrica)",
+        "Diseño de titanio aeroespacial",
+        "Botón de Acción personalizable",
+        "Conector USB-C",
+        "Face ID",
+        "Resistencia al agua y al polvo IP68",
+        "Dynamic Island"
+    ],
+    isBestseller: true,
+    isOnOffer: true,
+    badge: "Batería 100% + Sin Detalles"
+}
+
 ];
 // ==========================================================================================================
 
@@ -771,7 +891,7 @@ function removeFromCart(productId) {
 function toggleCart() {
     const modal = document.getElementById('cartModal');
     modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-    
+
     if (modal.style.display === 'block') {
         updateCart();
     }
@@ -862,9 +982,9 @@ function handleTradeIn(e) {
 }
 
 // Checkout
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+document.getElementById('checkoutForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    
+
     // Verificar si el carrito está vacío
     if (cart.length === 0) {
         showNotification('El carrito está vacío', 'warning');
@@ -884,15 +1004,15 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
 
     // Construir mensaje de factura
     let message = `🛍️ *FACTURA ELECTRÓNICA - MOBILEEXPRESSHN* 🛍️\n\n`;
-    message += `📅 *Fecha:* ${new Date().toLocaleDateString()}\n`;    
-    
+    message += `📅 *Fecha:* ${new Date().toLocaleDateString()}\n`;
+
     message += `👤 *Información del Cliente*\n`;
     message += `▸ Nombre: ${name}\n`;
     message += `▸ Teléfono: ${phone}\n`;
     message += `▸ Dirección: ${address}\n`;
     message += `▸ Método de Pago: ${paymentMethod}\n`;
     message += `▸ Notas: ${notes || 'Ninguna'}\n\n`;
-    
+
     message += `📋 *Detalle del Pedido*\n`;
     message += `══════════════════════════\n`;
     cart.forEach(item => {
@@ -914,10 +1034,10 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
 
     const whatsappUrl = `https://wa.me/+50496811650?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-    
+
     // Mostrar notificación de pedido realizado
     showNotification('¡Pedido realizado con éxito!', 'success');
-    
+
     // Limpiar carrito después del pedido
     cart = [];
     saveCart();
@@ -934,14 +1054,14 @@ function showNotification(message, type = 'info') {
         ${message}
         <span class="notification-close">&times;</span>
     `;
-    
+
     document.body.appendChild(notification);
-    
+
     // Cerrar notificación al hacer clic en ×
     notification.querySelector('.notification-close').addEventListener('click', () => {
         notification.remove();
     });
-    
+
     // Cerrar automáticamente después de 3 segundos
     setTimeout(() => {
         notification.remove();
@@ -953,9 +1073,9 @@ function handleSearch() {
     const suggestions = document.getElementById('searchSuggestions');
     suggestions.innerHTML = '';
     if (query) {
-        const filteredProducts = products.filter(p => 
-            p.name.toLowerCase().includes(query) || 
-            p.brand.toLowerCase().includes(query) || 
+        const filteredProducts = products.filter(p =>
+            p.name.toLowerCase().includes(query) ||
+            p.brand.toLowerCase().includes(query) ||
             p.description.toLowerCase().includes(query)
         );
         filteredProducts.slice(0, 5).forEach(product => {
