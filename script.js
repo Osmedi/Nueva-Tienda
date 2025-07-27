@@ -1210,3 +1210,64 @@ function showNotification(message, type = 'success') {
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 }
+
+// Custom Carousels
+function initializeCustomCarousels() {
+    document.querySelectorAll('.custom-carousel').forEach(carousel => {
+        const container = carousel.querySelector('.carousel-container');
+        const prev = carousel.querySelector('.carousel-prev');
+        const next = carousel.querySelector('.carousel-next');
+        const dots = carousel.querySelectorAll('.dot');
+        let index = 0;
+        const totalImages = carousel.querySelectorAll('.carousel-image').length / 2; // Dividido por 2 por imágenes desktop/mobile
+
+        // Actualizar carrusel
+        function updateCarousel() {
+            container.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
+
+        // Navegación con flechas
+        prev.addEventListener('click', () => {
+            index = (index - 1 + totalImages) % totalImages;
+            updateCarousel();
+            resetAutoSlide();
+        });
+
+        next.addEventListener('click', () => {
+            index = (index + 1) % totalImages;
+            updateCarousel();
+            resetAutoSlide();
+        });
+
+        // Navegación con puntos
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                index = i;
+                updateCarousel();
+                resetAutoSlide();
+            });
+        });
+
+        // Transición automática cada 3 segundos
+        let autoSlide = setInterval(() => {
+            index = (index + 1) % totalImages;
+            updateCarousel();
+        }, 3000);
+
+        // Reiniciar temporizador al interactuar
+        function resetAutoSlide() {
+            clearInterval(autoSlide);
+            autoSlide = setInterval(() => {
+                index = (index + 1) % totalImages;
+                updateCarousel();
+            }, 3000);
+        }
+    });
+}
+
+// Llamar a la función al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    initializeCustomCarousels();
+});
