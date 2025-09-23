@@ -274,11 +274,11 @@ nav {
   color: var(--color-text-light);
   width: 200px;
   transition: var(--transition);
+  width: 100%;
   
 }
 
 .search-container input:focus {
-  width: 250px;
   outline: none;
   background: rgba(255, 255, 255, 0.3);
 }
@@ -307,6 +307,8 @@ nav {
   max-height: 300px;
   overflow-y: auto;
   display: none;
+  max-height: 220px;
+  top: -225px;
 }
 
 .search-suggestion {
