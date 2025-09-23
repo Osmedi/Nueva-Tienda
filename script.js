@@ -798,7 +798,7 @@ const products = [
         "pantalla": "6.1 pulgadas Super Retina XDR OLED",
         "procesador": "A18 Bionic",
         "almacenamiento": "128GB, 256GB y 512GB",
-        "camara": "Sistema de cámara dual: Principal de 48MP y Ultra Gran Angular de 12MP",
+        "camara": "",
         "bateria": "Hasta 24 horas de reproducción de vídeo",
         "sistema": "iOS 19",
         "colores_disponibles": ["Midnight", "Starlight", "Blue", "Green", "Pink"],
@@ -1421,9 +1421,78 @@ function initializeCustomCarousels() {
     });
 }
 
-// Llamar a la función al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     initializeCustomCarousels();
 });
 
 
+// Generar carrusel de marcas
+function generateBrandsCarousel() {
+    const brands = [
+        { name: 'Apple', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
+        { name: 'Samsung', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg' },
+        { name: 'Google', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg' },
+        { name: 'Asus', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg' },
+        { name: 'Microsoft', logo: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' },
+        { name: 'Xbox', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Xbox_logo_%282019%29.svg/250px-Xbox_logo_%282019%29.svg.png' },
+    ];
+
+    const brandsList = document.getElementById('brandsList');
+    brandsList.innerHTML = '';
+
+    // Duplicar las marcas para efecto infinito
+    const duplicatedBrands = [...brands, ...brands, ...brands];
+
+    duplicatedBrands.forEach((brand, index) => {
+        const brandItem = document.createElement('div');
+        brandItem.className = 'brand-carousel-item';
+        brandItem.innerHTML = `
+            <div class="brand-carousel-card" onclick="filterProductsByBrand('${brand.name}')">
+                <img src="${brand.logo}" alt="${brand.name}" class="brand-carousel-logo">
+                <h3>${brand.name}</h3>
+            </div>
+        `;
+        brandsList.appendChild(brandItem);
+    });
+}
+
+// Generar carrusel de productos más nuevos
+function generateNewProductsCarousel() {
+    // Ordenar productos por ID (los más nuevos primero) y tomar los últimos 8
+    const newProducts = [...products]
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 4);
+
+    const newProductsList = document.getElementById('newProductsList');
+    newProductsList.innerHTML = '';
+
+    // Duplicar los productos para efecto infinito
+    const duplicatedProducts = [...newProducts, ...newProducts, ...newProducts];
+
+    duplicatedProducts.forEach((product, index) => {
+        const productItem = document.createElement('div');
+        productItem.className = 'new-product-item';
+        productItem.innerHTML = `
+            <div class="new-product-card">
+                <span class="new-product-badge">Nuevo</span>
+                <img src="${product.images[0]}" alt="${product.name}" class="new-product-image">
+                <div class="new-product-info">
+                    <h3 class="new-product-name">${product.name}</h3>
+                    <button class="view-product-btn" onclick="openProductModal(${product.id})">Ver Producto</button>
+                </div>
+            </div>
+        `;
+        newProductsList.appendChild(productItem);
+    });
+}
+
+// Actualizar la función initializeEventListeners para incluir las nuevas funciones
+function initializeEventListeners() {
+    // ... código existente ...
+    
+    // Generar carruseles después de que el DOM esté listo
+    setTimeout(() => {
+        generateBrandsCarousel();
+        generateNewProductsCarousel();
+    }, 100);
+}
