@@ -477,6 +477,11 @@ nav {
 
 /* Hero Section */
 .hero {
+  mask-image: linear-gradient(
+    rgb(136, 255, 0) 80%
+    transparent
+  );
+  top: 6px;
   height: 80vh;
   min-height: 600px;
   background: linear-gradient(135deg, var(--color-primary), var(--color-dark));
@@ -526,6 +531,9 @@ nav {
 }
 
 @media (max-width: 768px) {
+  div#productModalBody {
+    word-break: break-word;
+}
   .hero-video {
     display: none;
   }
@@ -1239,7 +1247,7 @@ nav {
 
 .product-modal-main-image {
   height: 400px;
-  background: #F5F5F5;
+  background: #ffffff00;
   border-radius: var(--border-radius);
   display: flex;
   align-items: center;
@@ -2359,3 +2367,4 @@ label.theme-switch{
         display: block;
     }
 }
+

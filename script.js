@@ -661,8 +661,162 @@ const products = [
     isBestseller: true,
     isOnOffer: true,
     badge: "Batería 100% + Sin Detalles"
-}
+},
 
+{
+    "id": 18,
+    "name": "iPhone 17 Pro Max",
+    "brand": "Apple",
+    "category": "smartphones",
+    "price": 30000,
+    "rating": 5.0,
+    "reviews": 250,
+    "images": [
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max.png?updatedAt=1758601801627",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max_2.png?updatedAt=1758602325547",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max_3.png?updatedAt=1758602655793"
+    ],
+    "description": "El iPhone 17 Pro Max establece un nuevo estándar en tecnología móvil. Con el chip A19 Pro, una cámara de fusión triple de 48MP y un diseño de aluminio con Ceramic Shield 2, este modelo ofrece un rendimiento inigualable y una durabilidad superior. Disfruta de una experiencia de usuario fluida con la pantalla ProMotion de 6.9 pulgadas y un sistema de gestión térmica avanzado.",
+    "specs": {
+        "pantalla": "6.9 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
+        "procesador": "A19 Pro Bionic",
+        "almacenamiento": "256GB, 512GB, 1TB y 2TB",
+        "camara": "Sistema de cámara de fusión triple: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo Periscópico de 48MP con zoom óptico 8x",
+        "bateria": "Hasta 40W de carga rápida con USB-C",
+        "sistema": "iOS 19 (lanzamiento)",
+        "colores_disponibles": ["Cosmic Orange", "Deep Blue", "Silver"],
+        "redes": "5G, Wi-Fi 7, Bluetooth 6.0"
+    },
+    "features": [
+        "Chip A19 Pro con trazado de rayos acelerado",
+        "Sistema de gestión térmica con cámara de vapor",
+        "Pantalla con Ceramic Shield 2",
+        "Cámara con capacidad de video 4K a 120 fps",
+        "Diseño de chasis de aluminio",
+        "Puerto USB-C con velocidades de 10 Gbit/s",
+        "Audio espacial y altavoces estéreo",
+        "Resistencia al agua y al polvo IP68",
+        "Face ID"
+    ],
+    "isBestseller": true,
+    "isOnOffer": false,
+    "badge": "Nuevo Lanzamiento"
+},
+{
+    "id": 19,
+    "name": "iPhone 17 Air",
+    "brand": "Apple",
+    "category": "smartphones",
+    "price": 25999,
+    "rating": 4.5,
+    "reviews": 95,
+    "images": [
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(9).png?updatedAt=1758604406544",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iphone-air-finish-select-202509-lightgold-removebg-preview.png?updatedAt=1758604406565",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(10).png?updatedAt=1758604406662"
+    ],
+    "description": "El iPhone 17 Air es la apuesta de Apple por el diseño ultradelgado, siendo el iPhone más delgado jamás creado con solo 5.6 mm de grosor. Combina una estética minimalista con un rendimiento de nivel profesional gracias a su chip A19 Pro. Diseñado para quienes priorizan un teléfono ligero, cómodo y con estilo, este modelo sacrifica la versatilidad de múltiples cámaras en favor de un diseño elegante y compacto.",
+    "specs": {
+        "pantalla": "6.5 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
+        "procesador": "A19 Pro Bionic",
+        "almacenamiento": "256GB, 512GB y 1TB",
+        "camara": "Cámara trasera de 48MP (lente principal) y cámara frontal de 18MP con Center Stage",
+        "bateria": "Hasta 27 horas de reproducción de video",
+        "sistema": "iOS 19 (lanzamiento)",
+        "colores_disponibles": ["Space Black", "Cloud White", "Light Gold", "Sky Blue"],
+        "redes": "5G, Wi-Fi 7, Bluetooth 6.0 (solo eSIM)"
+    },
+    "features": [
+        "Diseño ultradelgado de 5.6mm y 165 gramos",
+        "Cuerpo de titanio y Ceramic Shield 2",
+        "Chip A19 Pro con Neural Engine de 16 núcleos",
+        "Tecnología de pantalla ProMotion y Dynamic Island",
+        "Face ID y resistencia al agua IP68",
+        "Conector USB-C",
+        "Audio espacial con doble altavoz estéreo",
+        "Solo compatible con eSIM"
+    ],
+    "isBestseller": false,
+    "isOnOffer": false,
+    "badge": "Diseño Ultradelgado"
+},
+{
+    "id": 20,
+    "name": "iPhone 17 Pro",
+    "brand": "Apple",
+    "category": "smartphones",
+    "price": 28499,
+    "rating": 4.8,
+    "reviews": 180,
+    "images": [
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(11).png?updatedAt=1758605037161",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(12).png?updatedAt=1758605037189",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(13).png?updatedAt=1758605037198"
+    ],
+    "description": "El iPhone 17 Pro es la opción perfecta para quienes buscan un rendimiento profesional en un tamaño más compacto. Incorpora el potente chip A19 Pro y un sistema de cámara avanzado con lentes de 48 MP. Su diseño unibody de aluminio forjado y la nueva pantalla con Ceramic Shield 2 lo hacen increíblemente resistente. Disfruta de la mejor tecnología de Apple en un formato ideal para el día a día.",
+    "specs": {
+        "pantalla": "6.3 pulgadas Super Retina XDR OLED con ProMotion (1-120 Hz)",
+        "procesador": "A19 Pro Bionic",
+        "almacenamiento": "256GB, 512GB y 1TB",
+        "camara": "Sistema de cámara Pro: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo con zoom óptico 4x (48MP)",
+        "bateria": "Hasta 31 horas de reproducción de vídeo",
+        "sistema": "iOS 26",
+        "colores_disponibles": ["Silver", "Cosmic Orange", "Deep Blue"],
+        "redes": "5G, Wi-Fi 7, Bluetooth 6"
+    },
+    "features": [
+        "Chip A19 Pro con GPU 2x más rápida",
+        "Cámara de vapor para disipación de calor",
+        "Pantalla con brillo pico de hasta 3000 nits",
+        "Teleobjetivo con zoom óptico de 4x y lente de tetraprisma",
+        "Graba videos en 4K Dolby Vision a 120 fps",
+        "Diseño unibody de aluminio",
+        "Dynamic Island",
+        "Resistencia al agua y al polvo IP68",
+        "Conector USB-C"
+    ],
+    "isBestseller": false,
+    "isOnOffer": false,
+    "badge": "Mejor Valorado"
+}
+,
+{
+    "id": 21,
+    "name": "iPhone 17",
+    "brand": "Apple",
+    "category": "smartphones",
+    "price": 20000,
+    "rating": 4.6,
+    "reviews": 350,
+    "images": [
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(16).png?updatedAt=1758605663987",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(14).png?updatedAt=1758605663974",
+        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(15).png?updatedAt=1758605663955"
+    ],
+    "description": "El iPhone 17 ofrece una experiencia excepcional y accesible. Equipado con el chip A18, garantiza un rendimiento rápido y fluido para cualquier tarea. Su sistema de cámara dual captura fotos y videos de alta calidad, mientras que su diseño resistente y la pantalla Super Retina XDR lo convierten en un dispositivo fiable para el uso diario. Es la opción ideal para quienes buscan el poder y la confiabilidad de Apple sin las características Pro.",
+    "specs": {
+        "pantalla": "6.1 pulgadas Super Retina XDR OLED",
+        "procesador": "A18 Bionic",
+        "almacenamiento": "128GB, 256GB y 512GB",
+        "camara": "Sistema de cámara dual: Principal de 48MP y Ultra Gran Angular de 12MP",
+        "bateria": "Hasta 24 horas de reproducción de vídeo",
+        "sistema": "iOS 19",
+        "colores_disponibles": ["Midnight", "Starlight", "Blue", "Green", "Pink"],
+        "redes": "5G, Wi-Fi 6E, Bluetooth 5.4"
+    },
+    "features": [
+        "Chip A18 Bionic",
+        "Grabación de video en 4K a 60 fps",
+        "Pantalla Super Retina XDR",
+        "Dynamic Island",
+        "Resistencia al agua y al polvo IP68",
+        "Conector USB-C",
+        "Diseño de aluminio aeroespacial"
+    ],
+    "isBestseller": true,
+    "isOnOffer": false,
+    "badge": "Más Vendido"
+}
 ];
 // ==========================================================================================================
 
@@ -1271,3 +1425,5 @@ function initializeCustomCarousels() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeCustomCarousels();
 });
+
+
