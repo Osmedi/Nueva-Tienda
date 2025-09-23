@@ -584,239 +584,239 @@ const products = [
         badge: "Usado/Reacondicionado"
     },
     {
-    id: 16,
-    name: "iPhone 16e",
-    brand: "Apple",
-    category: "smartphones",
-    price: 16500, 
-    originalPrice: 20000, 
-    rating: 4.5, 
-    reviews: 1, 
-    images: [
-        "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-color-lineup-back-250219_inline.jpg.large.jpg", 
-        "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-front-and-back-250219_inline.jpg.large.jpg", 
-        "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-Visual-Intelligence-250219_inline.jpg.large.jpg" 
-    ],
-    description: "Este iPhone 16e de 128GB se encuentra en un estado impecable, completamente nítido y sin detalles estéticos. Ofrece el rendimiento y las características que esperas de un iPhone, a un precio accesible.",
-    specs: {
-        pantalla: "6.1 pulgadas Super Retina XDR OLED",
-        procesador: "A17 Bionic", 
-        almacenamiento: "128GB",
-        camara: "Cámara dual: 48MP principal + Ultra gran angular 12MP",
-        bateria: "Hasta 20 horas de reproducción de vídeo",
-        sistema: "iOS 18",
-        color: "Negro"
+        id: 16,
+        name: "iPhone 16e",
+        brand: "Apple",
+        category: "smartphones",
+        price: 16500,
+        originalPrice: 20000,
+        rating: 4.5,
+        reviews: 1,
+        images: [
+            "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-color-lineup-back-250219_inline.jpg.large.jpg",
+            "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-front-and-back-250219_inline.jpg.large.jpg",
+            "https://www.apple.com/newsroom/images/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/article/Apple-iPhone-16e-Visual-Intelligence-250219_inline.jpg.large.jpg"
+        ],
+        description: "Este iPhone 16e de 128GB se encuentra en un estado impecable, completamente nítido y sin detalles estéticos. Ofrece el rendimiento y las características que esperas de un iPhone, a un precio accesible.",
+        specs: {
+            pantalla: "6.1 pulgadas Super Retina XDR OLED",
+            procesador: "A17 Bionic",
+            almacenamiento: "128GB",
+            camara: "Cámara dual: 48MP principal + Ultra gran angular 12MP",
+            bateria: "Hasta 20 horas de reproducción de vídeo",
+            sistema: "iOS 18",
+            color: "Negro"
+        },
+        features: [
+            "Estado completamente nítido sin detalles",
+            "Garantía de 30 días",
+            "Resistente al agua IP68",
+            "Dynamic Island",
+            "Conexión 5G",
+            "Face ID",
+            "Carga inalámbrica",
+            "Ceramic Shield"
+        ],
+        isBestseller: true,
+        isOnOffer: true,
+        badge: "Excelente estado + Garantía"
     },
-    features: [
-        "Estado completamente nítido sin detalles",
-        "Garantía de 30 días",
-        "Resistente al agua IP68",
-        "Dynamic Island",
-        "Conexión 5G",
-        "Face ID",
-        "Carga inalámbrica",
-        "Ceramic Shield"
-    ],
-    isBestseller: true,
-    isOnOffer: true,
-    badge: "Excelente estado + Garantía"
-},
-{
+    {
 
-    id: 17,
-    name: "iPhone 15 Pro Max",
-    brand: "Apple",
-    category: "smartphones",
-    price: 25500, 
-    rating: 4.9,
-    reviews: 120, 
-    images: [
-        "https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/iphone-15-pro-max.png", 
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWHxVFT15qeyw6lCZzcjdb0Aj2GjjAyZCFP3HIvMIfcA5kUvY4EEqCtBhP3PZOlEBkQH4&usqp=CAU", 
-        "https://i.blogs.es/2c60a7/iphone-15-pro-y-iphone-15-pro-max-primeras-impresiones-applesfera-19/1366_2000.jpeg", 
-    ],
-    description: "Este iPhone 15 Pro Max de 512GB se encuentra en un estado impecable, sin detalles estéticos y con la batería al 100%. Disponible en los tres colores originales de titanio (Natural, Azul, Blanco, Negro) y compatible con ambas redes (libre de fábrica). Disfruta de la máxima potencia y capacidad de almacenamiento.",
-    specs: {
-        pantalla: "6.7 pulgadas Super Retina XDR OLED con ProMotion",
-        procesador: "A17 Pro Bionic",
-        almacenamiento: "512GB",
-        camara: "Sistema de cámara Pro avanzado: Principal de 48MP, Ultra Gran Angular de 12MP, Teleobjetivo de 12MP con zoom óptico 5x",
-        bateria: "100% de capacidad, hasta 29 horas de reproducción de vídeo",
-        sistema: "iOS 17 (actualizable a iOS 18)",
-        colores_disponibles: ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
-        redes: "Ambas redes (GSM y CDMA, libre de fábrica)"
+        id: 17,
+        name: "iPhone 15 Pro Max",
+        brand: "Apple",
+        category: "smartphones",
+        price: 25500,
+        rating: 4.9,
+        reviews: 120,
+        images: [
+            "https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/iphone-15-pro-max.png",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWHxVFT15qeyw6lCZzcjdb0Aj2GjjAyZCFP3HIvMIfcA5kUvY4EEqCtBhP3PZOlEBkQH4&usqp=CAU",
+            "https://i.blogs.es/2c60a7/iphone-15-pro-y-iphone-15-pro-max-primeras-impresiones-applesfera-19/1366_2000.jpeg",
+        ],
+        description: "Este iPhone 15 Pro Max de 512GB se encuentra en un estado impecable, sin detalles estéticos y con la batería al 100%. Disponible en los tres colores originales de titanio (Natural, Azul, Blanco, Negro) y compatible con ambas redes (libre de fábrica). Disfruta de la máxima potencia y capacidad de almacenamiento.",
+        specs: {
+            pantalla: "6.7 pulgadas Super Retina XDR OLED con ProMotion",
+            procesador: "A17 Pro Bionic",
+            almacenamiento: "512GB",
+            camara: "Sistema de cámara Pro avanzado: Principal de 48MP, Ultra Gran Angular de 12MP, Teleobjetivo de 12MP con zoom óptico 5x",
+            bateria: "100% de capacidad, hasta 29 horas de reproducción de vídeo",
+            sistema: "iOS 17 (actualizable a iOS 18)",
+            colores_disponibles: ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+            redes: "Ambas redes (GSM y CDMA, libre de fábrica)"
+        },
+        features: [
+            "Batería al 100%",
+            "Sin detalles estéticos",
+            "Disponible en Natural Titanium, Blue Titanium, White Titanium y Black Titanium",
+            "Compatible con ambas redes (libre de fábrica)",
+            "Diseño de titanio aeroespacial",
+            "Botón de Acción personalizable",
+            "Conector USB-C",
+            "Face ID",
+            "Resistencia al agua y al polvo IP68",
+            "Dynamic Island"
+        ],
+        isBestseller: true,
+        isOnOffer: true,
+        badge: "Batería 100% + Sin Detalles"
     },
-    features: [
-        "Batería al 100%",
-        "Sin detalles estéticos",
-        "Disponible en Natural Titanium, Blue Titanium, White Titanium y Black Titanium",
-        "Compatible con ambas redes (libre de fábrica)",
-        "Diseño de titanio aeroespacial",
-        "Botón de Acción personalizable",
-        "Conector USB-C",
-        "Face ID",
-        "Resistencia al agua y al polvo IP68",
-        "Dynamic Island"
-    ],
-    isBestseller: true,
-    isOnOffer: true,
-    badge: "Batería 100% + Sin Detalles"
-},
 
-{
-    "id": 18,
-    "name": "iPhone 17 Pro Max",
-    "brand": "Apple",
-    "category": "smartphones",
-    "price": 45500,
-    "rating": 5.0,
-    "reviews": 250,
-    "images": [
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max.png?updatedAt=1758601801627",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max_2.png?updatedAt=1758602325547",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max_3.png?updatedAt=1758602655793"
-    ],
-    "description": "El iPhone 17 Pro Max establece un nuevo estándar en tecnología móvil. Con el chip A19 Pro, una cámara de fusión triple de 48MP y un diseño de aluminio con Ceramic Shield 2, este modelo ofrece un rendimiento inigualable y una durabilidad superior. Disfruta de una experiencia de usuario fluida con la pantalla ProMotion de 6.9 pulgadas y un sistema de gestión térmica avanzado.",
-    "specs": {
-        "pantalla": "6.9 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
-        "procesador": "A19 Pro Bionic",
-        "almacenamiento": "256GB,512GB vale 49500",
-        "camara": "Sistema de cámara de fusión triple: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo Periscópico de 48MP con zoom óptico 8x",
-        "bateria": "Hasta 40W de carga rápida con USB-C",
-        "sistema": "iOS 19 (lanzamiento)",
-        "colores_disponibles": ["Cosmic Orange", "Deep Blue", "Silver"],
-        "redes": "5G, Wi-Fi 7, Bluetooth 6.0"
+    {
+        "id": 18,
+        "name": "iPhone 17 Pro Max",
+        "brand": "Apple",
+        "category": "smartphones",
+        "price": 45500,
+        "rating": 5.0,
+        "reviews": 250,
+        "images": [
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max.png?updatedAt=1758601801627",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max_2.png?updatedAt=1758602325547",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iPhone%2017%20Pro%20Max_3.png?updatedAt=1758602655793"
+        ],
+        "description": "El iPhone 17 Pro Max establece un nuevo estándar en tecnología móvil. Con el chip A19 Pro, una cámara de fusión triple de 48MP y un diseño de aluminio con Ceramic Shield 2, este modelo ofrece un rendimiento inigualable y una durabilidad superior. Disfruta de una experiencia de usuario fluida con la pantalla ProMotion de 6.9 pulgadas y un sistema de gestión térmica avanzado.",
+        "specs": {
+            "pantalla": "6.9 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
+            "procesador": "A19 Pro Bionic",
+            "almacenamiento": "256GB,512GB vale 49500",
+            "camara": "Sistema de cámara de fusión triple: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo Periscópico de 48MP con zoom óptico 8x",
+            "bateria": "Hasta 40W de carga rápida con USB-C",
+            "sistema": "iOS 19 (lanzamiento)",
+            "colores_disponibles": ["Cosmic Orange", "Deep Blue", "Silver"],
+            "redes": "5G, Wi-Fi 7, Bluetooth 6.0"
+        },
+        "features": [
+            "Chip A19 Pro con trazado de rayos acelerado",
+            "Sistema de gestión térmica con cámara de vapor",
+            "Pantalla con Ceramic Shield 2",
+            "Cámara con capacidad de video 4K a 120 fps",
+            "Diseño de chasis de aluminio",
+            "Puerto USB-C con velocidades de 10 Gbit/s",
+            "Audio espacial y altavoces estéreo",
+            "Resistencia al agua y al polvo IP68",
+            "Face ID"
+        ],
+        "isBestseller": true,
+        "isOnOffer": false,
+        "badge": "Nuevo Lanzamiento"
     },
-    "features": [
-        "Chip A19 Pro con trazado de rayos acelerado",
-        "Sistema de gestión térmica con cámara de vapor",
-        "Pantalla con Ceramic Shield 2",
-        "Cámara con capacidad de video 4K a 120 fps",
-        "Diseño de chasis de aluminio",
-        "Puerto USB-C con velocidades de 10 Gbit/s",
-        "Audio espacial y altavoces estéreo",
-        "Resistencia al agua y al polvo IP68",
-        "Face ID"
-    ],
-    "isBestseller": true,
-    "isOnOffer": false,
-    "badge": "Nuevo Lanzamiento"
-},
-{
-    "id": 19,
-    "name": "iPhone 17 Air",
-    "brand": "Apple",
-    "category": "smartphones",
-    "price": 37500,
-    "rating": 4.5,
-    "reviews": 95,
-    "images": [
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(9).png?updatedAt=1758604406544",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/iphone-air-finish-select-202509-lightgold-removebg-preview.png?updatedAt=1758604406565",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(10).png?updatedAt=1758604406662"
-    ],
-    "description": "El iPhone 17 Air es la apuesta de Apple por el diseño ultradelgado, siendo el iPhone más delgado jamás creado con solo 5.6 mm de grosor. Combina una estética minimalista con un rendimiento de nivel profesional gracias a su chip A19 Pro. Diseñado para quienes priorizan un teléfono ligero, cómodo y con estilo, este modelo sacrifica la versatilidad de múltiples cámaras en favor de un diseño elegante y compacto.",
-    "specs": {
-        "pantalla": "6.5 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
-        "procesador": "A19 Pro Bionic",
-        "almacenamiento": "256GB, 512GB y 1TB",
-        "camara": "Cámara trasera de 48MP (lente principal) y cámara frontal de 18MP con Center Stage",
-        "bateria": "Hasta 27 horas de reproducción de video",
-        "sistema": "iOS 19 (lanzamiento)",
-        "colores_disponibles": ["Space Black", "Cloud White", "Light Gold", "Sky Blue"],
-        "redes": "5G, Wi-Fi 7, Bluetooth 6.0 (solo eSIM)"
+    {
+        "id": 19,
+        "name": "iPhone 17 Air",
+        "brand": "Apple",
+        "category": "smartphones",
+        "price": 37500,
+        "rating": 4.5,
+        "reviews": 95,
+        "images": [
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(9).png?updatedAt=1758604406544",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/iphone-air-finish-select-202509-lightgold-removebg-preview.png?updatedAt=1758604406565",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(10).png?updatedAt=1758604406662"
+        ],
+        "description": "El iPhone 17 Air es la apuesta de Apple por el diseño ultradelgado, siendo el iPhone más delgado jamás creado con solo 5.6 mm de grosor. Combina una estética minimalista con un rendimiento de nivel profesional gracias a su chip A19 Pro. Diseñado para quienes priorizan un teléfono ligero, cómodo y con estilo, este modelo sacrifica la versatilidad de múltiples cámaras en favor de un diseño elegante y compacto.",
+        "specs": {
+            "pantalla": "6.5 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
+            "procesador": "A19 Pro Bionic",
+            "almacenamiento": "256GB, 512GB y 1TB",
+            "camara": "Cámara trasera de 48MP (lente principal) y cámara frontal de 18MP con Center Stage",
+            "bateria": "Hasta 27 horas de reproducción de video",
+            "sistema": "iOS 19 (lanzamiento)",
+            "colores_disponibles": ["Space Black", "Cloud White", "Light Gold", "Sky Blue"],
+            "redes": "5G, Wi-Fi 7, Bluetooth 6.0 (solo eSIM)"
+        },
+        "features": [
+            "Diseño ultradelgado de 5.6mm y 165 gramos",
+            "Cuerpo de titanio y Ceramic Shield 2",
+            "Chip A19 Pro con Neural Engine de 16 núcleos",
+            "Tecnología de pantalla ProMotion y Dynamic Island",
+            "Face ID y resistencia al agua IP68",
+            "Conector USB-C",
+            "Audio espacial con doble altavoz estéreo",
+            "Solo compatible con eSIM"
+        ],
+        "isBestseller": false,
+        "isOnOffer": false,
+        "badge": "Diseño Ultradelgado"
     },
-    "features": [
-        "Diseño ultradelgado de 5.6mm y 165 gramos",
-        "Cuerpo de titanio y Ceramic Shield 2",
-        "Chip A19 Pro con Neural Engine de 16 núcleos",
-        "Tecnología de pantalla ProMotion y Dynamic Island",
-        "Face ID y resistencia al agua IP68",
-        "Conector USB-C",
-        "Audio espacial con doble altavoz estéreo",
-        "Solo compatible con eSIM"
-    ],
-    "isBestseller": false,
-    "isOnOffer": false,
-    "badge": "Diseño Ultradelgado"
-},
-{
-    "id": 20,
-    "name": "iPhone 17 Pro",
-    "brand": "Apple",
-    "category": "smartphones",
-    "price": 42000,
-    "rating": 4.8,
-    "reviews": 180,
-    "images": [
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(11).png?updatedAt=1758605037161",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(12).png?updatedAt=1758605037189",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(13).png?updatedAt=1758605037198"
-    ],
-    "description": "El iPhone 17 Pro es la opción perfecta para quienes buscan un rendimiento profesional en un tamaño más compacto. Incorpora el potente chip A19 Pro y un sistema de cámara avanzado con lentes de 48 MP. Su diseño unibody de aluminio forjado y la nueva pantalla con Ceramic Shield 2 lo hacen increíblemente resistente. Disfruta de la mejor tecnología de Apple en un formato ideal para el día a día.",
-    "specs": {
-        "pantalla": "6.3 pulgadas Super Retina XDR OLED con ProMotion (1-120 Hz)",
-        "procesador": "A19 Pro Bionic",
-        "almacenamiento": "256GB, 512GB vale 47500",
-        "camara": "Sistema de cámara Pro: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo con zoom óptico 4x (48MP)",
-        "bateria": "Hasta 31 horas de reproducción de vídeo",
-        "sistema": "iOS 26",
-        "colores_disponibles": ["Silver", "Cosmic Orange", "Deep Blue"],
-        "redes": "5G, Wi-Fi 7, Bluetooth 6"
-    },
-    "features": [
-        "Chip A19 Pro con GPU 2x más rápida",
-        "Cámara de vapor para disipación de calor",
-        "Pantalla con brillo pico de hasta 3000 nits",
-        "Teleobjetivo con zoom óptico de 4x y lente de tetraprisma",
-        "Graba videos en 4K Dolby Vision a 120 fps",
-        "Diseño unibody de aluminio",
-        "Dynamic Island",
-        "Resistencia al agua y al polvo IP68",
-        "Conector USB-C"
-    ],
-    "isBestseller": false,
-    "isOnOffer": false,
-    "badge": "Mejor Valorado"
-}
-,
-{
-    "id": 21,
-    "name": "iPhone 17",
-    "brand": "Apple",
-    "category": "smartphones",
-    "price": 32500,
-    "rating": 4.6,
-    "reviews": 350,
-    "images": [
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(16).png?updatedAt=1758605663987",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(14).png?updatedAt=1758605663974",
-        "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(15).png?updatedAt=1758605663955"
-    ],
-    "description": "El iPhone 17 ofrece una experiencia excepcional y accesible. Equipado con el chip A18, garantiza un rendimiento rápido y fluido para cualquier tarea. Su sistema de cámara dual captura fotos y videos de alta calidad, mientras que su diseño resistente y la pantalla Super Retina XDR lo convierten en un dispositivo fiable para el uso diario. Es la opción ideal para quienes buscan el poder y la confiabilidad de Apple sin las características Pro.",
-    "specs": {
-        "pantalla": "6.1 pulgadas Super Retina XDR OLED",
-        "procesador": "A18 Bionic",
-        "almacenamiento": "128GB, 256GB y 512GB",
-        "camara": "",
-        "bateria": "Hasta 24 horas de reproducción de vídeo",
-        "sistema": "iOS 19",
-        "colores_disponibles": ["Midnight", "Starlight", "Blue", "Green", "Pink"],
-        "redes": "5G, Wi-Fi 6E, Bluetooth 5.4"
-    },
-    "features": [
-        "Chip A18 Bionic",
-        "Grabación de video en 4K a 60 fps",
-        "Pantalla Super Retina XDR",
-        "Dynamic Island",
-        "Resistencia al agua y al polvo IP68",
-        "Conector USB-C",
-        "Diseño de aluminio aeroespacial"
-    ],
-    "isBestseller": true,
-    "isOnOffer": false,
-    "badge": "Más Vendido"
-}
+    {
+        "id": 20,
+        "name": "iPhone 17 Pro",
+        "brand": "Apple",
+        "category": "smartphones",
+        "price": 42000,
+        "rating": 4.8,
+        "reviews": 180,
+        "images": [
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(11).png?updatedAt=1758605037161",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(12).png?updatedAt=1758605037189",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(13).png?updatedAt=1758605037198"
+        ],
+        "description": "El iPhone 17 Pro es la opción perfecta para quienes buscan un rendimiento profesional en un tamaño más compacto. Incorpora el potente chip A19 Pro y un sistema de cámara avanzado con lentes de 48 MP. Su diseño unibody de aluminio forjado y la nueva pantalla con Ceramic Shield 2 lo hacen increíblemente resistente. Disfruta de la mejor tecnología de Apple en un formato ideal para el día a día.",
+        "specs": {
+            "pantalla": "6.3 pulgadas Super Retina XDR OLED con ProMotion (1-120 Hz)",
+            "procesador": "A19 Pro Bionic",
+            "almacenamiento": "256GB, 512GB vale 47500",
+            "camara": "Sistema de cámara Pro: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo con zoom óptico 4x (48MP)",
+            "bateria": "Hasta 31 horas de reproducción de vídeo",
+            "sistema": "iOS 26",
+            "colores_disponibles": ["Silver", "Cosmic Orange", "Deep Blue"],
+            "redes": "5G, Wi-Fi 7, Bluetooth 6"
+        },
+        "features": [
+            "Chip A19 Pro con GPU 2x más rápida",
+            "Cámara de vapor para disipación de calor",
+            "Pantalla con brillo pico de hasta 3000 nits",
+            "Teleobjetivo con zoom óptico de 4x y lente de tetraprisma",
+            "Graba videos en 4K Dolby Vision a 120 fps",
+            "Diseño unibody de aluminio",
+            "Dynamic Island",
+            "Resistencia al agua y al polvo IP68",
+            "Conector USB-C"
+        ],
+        "isBestseller": false,
+        "isOnOffer": false,
+        "badge": "Mejor Valorado"
+    }
+    ,
+    {
+        "id": 21,
+        "name": "iPhone 17",
+        "brand": "Apple",
+        "category": "smartphones",
+        "price": 32500,
+        "rating": 4.6,
+        "reviews": 350,
+        "images": [
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(16).png?updatedAt=1758605663987",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(14).png?updatedAt=1758605663974",
+            "https://ik.imagekit.io/anr5mu99tt/Catalogo/image-removebg-preview%20(15).png?updatedAt=1758605663955"
+        ],
+        "description": "El iPhone 17 ofrece una experiencia excepcional y accesible. Equipado con el chip A18, garantiza un rendimiento rápido y fluido para cualquier tarea. Su sistema de cámara dual captura fotos y videos de alta calidad, mientras que su diseño resistente y la pantalla Super Retina XDR lo convierten en un dispositivo fiable para el uso diario. Es la opción ideal para quienes buscan el poder y la confiabilidad de Apple sin las características Pro.",
+        "specs": {
+            "pantalla": "6.1 pulgadas Super Retina XDR OLED",
+            "procesador": "A18 Bionic",
+            "almacenamiento": "128GB, 256GB y 512GB",
+            "camara": "",
+            "bateria": "Hasta 24 horas de reproducción de vídeo",
+            "sistema": "iOS 19",
+            "colores_disponibles": ["Midnight", "Starlight", "Blue", "Green", "Pink"],
+            "redes": "5G, Wi-Fi 6E, Bluetooth 5.4"
+        },
+        "features": [
+            "Chip A18 Bionic",
+            "Grabación de video en 4K a 60 fps",
+            "Pantalla Super Retina XDR",
+            "Dynamic Island",
+            "Resistencia al agua y al polvo IP68",
+            "Conector USB-C",
+            "Diseño de aluminio aeroespacial"
+        ],
+        "isBestseller": true,
+        "isOnOffer": false,
+        "badge": "Más Vendido"
+    }
 ];
 // ==========================================================================================================
 
@@ -835,11 +835,25 @@ let cart = [];
 let isVideoPlaying = true;
 
 // Initialize
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     try {
+        // 1. Cargar tema inmediatamente
         loadTheme();
+
+        // 2. Inicializar event listeners básicos
+        initializeBasicEventListeners();
+
+        // 3. Renderizar productos
         renderProducts();
-        initializeEventListeners();
+
+        // 4. Inicializar carruseles después de un pequeño delay
+        setTimeout(() => {
+            generateBrandsCarousel();
+            generateNewProductsCarousel();
+            initializeCustomCarousels();
+        }, 100);
+
     } catch (error) {
         console.error("Error al inicializar:", error);
     } finally {
@@ -853,16 +867,99 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+// Event Listeners
+function initializeBasicEventListeners() {
+    try {
+        // Theme toggle
+        const themeCheckbox = document.getElementById('theme-checkbox');
+        if (themeCheckbox) {
+            themeCheckbox.addEventListener('change', toggleTheme);
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', handleSearch);
+        }
+
+        const searchButton = document.getElementById('searchButton');
+        if (searchButton) {
+            searchButton.addEventListener('click', handleSearch);
+        }
+
+        // Video toggle
+        const videoToggle = document.querySelector('.video-toggle');
+        if (videoToggle) {
+            videoToggle.addEventListener('click', toggleVideo);
+        }
+
+        // Scroll to top
+        const scrollTopBtn = document.querySelector('.scroll-top-btn');
+        if (scrollTopBtn) {
+            scrollTopBtn.addEventListener('click', scrollToTop);
+        }
+
+        // Scroll event
+        window.addEventListener('scroll', handleScroll);
+
+        // Filters
+        const categoryFilter = document.getElementById('categoryFilter');
+        if (categoryFilter) {
+            categoryFilter.addEventListener('change', applyMinimalFilters);
+        }
+
+        const priceFilter = document.getElementById('priceFilter');
+        if (priceFilter) {
+            priceFilter.addEventListener('change', applyMinimalFilters);
+        }
+
+        const sortFilter = document.getElementById('sortFilter');
+        if (sortFilter) {
+            sortFilter.addEventListener('change', applyMinimalFilters);
+        }
+
+        // Forms (con verificación de existencia)
+        const checkoutForm = document.getElementById('checkoutForm');
+        if (checkoutForm) {
+            checkoutForm.addEventListener('submit', handleCheckout);
+        } else {
+            console.log('checkoutForm no encontrado');
+        }
+
+        const tradeInForm = document.getElementById('tradeInForm');
+        if (tradeInForm) {
+            tradeInForm.addEventListener('submit', handleTradeIn);
+        } else {
+            console.log('tradeInForm no encontrado');
+        }
+
+    } catch (error) {
+        console.error('Error en initializeBasicEventListeners:', error);
+    }
+}
+
+
+function initializeEventListeners() {
+    generateBrandsCarousel();
+    generateNewProductsCarousel();
+    initializeCustomCarousels();
+}
 // Theme Toggle
 function loadTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    document.getElementById('theme-checkbox').checked = savedTheme === 'dark';
+
+    const themeCheckbox = document.getElementById('theme-checkbox');
+    if (themeCheckbox) {
+        themeCheckbox.checked = savedTheme === 'dark';
+    }
 }
 
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
 }
@@ -1428,19 +1525,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Generar carrusel de marcas
 function generateBrandsCarousel() {
+    const brandsList = document.getElementById('brandsList');
+    if (!brandsList) {
+        console.log('Elemento brandsList no encontrado');
+        return;
+    }
+
     const brands = [
         { name: 'Apple', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
         { name: 'Samsung', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg' },
         { name: 'Google', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg' },
         { name: 'Asus', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg' },
         { name: 'Microsoft', logo: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' },
-        { name: 'Xbox', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Xbox_logo_%282019%29.svg/250px-Xbox_logo_%282019%29.svg.png' },
+        { name: 'Xbox', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Xbox_logo_%282019%29.svg/800px-Xbox_logo_%282019%29.svg.png' },
     ];
 
-    const brandsList = document.getElementById('brandsList');
     brandsList.innerHTML = '';
 
-    // Duplicar las marcas para efecto infinito
+    // Duplicar las marcas para efecto infinito (3 veces)
     const duplicatedBrands = [...brands, ...brands, ...brands];
 
     duplicatedBrands.forEach((brand, index) => {
@@ -1454,19 +1556,26 @@ function generateBrandsCarousel() {
         `;
         brandsList.appendChild(brandItem);
     });
+
+    console.log('Carrusel de marcas generado correctamente');
 }
 
 // Generar carrusel de productos más nuevos
 function generateNewProductsCarousel() {
+    const newProductsList = document.getElementById('newProductsList');
+    if (!newProductsList) {
+        console.log('Elemento newProductsList no encontrado');
+        return;
+    }
+
     // Ordenar productos por ID (los más nuevos primero) y tomar los últimos 8
     const newProducts = [...products]
         .sort((a, b) => b.id - a.id)
-        .slice(0, 4);
+        .slice(0, 5);
 
-    const newProductsList = document.getElementById('newProductsList');
     newProductsList.innerHTML = '';
 
-    // Duplicar los productos para efecto infinito
+    // Duplicar los productos para efecto infinito (3 veces)
     const duplicatedProducts = [...newProducts, ...newProducts, ...newProducts];
 
     duplicatedProducts.forEach((product, index) => {
@@ -1484,15 +1593,29 @@ function generateNewProductsCarousel() {
         `;
         newProductsList.appendChild(productItem);
     });
-}
 
-// Actualizar la función initializeEventListeners para incluir las nuevas funciones
+    console.log('Carrusel de productos nuevos generado correctamente');
+}
 function initializeEventListeners() {
-    // ... código existente ...
-    
-    // Generar carruseles después de que el DOM esté listo
+
+    // Genera carruseles después de que el DOM 
     setTimeout(() => {
         generateBrandsCarousel();
         generateNewProductsCarousel();
     }, 100);
 }
+
+// Inicialización forzada como fallback
+window.addEventListener('load', () => {
+    console.log('Página completamente cargada - inicializando carruseles');
+
+    setTimeout(() => {
+        if (document.getElementById('brandsList')) {
+            generateBrandsCarousel();
+        }
+        if (document.getElementById('newProductsList')) {
+            generateNewProductsCarousel();
+        }
+        initializeCustomCarousels();
+    }, 500);
+});

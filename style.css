@@ -2635,3 +2635,19 @@ label.theme-switch{
 [data-theme="dark"] .brand-carousel-card:hover {
     background: rgba(0, 0, 0, 0.3);
 } 
+
+
+.developer-credit i {
+    color: var(--color-primary);
+    margin-right: 5px;
+}
+
+.dev-email {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.dev-email:hover {
+    text-decoration: underline;
+}
