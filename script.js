@@ -668,7 +668,7 @@ const products = [
     "name": "iPhone 17 Pro Max",
     "brand": "Apple",
     "category": "smartphones",
-    "price": 30000,
+    "price": 45500,
     "rating": 5.0,
     "reviews": 250,
     "images": [
@@ -680,7 +680,7 @@ const products = [
     "specs": {
         "pantalla": "6.9 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
         "procesador": "A19 Pro Bionic",
-        "almacenamiento": "256GB, 512GB, 1TB y 2TB",
+        "almacenamiento": "256GB,512GB vale 49500",
         "camara": "Sistema de cámara de fusión triple: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo Periscópico de 48MP con zoom óptico 8x",
         "bateria": "Hasta 40W de carga rápida con USB-C",
         "sistema": "iOS 19 (lanzamiento)",
@@ -707,7 +707,7 @@ const products = [
     "name": "iPhone 17 Air",
     "brand": "Apple",
     "category": "smartphones",
-    "price": 25999,
+    "price": 37500,
     "rating": 4.5,
     "reviews": 95,
     "images": [
@@ -745,7 +745,7 @@ const products = [
     "name": "iPhone 17 Pro",
     "brand": "Apple",
     "category": "smartphones",
-    "price": 28499,
+    "price": 42000,
     "rating": 4.8,
     "reviews": 180,
     "images": [
@@ -757,7 +757,7 @@ const products = [
     "specs": {
         "pantalla": "6.3 pulgadas Super Retina XDR OLED con ProMotion (1-120 Hz)",
         "procesador": "A19 Pro Bionic",
-        "almacenamiento": "256GB, 512GB y 1TB",
+        "almacenamiento": "256GB, 512GB vale 47500",
         "camara": "Sistema de cámara Pro: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo con zoom óptico 4x (48MP)",
         "bateria": "Hasta 31 horas de reproducción de vídeo",
         "sistema": "iOS 26",
@@ -785,7 +785,7 @@ const products = [
     "name": "iPhone 17",
     "brand": "Apple",
     "category": "smartphones",
-    "price": 20000,
+    "price": 32500,
     "rating": 4.6,
     "reviews": 350,
     "images": [

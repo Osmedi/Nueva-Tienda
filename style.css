@@ -531,9 +531,6 @@ nav {
 }
 
 @media (max-width: 768px) {
-  div#productModalBody {
-    word-break: break-word;
-}
   .hero-video {
     display: none;
   }
