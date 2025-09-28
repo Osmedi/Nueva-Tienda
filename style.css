@@ -2653,3 +2653,200 @@ label.theme-switch{
 .dev-email:hover {
     text-decoration: underline;
 }
+
+/* Estilos mejorados para selectores de producto */
+.product-selector {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.product-selector label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1rem;
+}
+
+/* Estilos para opciones de GB (botones) */
+.gb-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.gb-option {
+    padding: 12px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    background: transparent;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 80px;
+    text-align: center;
+}
+
+.gb-option:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.gb-option.active {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-text-light);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Estilos para opciones de color (círculos) */
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.color-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    padding: 8px;
+    border-radius: var(--border-radius-sm);
+    min-width: 60px;
+}
+
+.color-option:hover {
+    transform: translateY(-2px);
+    background: rgba(242, 140, 56, 0.1);
+}
+
+.color-option.active {
+    background: rgba(242, 140, 56, 0.2);
+    border: 1px solid var(--color-primary);
+}
+
+.color-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--color-border);
+    transition: var(--transition);
+    margin-bottom: 8px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.color-option.active .color-swatch {
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Indicador de selección para color */
+.color-swatch::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0;
+    transition: var(--transition);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.color-option.active .color-swatch::after {
+    opacity: 1;
+}
+
+.color-name {
+    font-size: 0.8rem;
+    color: var(--color-text);
+    text-align: center;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .color-name {
+    color: var(--color-text-light);
+}
+
+/* Estilos para colores claros (mejor contraste) */
+.color-swatch[style*="#FFFFFF"],
+.color-swatch[style*="#FFF"],
+.color-swatch[style*="white"],
+.color-swatch[style*="#FFD700"],
+.color-swatch[style*="#C0C0C0"],
+.color-swatch[style*="#FADBD8"],
+.color-swatch[style*="#FFCC00"] {
+    border: 3px solid #e0e0e0;
+}
+
+.color-swatch[style*="#FFFFFF"]::after,
+.color-swatch[style*="#FFF"]::after,
+.color-swatch[style*="white"]::after,
+.color-swatch[style*="#FFD700"]::after,
+.color-swatch[style*="#C0C0C0"]::after,
+.color-swatch[style*="#FADBD8"]::after,
+.color-swatch[style*="#FFCC00"]::after {
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Estilos para opciones en el carrito */
+.item-options {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 5px 0;
+    display: flex;
+    gap: 15px;
+}
+
+.option-badge {
+    background: rgba(242, 140, 56, 0.1);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+[data-theme="dark"] .item-options {
+    color: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .gb-options {
+        gap: 8px;
+    }
+    
+    .gb-option {
+        padding: 10px 15px;
+        min-width: 70px;
+        font-size: 0.85rem;
+    }
+    
+    .color-options {
+        gap: 12px;
+    }
+    
+    .color-option {
+        min-width: 50px;
+        padding: 6px;
+    }
+    
+    .color-swatch {
+        width: 35px;
+        height: 35px;
+    }
+}

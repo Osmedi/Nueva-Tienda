@@ -698,6 +698,13 @@ const products = [
             "Resistencia al agua y al polvo IP68",
             "Face ID"
         ],
+
+        gb_options: [
+            { "gb": "256", "price": 45500 },
+            { "gb": "512", "price": 49500 }
+        ],
+        colors: ["Naranja cósmico", "Azul profundo", "Plata"],
+
         "isBestseller": true,
         "isOnOffer": false,
         "badge": "Nuevo Lanzamiento"
@@ -736,6 +743,7 @@ const products = [
             "Audio espacial con doble altavoz estéreo",
             "Solo compatible con eSIM"
         ],
+        colors: ["Negro espacial", "Blanco nube"],
         "isBestseller": false,
         "isOnOffer": false,
         "badge": "Diseño Ultradelgado"
@@ -775,6 +783,11 @@ const products = [
             "Resistencia al agua y al polvo IP68",
             "Conector USB-C"
         ],
+        gb_options: [
+            { "gb": "256", "price": 42000 },
+            { "gb": "512", "price": 47500 }
+        ],
+        colors: ["Naranja cósmico", "Azul profundo", "Plata"],
         "isBestseller": false,
         "isOnOffer": false,
         "badge": "Mejor Valorado"
@@ -813,6 +826,11 @@ const products = [
             "Conector USB-C",
             "Diseño de aluminio aeroespacial"
         ],
+        gb_options: [
+            { "gb": "256", "price": 35500 },
+            { "gb": "512", "price": "No definido" }
+        ],
+        colors: ["Lavanda", "Verde salvina", "Verde eblina", "Blanco", "negro"],
         "isBestseller": true,
         "isOnOffer": false,
         "badge": "Más Vendido"
@@ -975,7 +993,6 @@ function initializeEventListeners() {
     document.getElementById('categoryFilter').addEventListener('change', applyMinimalFilters);
     document.getElementById('priceFilter').addEventListener('change', applyMinimalFilters);
     document.getElementById('sortFilter').addEventListener('change', applyMinimalFilters);
-    document.getElementById('checkoutForm').addEventListener('submit', handleCheckout);
     document.getElementById('tradeInForm').addEventListener('submit', handleTradeIn);
 }
 
@@ -1070,15 +1087,31 @@ function initializeCarousels() {
 // Cart Functions
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
-    const cartItem = cart.find(item => item.id === productId);
+
+    // Para productos desde tarjeta, usar null explícitamente
+    const cartProduct = {
+        ...product,
+        selectedGB: null,
+        selectedColor: null
+    };
+
+    // Buscar item existente con las mismas características
+    const cartItem = cart.find(item =>
+        item.id === productId &&
+        item.selectedGB === null &&
+        item.selectedColor === null
+    );
+
     if (cartItem) {
         cartItem.quantity += 1;
     } else {
-        cart.push({ ...product, quantity: 1 });
+        cart.push({ ...cartProduct, quantity: 1 });
     }
+
     updateCart();
     showNotification(`${product.name} añadido al carrito`);
 }
+
 
 function updateCart() {
     const cartItems = document.getElementById('cartItems');
@@ -1233,10 +1266,10 @@ function handleTradeIn(e) {
 }
 
 // Checkout
-document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+// Checkout Functionality - VERSIÓN CORREGIDA
+function handleCheckout(e) {
     e.preventDefault();
 
-    // Verificar si el carrito está vacío
     if (cart.length === 0) {
         showNotification('El carrito está vacío', 'warning');
         return;
@@ -1246,56 +1279,96 @@ document.getElementById('checkoutForm').addEventListener('submit', function (e) 
     const phone = document.getElementById('customerPhone').value;
     const address = document.getElementById('customerAddress').value;
     const notes = document.getElementById('customerNotes').value;
-    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-    // Calcular totales
-    const subtotal = cart.reduce((total, item) => total + products.find(p => p.id === item.id).price * item.quantity, 0);
-    const tax = subtotal * 0.15;
-    const total = subtotal + tax;
+    const paymentMethodElement = document.querySelector('input[name="paymentMethod"]:checked');
+    if (!paymentMethodElement) {
+        showNotification('Por favor selecciona un método de pago', 'warning');
+        return;
+    }
+    const paymentMethod = paymentMethodElement.value;
 
-    // Construir mensaje de factura
+    const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    const total = subtotal;
+
     let message = `🛍️ *FACTURA ELECTRÓNICA - MOBILEEXPRESSHN* 🛍️\n\n`;
     message += `📅 *Fecha:* ${new Date().toLocaleDateString()}\n`;
+    message += `⏰ *Hora:* ${new Date().toLocaleTimeString()}\n\n`;
 
-    message += `👤 *Información del Cliente*\n`;
-    message += `▸ Nombre: ${name}\n`;
-    message += `▸ Teléfono: ${phone}\n`;
-    message += `▸ Dirección: ${address}\n`;
-    message += `▸ Método de Pago: ${paymentMethod}\n`;
-    message += `▸ Notas: ${notes || 'Ninguna'}\n\n`;
-
-    message += `📋 *Detalle del Pedido*\n`;
+    message += `👤 *INFORMACIÓN DEL CLIENTE*\n`;
     message += `══════════════════════════\n`;
-    cart.forEach(item => {
-        const product = products.find(p => p.id === item.id);
-        message += `➤ *${product.name}* (${product.brand})\n`;
-        message += `   ▸ Cantidad: ${item.quantity}\n`;
-        message += `   ▸ Precio unitario: L.${product.price.toFixed(2)}\n`;
-        message += `   ▸ Subtotal: L.${(product.price * item.quantity).toFixed(2)}\n\n`;
+    message += `▸ *Nombre:* ${name}\n`;
+    message += `▸ *Teléfono:* ${phone}\n`;
+    message += `▸ *Dirección:* ${address}\n`;
+    message += `▸ *Método de Pago:* ${paymentMethod}\n`;
+    message += `▸ *Notas Adicionales:* ${notes || 'Ninguna'}\n\n`;
+
+    message += `📋 *DETALLE DEL PEDIDO*\n`;
+    message += `══════════════════════════\n`;
+
+    cart.forEach((item, index) => {
+        // Construir información de opciones seleccionadas
+        let optionsInfo = '';
+        if (item.selectedGB || item.selectedColor) {
+            optionsInfo = '\n   └── ';
+            if (item.selectedGB) optionsInfo += `💾 ${item.selectedGB}GB`;
+            if (item.selectedGB && item.selectedColor) optionsInfo += ' • ';
+            if (item.selectedColor) optionsInfo += `🎨 Color: ${item.selectedColor}`;
+        }
+
+        message += `➤ *${item.name}*${optionsInfo}\n`;
+        message += `   ▸ Cantidad: ${item.quantity} unidad${item.quantity > 1 ? 'es' : ''}\n`;
+        message += `   ▸ Precio unitario: L.${item.price.toFixed(2)}\n`;
+        message += `   ▸ Subtotal: L.${(item.price * item.quantity).toFixed(2)}\n`;
+
+        // Separador entre productos (excepto el último)
+        if (index < cart.length - 1) {
+            message += `   ─────────────────────\n`;
+        }
     });
+
     message += `══════════════════════════\n`;
-    message += `💰 *Resumen de Pagos*\n`;
+    message += `💰 *RESUMEN DE PAGOS*\n`;
+    message += `══════════════════════════\n`;
     message += `▸ Subtotal: L.${subtotal.toFixed(2)}\n`;
     message += `▸ *TOTAL A PAGAR: L.${total.toFixed(2)}*\n\n`;
-    message += `📦 *Información de Envío*\n`;
-    message += `▸ Tiempo estimado: 24-48 horas\n`;
-    message += `▸ Estado: Pedido recibido\n\n`;
-    message += `¡Gracias por tu compra en MobileExpressHN! 💜\n`;
-    message += `Para seguimiento de tu pedido, contactanos por este medio`;
+
+    message += `📦 *INFORMACIÓN DE ENVÍO*\n`;
+    message += `══════════════════════════\n`;
+    message += `▸ *Tiempo estimado:* 24-48 horas\n`;
+    message += `▸ *Estado:* Pedido recibido\n`;
+    message += `▸ *Zona de entrega:* ${address.includes('Tegucigalpa') || address.includes('Teguc') ? 'Área Metropolitana' : 'Fuera del área metropolitana'}\n\n`;
+
+    message += `🔧 *DETALLES ADICIONALES*\n`;
+    message += `══════════════════════════\n`;
+    message += `▸ *Garantía:* Todos los productos incluyen hasta un año de garantía\n`;
+    message += `▸ *Soporte:* Disponible 24/7\n`;
+    message += `▸ *Contacto:* +504 9681-1650\n\n`;
+
+    message += `¡Gracias por tu compra en *MobileExpressHN*! 💜\n\n`;
+    message += `📞 *Para seguimiento de tu pedido:*\n`;
+    message += `• WhatsApp: +504 9681-1650\n`;
+    message += `• Email: mobileexpresshn@gmail.com\n`;
+    message += `• Instagram: @mobile.expresshn\n\n`;
+
+    message += `🕒 *Horario de atención:*\n`;
+    message += `Lunes a Sábado: 8:00 AM - 6:00 PM`;
 
     const whatsappUrl = `https://wa.me/+50496811650?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
-    // Mostrar notificación de pedido realizado
-    showNotification('¡Pedido realizado con éxito!', 'success');
+    showNotification('¡Pedido realizado con éxito! Se abrirá WhatsApp', 'success');
 
-    // Limpiar carrito después del pedido
     cart = [];
-    saveCart();
-    renderCart();
+    updateCart();
     toggleCart();
-});
+}
 
+document.addEventListener('DOMContentLoaded', function () {
+    const checkoutForm = document.querySelector('#cartModal form');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', handleCheckout);
+    }
+});
 // Función para mostrar notificaciones
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
@@ -1619,3 +1692,401 @@ window.addEventListener('load', () => {
         initializeCustomCarousels();
     }, 500);
 });
+
+// Funcionalidad de selector de capacidad y color
+function initializeProductSelectors(product) {
+    // Verificar si el producto tiene opciones de GB
+    const hasGBOptions = product.gb_options && product.gb_options.length > 0;
+    const hasColors = product.colors && product.colors.length > 0;
+
+    // Crear selectores dinámicamente
+    let selectorsHTML = '';
+
+    if (hasGBOptions) {
+        selectorsHTML += `
+            <div class="product-selector">
+                <label>Capacidad de Almacenamiento:</label>
+                <div class="gb-options">
+                    ${product.gb_options.map((option, index) => `
+                        <button type="button" class="gb-option ${index === 0 ? 'active' : ''}" 
+                                data-gb="${option.gb}" data-price="${option.price}">
+                            ${option.gb}GB
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    if (hasColors) {
+        // Mapeo de colores a códigos HEX (puedes expandir esto según necesites)
+        const colorMap = {
+            'Negro': '#000000',
+            'Blanco': '#FFFFFF',
+            'Azul': '#007AFF',
+            'Oro': '#FFD700',
+            'Rojo': '#FF3B30',
+            'Verde': '#4CD964',
+            'Rosa': '#FF2D55',
+            'Morado': '#5856D6',
+            'Gris': '#8E8E93',
+            'Plateado': '#C0C0C0',
+            'Amarillo': '#FFCC00',
+            'Naranja': '#FF9500',
+            'Verde menta': '#00C7BE',
+            'Azul marino': '#003366',
+            'Rosa oro': '#FADBD8',
+
+            // iPhone 17 (Modelo Estándar)
+            'Lavanda': '#A896C7',         // Aproximación de un tono morado pastel
+            'Verde salvia': '#8FBC8F',    // Aproximación de un verde suave
+            'Azulneblina': '#A3C1E8',    // Aproximación de un azul claro
+            'Blanco': '#FDFDFD',          // Blanco casi puro
+            'Negro': '#1C1C1C',           // Negro profundo
+
+            // iPhone 17 Pro y Pro Max (Acabados Premium)
+            'Naranja cósmico': '#FF6E40', // Aproximación de un naranja brillante / cobre
+            'Azul profundo': '#3B4E75',   // Aproximación de un azul marino/oscuro
+            'Plata': '#EBEBEB',           // Aproximación de un tono plata/gris claro
+
+            // iPhone Air (Modelo Ultra Fino)
+            'Azul cielo': '#92BCE3',      // Aproximación de un azul claro y aireado
+            'Colororo claro': '#F0E5D1', // Aproximación de un dorado muy sutil / champagne
+            'Blanco nube': '#F2F5F8',     // Aproximación de un blanco con matiz frío
+            'Negro espacial': '#1C1C1C'   // Mismo negro profundo
+
+        };
+
+        selectorsHTML += `
+            <div class="product-selector">
+                <label>Color:</label>
+                <div class="color-options">
+                    ${product.colors.map((color, index) => {
+            const colorCode = colorMap[color] || '#CCCCCC';
+            return `
+                            <div class="color-option ${index === 0 ? 'active' : ''}" 
+                                 data-color="${color}" 
+                                 title="${color}">
+                                <div class="color-swatch" style="background-color: ${colorCode};"></div>
+                                <span class="color-name">${color}</span>
+                            </div>
+                        `;
+        }).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    return selectorsHTML;
+}
+
+// Actualizar la función updateProductPrice para manejar los botones de GB
+function updateProductPrice(product) {
+    const gbOptions = document.querySelectorAll('.gb-option');
+    const priceElement = document.querySelector('.product-modal-price');
+
+    if (gbOptions.length > 0 && priceElement) {
+        const activeOption = document.querySelector('.gb-option.active');
+        if (activeOption) {
+            const newPrice = parseFloat(activeOption.getAttribute('data-price'));
+            priceElement.textContent = `L.${newPrice.toFixed(2)}`;
+
+            // Actualizar el precio en el objeto producto temporalmente
+            product.currentPrice = newPrice;
+            product.selectedGB = activeOption.getAttribute('data-gb');
+        }
+    }
+}
+
+// Actualizar la función getSelectedOptions
+function getSelectedOptions(productId) {
+    const product = products.find(p => p.id === productId);
+    const selectedOptions = {
+        gb: null,
+        color: null,
+        price: product.price // Precio por defecto
+    };
+
+    const activeGbOption = document.querySelector('.gb-option.active');
+    const activeColorOption = document.querySelector('.color-option.active');
+
+    if (activeGbOption) {
+        selectedOptions.gb = activeGbOption.getAttribute('data-gb');
+        selectedOptions.price = parseFloat(activeGbOption.getAttribute('data-price'));
+    }
+
+    if (activeColorOption) {
+        selectedOptions.color = activeColorOption.getAttribute('data-color');
+    }
+
+    return selectedOptions;
+}
+
+// Agregar event listeners para los selectores estéticos
+function initializeSelectorEvents(product) {
+    // Event listeners para opciones de GB
+    const gbOptions = document.querySelectorAll('.gb-option');
+    gbOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            // Remover clase active de todas las opciones
+            gbOptions.forEach(opt => opt.classList.remove('active'));
+            // Agregar clase active a la opción clickeada
+            this.classList.add('active');
+            // Actualizar precio
+            updateProductPrice(product);
+        });
+    });
+
+    // Event listeners para opciones de color
+    const colorOptions = document.querySelectorAll('.color-option');
+    colorOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            // Remover clase active de todas las opciones
+            colorOptions.forEach(opt => opt.classList.remove('active'));
+            // Agregar clase active a la opción clickeada
+            this.classList.add('active');
+        });
+    });
+}
+
+// Modificar la función openProductModal para incluir la inicialización de eventos
+openProductModal = function (productId) {
+    const product = products.find(p => p.id === productId);
+    const modal = document.getElementById('productModal');
+    const modalBody = document.getElementById('productModalBody');
+
+    // Generar selectores
+    const selectorsHTML = initializeProductSelectors(product);
+
+    modalBody.innerHTML = `
+        <div class="product-modal-images">
+            <div class="product-modal-main-image">
+                <img src="${product.images[0]}" alt="${product.name}">
+            </div>
+            <div class="product-modal-thumbnails">
+                ${product.images.map((img, index) => `
+                    <div class="product-modal-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeModalImage('${img}', this)">
+                        <img src="${img}" alt="${product.name}">
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        <div class="product-modal-details">
+            <h2>${product.name}</h2>
+            <p class="product-modal-price">L.${product.price.toFixed(2)}</p>
+            
+            ${selectorsHTML}
+            
+            <div class="product-modal-rating">
+                <span class="stars">${'★'.repeat(Math.round(product.rating))}</span>
+                <span class="reviews-count">(${product.reviews} reseñas)</span>
+            </div>
+            <p class="product-modal-description">${product.description}</p>
+            <div class="product-modal-specs">
+                <h3>Especificaciones</h3>
+                <div class="specs-grid">
+                    ${Object.entries(product.specs).map(([key, value]) => `
+                        <div class="spec-item">
+                            <span class="spec-key">${key.charAt(0).toUpperCase() + key.slice(1)}:</span>
+                            <span>${value}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="product-modal-features">
+                <h3>Características</h3>
+                <ul>${product.features.map(feature => `<li>${feature}</li>`).join('')}</ul>
+            </div>
+            <div class="product-modal-actions">
+                <button class="add-to-cart" onclick="addToCartWithOptions(${product.id})"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
+                <button class="tradein-btn" onclick="toggleTradeInModal()"><i class="fas fa-sync-alt"></i> Permutar</button>
+            </div>
+        </div>
+    `;
+
+    modal.style.display = 'block';
+
+    // Inicializar eventos para los selectores estéticos
+    initializeSelectorEvents(product);
+};
+// Nueva función para agregar al carrito con opciones
+function addToCartWithOptions(productId) {
+    const product = products.find(p => p.id === productId);
+    const selectedOptions = getSelectedOptions(productId);
+
+    // Crear un objeto de producto con las opciones seleccionadas
+    const cartProduct = {
+        ...product,
+        selectedGB: selectedOptions.gb,
+        selectedColor: selectedOptions.color,
+        price: selectedOptions.price,
+        originalPrice: product.originalPrice || selectedOptions.price
+    };
+
+    // Verificar si ya existe en el carrito con las mismas opciones
+    const existingItemIndex = cart.findIndex(item =>
+        item.id === cartProduct.id &&
+        item.selectedGB === cartProduct.selectedGB &&
+        item.selectedColor === cartProduct.selectedColor
+    );
+
+    if (existingItemIndex > -1) {
+        cart[existingItemIndex].quantity += 1;
+    } else {
+        cart.push({ ...cartProduct, quantity: 1 });
+    }
+
+    updateCart();
+
+    // Mensaje de confirmación con las opciones seleccionadas
+    let confirmationMessage = `${product.name} añadido al carrito`;
+    if (selectedOptions.gb || selectedOptions.color) {
+        confirmationMessage += ' (';
+        if (selectedOptions.gb) confirmationMessage += `${selectedOptions.gb}GB`;
+        if (selectedOptions.gb && selectedOptions.color) confirmationMessage += ', ';
+        if (selectedOptions.color) confirmationMessage += `Color: ${selectedOptions.color}`;
+        confirmationMessage += ')';
+    }
+
+    showNotification(confirmationMessage);
+}
+
+// Modificar la función updateCart para mostrar las opciones seleccionadas
+const originalUpdateCart = updateCart;
+updateCart = function () {
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-cart-message">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Tu carrito está vacío</p>
+                <a href="#products" class="btn-primary" onclick="toggleCart()">Ver Productos</a>
+            </div>
+        `;
+        cartTotal.textContent = `Total: L.0.00`;
+    } else {
+        cart.forEach(item => {
+            total += item.price * item.quantity;
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+
+            let optionsText = '';
+            if (item.selectedGB) optionsText += ` • ${item.selectedGB}GB`;
+            if (item.selectedColor) optionsText += ` • Color: ${item.selectedColor}`;
+
+            cartItem.innerHTML = `
+                <img src="${item.images[0]}" alt="${item.name}">
+                <div class="item-info">
+                    <h4>${item.name}</h4>
+                    ${(item.selectedGB || item.selectedColor) ? `
+                    <div class="item-options">
+                        ${item.selectedGB ? `<span class="option-badge">${item.selectedGB}GB</span>` : ''}
+                        ${item.selectedColor ? `<span class="option-badge">Color: ${item.selectedColor}</span>` : ''}
+                    </div>
+                    ` : ''}
+                    <p class="item-price">L.${(item.price * item.quantity).toFixed(2)}</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, '${item.selectedGB || ''}', '${item.selectedColor || ''}', -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, '${item.selectedGB || ''}', '${item.selectedColor || ''}', 1)">+</button>
+                        <button class="remove-item" onclick="removeFromCart(${item.id}, '${item.selectedGB || ''}', '${item.selectedColor || ''}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            cartItems.appendChild(cartItem);
+        });
+
+        cartTotal.textContent = `Total: L.${total.toFixed(2)}`;
+    }
+
+    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+};
+
+function updateQuantity(productId, selectedGB, selectedColor, change) {
+    // Convertir a null si vienen como string vacío o undefined
+    const gb = (selectedGB === '' || selectedGB === undefined) ? null : selectedGB;
+    const color = (selectedColor === '' || selectedColor === undefined) ? null : selectedColor;
+
+    console.log('Buscando item:', { productId, gb, color });
+    console.log('Cart actual:', cart);
+
+    const cartItem = cart.find(item =>
+        item.id === productId &&
+        item.selectedGB === gb &&
+        item.selectedColor === color
+    );
+
+    if (cartItem) {
+        cartItem.quantity += change;
+        if (cartItem.quantity <= 0) {
+            cart = cart.filter(item =>
+                !(item.id === productId &&
+                    item.selectedGB === gb &&
+                    item.selectedColor === color)
+            );
+        }
+        updateCart();
+    } else {
+        console.log('Item no encontrado en el carrito');
+    }
+}
+
+function removeFromCart(productId, selectedGB, selectedColor) {
+    // Convertir a null si vienen como string vacío o undefined
+    const gb = (selectedGB === '' || selectedGB === undefined) ? null : selectedGB;
+    const color = (selectedColor === '' || selectedColor === undefined) ? null : selectedColor;
+
+    console.log('Eliminando item:', { productId, gb, color });
+
+    cart = cart.filter(item =>
+        !(item.id === productId &&
+            item.selectedGB === gb &&
+            item.selectedColor === color)
+    );
+    updateCart();
+}
+
+
+
+// Función para formatear las opciones del producto de manera más legible
+function formatProductOptions(item) {
+    const options = [];
+
+    if (item.selectedGB) {
+        options.push(`💾 ${item.selectedGB}GB`);
+    }
+
+    if (item.selectedColor) {
+        options.push(`🎨 ${item.selectedColor}`);
+    }
+
+    if (options.length === 0) {
+        return '';
+    }
+
+    return `\n   └── ${options.join(' • ')}`;
+}
+
+// Versión alternativa más compacta para el mensaje
+function formatProductOptionsCompact(item) {
+    const options = [];
+
+    if (item.selectedGB) {
+        options.push(`${item.selectedGB}GB`);
+    }
+
+    if (item.selectedColor) {
+        options.push(`Color: ${item.selectedColor}`);
+    }
+
+    if (options.length === 0) {
+        return '';
+    }
+
+    return ` [${options.join(' | ')}]`;
+}
