@@ -1007,7 +1007,9 @@ function renderProducts() {
 
     const filteredProducts = applyFilters(products);
 
-    filteredProducts.forEach(product => {
+    const reversedProducts = [...filteredProducts].reverse();
+
+    reversedProducts.forEach(product => {
         const productCard = createProductCard(product);
         productsGrid.appendChild(productCard);
     });

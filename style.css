@@ -166,7 +166,54 @@ nav {
   align-items: center;
   padding: 20px 0;
 }
+.shipping-marquee {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 997;
+    background: transparent;
+}
 
+.shipping-marquee marquee {
+    padding: 10px 0;
+    color: var(--text-color);
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+}
+
+.shipping-marquee marquee i {
+    color: var(--accent-color);
+    margin-right: 5px;
+    font-size: 12px;
+    color: #F28C38;
+}
+
+.shipping-marquee marquee strong {
+    color: var(--accent-color);
+    margin: 0 5px;
+    font-weight: 600;
+}
+
+main {
+    margin-top: 45px;
+}
+
+@media (max-width: 768px) {
+    .shipping-marquee {
+        top: 60px;
+    }
+    
+    .shipping-marquee marquee {
+        font-size: 11px;
+        padding: 8px 0;
+    }
+    
+    main {
+        margin-top: 35px;
+    }
+}
 .logo {
   display: flex;
   align-items: center;
