@@ -680,7 +680,6 @@ const products = [
         "specs": {
             "pantalla": "6.9 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
             "procesador": "A19 Pro Bionic",
-            "almacenamiento": "256GB,512GB vale 49500",
             "camara": "Sistema de cámara de fusión triple: Principal de 48MP, Ultra Gran Angular de 48MP, Teleobjetivo Periscópico de 48MP con zoom óptico 8x",
             "bateria": "Hasta 40W de carga rápida con USB-C",
             "sistema": "iOS 19 (lanzamiento)",
@@ -701,7 +700,9 @@ const products = [
 
         gb_options: [
             { "gb": "256", "price": 45500 },
-            { "gb": "512", "price": 49500 }
+            { "gb": "512", "price": 45000 },
+            { "gb": "1TB (1024GB)", "price": 62500 },
+            { "gb": "2TB (2048GB)", "price": 83000 }
         ],
         colors: ["Naranja cósmico", "Azul profundo", "Plata"],
 
@@ -726,7 +727,6 @@ const products = [
         "specs": {
             "pantalla": "6.5 pulgadas Super Retina XDR OLED con ProMotion (hasta 120 Hz)",
             "procesador": "A19 Pro Bionic",
-            "almacenamiento": "256GB, 512GB y 1TB",
             "camara": "Cámara trasera de 48MP (lente principal) y cámara frontal de 18MP con Center Stage",
             "bateria": "Hasta 27 horas de reproducción de video",
             "sistema": "iOS 19 (lanzamiento)",
@@ -810,7 +810,6 @@ const products = [
         "specs": {
             "pantalla": "6.1 pulgadas Super Retina XDR OLED",
             "procesador": "A18 Bionic",
-            "almacenamiento": "128GB, 256GB y 512GB",
             "camara": "",
             "bateria": "Hasta 24 horas de reproducción de vídeo",
             "sistema": "iOS 19",

@@ -1156,7 +1156,7 @@ nav {
   position: absolute;
   left: 15px;
   top: 12px;
-  color: #777;
+  color: #ffffff91;
   transition: var(--transition);
   pointer-events: none;
   background: transparent;
@@ -1175,8 +1175,8 @@ nav {
 .form-group select:not([value=""])+label {
   top: -10px;
   font-size: 0.8rem;
-  color: var(--color-primary);
-  background: transparent;
+  background: #F28C38;
+  border-radius: 15px;
 }
 
 [data-theme="dark"] .form-group input:focus+label,
@@ -1981,7 +1981,7 @@ footer {
   font-size: 1.2rem;
   box-shadow: var(--shadow-md);
   transition: var(--transition);
-  margin-right: 1px;
+  margin-right: -1px;
 }
 
 .scroll-top-btn:hover {
