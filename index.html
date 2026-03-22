@@ -514,17 +514,13 @@
 </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
-
-    <!-- ═══════════════════════════════════════════════════
-         FIREBASE — Agrega pedidos y permutas a Firestore
-         en tiempo real sin cambiar nada de la tienda.
-    ════════════════════════════════════════════════════ -->
+    <!-- Firebase carga productos ANTES de que script.js arranque -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="firebase-config.js"></script>
-    <script src="firebase-products.js"></script>
+    <script src="firebase-loader.js"></script>
+    <script src="script.js"></script>
     <script src="firebase-integration.js"></script>
 </body>
 </html>
