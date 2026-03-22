@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin — MobileExpressHN</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Firebase SDK + config compartida -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <style>
+    /* ============ VARIABLES ============ */
+    :root {
+      --bg: #09090e;
+      --surface: #111116;
+      --surface2: #17171e;
+      --surface3: #1e1e27;
+      --border: rgba(255,255,255,0.065);
+      --accent: #c2470a;
+      --accent2: #e05c18;
+      --glow: rgba(194,71,10,0.14);
+      --text: #ededf5;
+      --text2: #8888a0;
+      --text3: #525268;
+      --green: #22c55e;
+      --blue: #3b82f6;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --sidebar: 245px;
+      --r: 11px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:15px;scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;overflow-x:hidden}
+
+    /* ============ SETUP SCREEN ============ */
+    #setupScreen{
+      position:fixed;inset:0;background:var(--bg);z-index:9999;
+      display:flex;align-items:center;justify-content:center;
+      padding:20px;
+    }
+    .setup-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:18px;padding:40px;max-width:540px;width:100%;
+    }
+    .setup-logo{
+      display:flex;align-items:center;gap:12px;margin-bottom:28px;
+    }
+    .setup-logo-icon{
+      width:46px;height:46px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+    }
+    .setup-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:6px}
+    .setup-sub{color:var(--text2);font-size:0.85rem;margin-bottom:28px;line-height:1.6}
+    .setup-steps{
+      background:var(--surface2);border-radius:10px;padding:16px 20px;
+      margin-bottom:24px;border:1px solid var(--border);
+      font-size:0.82rem;color:var(--text2);line-height:2;
+    }
+    .setup-steps strong{color:var(--text)}
+    .setup-steps a{color:var(--accent2);text-decoration:none}
+    .setup-steps a:hover{text-decoration:underline}
+    .setup-field{margin-bottom:14px}
+    .setup-label{font-size:0.75rem;color:var(--text2);font-weight:500;margin-bottom:5px;display:block}
+    .setup-input{
+      width:100%;background:var(--surface2);border:1px solid var(--border);
+      border-radius:8px;color:var(--text);padding:10px 13px;
+      font-family:'DM Sans',sans-serif;font-size:0.85rem;
+      transition:border-color .2s;
+    }
+    .setup-input:focus{outline:none;border-color:var(--accent)}
+    .setup-input::placeholder{color:var(--text3)}
+    .setup-btn{
+      width:100%;background:var(--accent);border:none;border-radius:9px;
+      color:#fff;font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;
+      padding:13px;cursor:pointer;transition:background .2s;margin-top:4px;
+    }
+    .setup-btn:hover{background:var(--accent2)}
+    .setup-error{color:var(--red);font-size:0.8rem;margin-top:10px;display:none}
+    .setup-note{font-size:0.72rem;color:var(--text3);margin-top:12px;text-align:center;line-height:1.5}
+
+    /* ============ LOGIN SCREEN ============ */
+    #loginScreen{
+      position:fixed;inset:0;background:var(--bg);z-index:9998;
+      display:none;align-items:center;justify-content:center;padding:20px;
+    }
+    #loginScreen.show{display:flex}
+    .login-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:18px;padding:40px;max-width:400px;width:100%;
+      text-align:center;
+    }
+    .login-icon{
+      width:60px;height:60px;border-radius:16px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.5rem;margin:0 auto 20px;
+    }
+    .login-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:6px}
+    .login-sub{color:var(--text2);font-size:0.82rem;margin-bottom:28px}
+
+    /* ============ SIDEBAR ============ */
+    .sidebar{
+      width:var(--sidebar);background:var(--surface);
+      border-right:1px solid var(--border);
+      display:flex;flex-direction:column;
+      position:fixed;top:0;left:0;bottom:0;z-index:100;
+    }
+    .sidebar-logo{
+      padding:20px 18px 16px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;gap:10px;
+    }
+    .logo-icon{
+      width:32px;height:32px;border-radius:8px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;
+    }
+    .logo-text{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;line-height:1.2}
+    .logo-sub{font-size:0.65rem;color:var(--text3)}
+    .sidebar-nav{flex:1;padding:14px 0;overflow-y:auto}
+    .nav-label{font-size:0.62rem;font-weight:600;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;padding:10px 18px 5px}
+    .nav-item{
+      display:flex;align-items:center;gap:9px;
+      padding:8px 18px;color:var(--text2);cursor:pointer;
+      border-left:2px solid transparent;font-size:0.83rem;
+      transition:all .18s;
+    }
+    .nav-item:hover{color:var(--text);background:var(--surface2)}
+    .nav-item.active{color:var(--accent2);background:var(--glow);border-left-color:var(--accent);font-weight:500}
+    .nav-item i{width:17px;text-align:center;font-size:0.82rem}
+    .nav-badge{
+      margin-left:auto;background:var(--accent);color:#fff;
+      font-size:0.62rem;padding:1px 6px;border-radius:20px;font-weight:600;
+    }
+    .firebase-status{
+      margin:12px 18px;padding:8px 12px;border-radius:8px;
+      background:var(--surface2);border:1px solid var(--border);
+      font-size:0.72rem;display:flex;align-items:center;gap:7px;
+    }
+    .status-dot{width:7px;height:7px;border-radius:50%;background:var(--text3)}
+    .status-dot.connected{background:var(--green);box-shadow:0 0 6px var(--green)}
+    .status-dot.error{background:var(--red)}
+    .sidebar-footer{padding:14px 18px;border-top:1px solid var(--border)}
+    .admin-profile{display:flex;align-items:center;gap:9px}
+    .admin-avatar{
+      width:32px;height:32px;border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),#ff7a40);
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
+    }
+    .admin-name{font-size:0.78rem;font-weight:500}
+    .admin-role{font-size:0.67rem;color:var(--text3)}
+    .logout-btn{
+      margin-left:auto;width:26px;height:26px;border-radius:6px;
+      background:transparent;border:1px solid var(--border);
+      color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:0.72rem;transition:all .2s;
+    }
+    .logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+    /* ============ MAIN ============ */
+    .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
+    .topbar{
+      height:56px;background:var(--surface);border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 26px;gap:14px;
+      position:sticky;top:0;z-index:50;
+    }
+    .topbar-title{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;flex:1}
+    .topbar-actions{display:flex;align-items:center;gap:9px}
+    .tb-btn{
+      background:var(--surface2);border:1px solid var(--border);
+      color:var(--text2);padding:6px 13px;border-radius:7px;cursor:pointer;
+      font-size:0.78rem;font-family:'DM Sans',sans-serif;
+      transition:all .2s;display:flex;align-items:center;gap:6px;
+    }
+    .tb-btn:hover{border-color:var(--accent);color:var(--text)}
+    .tb-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+    .tb-btn.primary:hover{background:var(--accent2)}
+    .tb-btn:disabled{opacity:.4;cursor:not-allowed}
+    .search-wrap{position:relative}
+    .search-wrap i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:0.72rem}
+    .tb-search{
+      background:var(--surface2);border:1px solid var(--border);border-radius:7px;
+      padding:7px 11px 7px 28px;color:var(--text);
+      font-family:'DM Sans',sans-serif;font-size:0.78rem;width:200px;
+    }
+    .tb-search:focus{outline:none;border-color:var(--accent)}
+    .notif-btn{
+      width:32px;height:32px;background:var(--surface2);border:1px solid var(--border);
+      border-radius:7px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--text2);font-size:0.82rem;position:relative;
+    }
+    .notif-dot{position:absolute;top:5px;right:5px;width:6px;height:6px;background:var(--accent);border-radius:50%;border:1.5px solid var(--surface)}
+
+    /* ============ CONTENT ============ */
+    .content{padding:26px;flex:1}
+    .page{display:none}
+    .page.active{display:block}
+
+    /* ============ LOADING ============ */
+    .loading-overlay{
+      display:flex;align-items:center;justify-content:center;
+      gap:10px;padding:60px 20px;color:var(--text3);font-size:0.85rem;
+    }
+    .spinner{
+      width:20px;height:20px;border:2px solid var(--border);
+      border-top-color:var(--accent);border-radius:50%;
+      animation:spin .7s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ============ STATS ============ */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .stat-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r);padding:18px;position:relative;overflow:hidden;
+      transition:border-color .2s;
+    }
+    .stat-card:hover{border-color:var(--accent)}
+    .stat-label{font-size:0.72rem;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+    .stat-value{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:700;line-height:1;margin-bottom:5px}
+    .stat-change{font-size:0.72rem;color:var(--text3);display:flex;align-items:center;gap:4px}
+    .stat-icon{
+      position:absolute;top:18px;right:18px;width:34px;height:34px;
+      border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;
+    }
+
+    /* ============ PANELS ============ */
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    .panel-header{
+      padding:14px 18px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;gap:10px;
+    }
+    .panel-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.87rem;flex:1}
+    .panel-action{font-size:0.73rem;color:var(--accent2);cursor:pointer}
+    .panel-body{padding:18px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    /* ============ TABLE ============ */
+    .data-table{width:100%;border-collapse:collapse}
+    .data-table th{
+      font-size:0.67rem;text-transform:uppercase;letter-spacing:.08em;
+      color:var(--text3);font-weight:600;padding:9px 14px;text-align:left;
+      border-bottom:1px solid var(--border);
+    }
+    .data-table td{
+      padding:11px 14px;font-size:0.81rem;
+      border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;
+    }
+    .data-table tbody tr:last-child td{border-bottom:none}
+    .data-table tbody tr:hover td{background:var(--surface2);color:var(--text)}
+    .data-table td.bold{color:var(--text);font-weight:500}
+
+    /* ============ BADGES ============ */
+    .badge{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:6px;font-size:0.68rem;font-weight:600}
+    .badge.green{background:rgba(34,197,94,.12);color:var(--green)}
+    .badge.blue{background:rgba(59,130,246,.12);color:var(--blue)}
+    .badge.yellow{background:rgba(245,158,11,.12);color:var(--yellow)}
+    .badge.red{background:rgba(239,68,68,.12);color:var(--red)}
+    .badge.orange{background:var(--glow);color:var(--accent2)}
+    .badge.gray{background:rgba(255,255,255,.06);color:var(--text2)}
+
+    /* ============ PRODUCT GRID ============ */
+    .filter-bar{display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+    .f-select,.f-input{
+      background:var(--surface);border:1px solid var(--border);border-radius:7px;
+      color:var(--text);padding:7px 11px;font-family:'DM Sans',sans-serif;font-size:0.78rem;
+    }
+    .f-select:focus,.f-input:focus{outline:none;border-color:var(--accent)}
+    .f-input{width:190px}
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}
+    .prod-card{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+      overflow:hidden;transition:border-color .2s,transform .2s;
+    }
+    .prod-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .prod-img-wrap{
+      height:130px;background:var(--surface2);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    .prod-img{max-height:112px;max-width:90%;object-fit:contain}
+    .prod-badges{position:absolute;top:7px;left:7px;display:flex;flex-direction:column;gap:4px}
+    .prod-body{padding:11px}
+    .prod-name{font-weight:600;font-size:0.83rem;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .prod-brand{font-size:0.7rem;color:var(--text3);margin-bottom:7px}
+    .prod-price{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent2);font-size:0.97rem}
+    .prod-orig{font-size:0.7rem;color:var(--text3);text-decoration:line-through}
+    .prod-footer{display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:7px;border-top:1px solid var(--border)}
+    .prod-actions{display:flex;gap:5px}
+    .icon-btn{
+      width:27px;height:27px;border-radius:6px;border:1px solid var(--border);
+      background:var(--surface2);color:var(--text2);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:0.7rem;
+      transition:all .18s;
+    }
+    .icon-btn:hover{border-color:var(--accent);color:var(--accent2)}
+    .icon-btn.del:hover{border-color:var(--red);color:var(--red)}
+
+    /* ============ SECTION HEADER ============ */
+    .section-hd{display:flex;align-items:center;margin-bottom:18px;gap:12px}
+    .section-hd h2{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;flex:1}
+    .section-hd span{color:var(--accent2)}
+
+    /* ============ MODAL ============ */
+    .modal-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);
+      display:flex;align-items:center;justify-content:center;z-index:1000;
+      opacity:0;pointer-events:none;transition:opacity .22s;
+    }
+    .modal-overlay.open{opacity:1;pointer-events:all}
+    .modal{
+      background:var(--surface);border:1px solid var(--border);border-radius:15px;
+      width:560px;max-height:90vh;overflow-y:auto;padding:26px;
+      transform:translateY(14px);transition:transform .22s;
+    }
+    .modal-overlay.open .modal{transform:translateY(0)}
+    .modal-title{
+      font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;
+      margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;
+    }
+    .modal-close{
+      width:26px;height:26px;border-radius:6px;background:var(--surface2);
+      border:1px solid var(--border);color:var(--text2);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:0.82rem;
+    }
+    .modal-close:hover{color:var(--text);border-color:var(--accent)}
+
+    /* ============ FORM ============ */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .form-group{display:flex;flex-direction:column;gap:5px}
+    .form-group.full{grid-column:span 2}
+    .form-label{font-size:0.72rem;color:var(--text2);font-weight:500}
+    .form-input,.form-select,.form-textarea{
+      background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+      color:var(--text);padding:9px 11px;font-family:'DM Sans',sans-serif;font-size:0.83rem;
+      transition:border-color .2s;width:100%;
+    }
+    .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--accent)}
+    .form-textarea{resize:vertical;min-height:75px}
+    .form-check{display:flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--text2);cursor:pointer}
+    .form-check input{accent-color:var(--accent);width:13px;height:13px}
+    .modal-footer{display:flex;gap:9px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+    .btn{padding:8px 17px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:500;cursor:pointer;transition:all .18s;border:1px solid var(--border)}
+    .btn.secondary{background:var(--surface2);color:var(--text2)}
+    .btn.secondary:hover{color:var(--text);border-color:var(--accent)}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+    .btn.primary:hover{background:var(--accent2)}
+    .btn.danger{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2);color:var(--red)}
+    .btn.danger:hover{background:var(--red);color:#fff}
+    .btn:disabled{opacity:.4;cursor:not-allowed}
+
+    /* ============ ORDER PILLS ============ */
+    .os-wrap{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+    .os-pill{padding:5px 13px;border-radius:20px;font-size:0.73rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text2);transition:all .18s}
+    .os-pill.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+    /* ============ SETTINGS ============ */
+    .setting-row{display:flex;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);gap:14px}
+    .setting-row:last-child{border-bottom:none}
+    .setting-info{flex:1}
+    .setting-name{font-size:0.83rem;font-weight:500}
+    .setting-desc{font-size:0.73rem;color:var(--text3);margin-top:2px}
+    .toggle{width:40px;height:22px;background:var(--surface3);border-radius:11px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:1px solid var(--border)}
+    .toggle.on{background:var(--accent);border-color:var(--accent)}
+    .toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:2px;left:2px;transition:left .2s}
+    .toggle.on::after{left:20px}
+
+    /* ============ TOAST ============ */
+    .toast-container{position:fixed;bottom:22px;right:22px;z-index:2000;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+    .toast{
+      background:var(--surface);border:1px solid var(--border);border-radius:9px;
+      padding:11px 15px;font-size:0.8rem;display:flex;align-items:center;gap:9px;
+      box-shadow:0 8px 24px rgba(0,0,0,.4);animation:slideIn .25s ease;max-width:290px;
+    }
+    .toast i{font-size:0.88rem}
+    .toast.success{border-color:var(--green)}
+    .toast.success i{color:var(--green)}
+    .toast.error{border-color:var(--red)}
+    .toast.error i{color:var(--red)}
+    .toast.info{border-color:var(--blue)}
+    .toast.info i{color:var(--blue)}
+    @keyframes slideIn{from{transform:translateX(18px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+    /* ============ EMPTY ============ */
+    .empty-state{text-align:center;padding:48px 20px;color:var(--text3)}
+    .empty-state i{font-size:2rem;margin-bottom:11px;display:block}
+    .empty-state p{font-size:0.83rem}
+
+    /* ============ CHART ============ */
+    .chart-area{height:170px;display:flex;align-items:flex-end;gap:5px;padding:0 3px}
+    .chart-bar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(to top,var(--accent),var(--accent2));transition:opacity .2s;min-height:4px}
+    .chart-bar:hover{opacity:1!important}
+    .chart-labels{display:flex;gap:5px;padding:5px 3px 0}
+    .chart-label{flex:1;text-align:center;font-size:0.63rem;color:var(--text3)}
+
+    /* ============ DONUT ============ */
+    .donut-wrap{display:flex;align-items:center;gap:18px}
+    .donut-legend{display:flex;flex-direction:column;gap:7px}
+    .legend-item{display:flex;align-items:center;gap:7px;font-size:0.76rem}
+    .legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+    .legend-label{color:var(--text2)}
+    .legend-val{margin-left:auto;font-weight:600;color:var(--text);padding-left:10px}
+
+    /* ============ ACTIVITY ============ */
+    .activity-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .activity-item:last-child{border-bottom:none}
+    .activity-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.77rem;flex-shrink:0;margin-top:1px}
+    .activity-main{font-size:0.8rem;color:var(--text);margin-bottom:2px}
+    .activity-main strong{color:var(--accent2)}
+    .activity-time{font-size:0.68rem;color:var(--text3)}
+
+    /* ============ QUICK ACTIONS ============ */
+    .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .qa-btn{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:13px;cursor:pointer;transition:all .18s;text-align:left;display:flex;align-items:center;gap:9px}
+    .qa-btn:hover{border-color:var(--accent);background:var(--glow)}
+    .qa-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.83rem;flex-shrink:0}
+    .qa-label{font-size:0.76rem;font-weight:500;color:var(--text)}
+    .qa-desc{font-size:0.66rem;color:var(--text3);margin-top:1px}
+
+    /* ============ PROG BAR ============ */
+    .prog-wrap{background:var(--surface3);border-radius:4px;height:5px;overflow:hidden}
+    .prog-bar{height:100%;border-radius:4px;transition:width .3s}
+
+    /* ============ SCROLLBAR ============ */
+    ::-webkit-scrollbar{width:4px;height:4px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
+
+    @media(max-width:1100px){.stats-grid{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+    @media(max-width:700px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:span 1}}
+  </style>
+</head>
+<body>
+
+<!-- ===================== SETUP SCREEN ===================== -->
+<div id="setupScreen">
+  <div class="setup-card">
+    <div class="setup-logo">
+      <div class="setup-logo-icon"><i class="fas fa-mobile-alt" style="color:#fff"></i></div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem">MobileExpressHN</div>
+        <div style="font-size:0.75rem;color:var(--text2)">Configuración inicial de Firebase</div>
+      </div>
+    </div>
+
+    <div class="setup-steps">
+      <strong>Pasos para crear tu proyecto Firebase:</strong><br>
+      1. Ve a <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a><br>
+      2. Clic en <strong>"Agregar proyecto"</strong> → ponle un nombre → crear<br>
+      3. En el menú lateral ve a <strong>Firestore Database</strong> → Crear base de datos → Modo producción<br>
+      4. Ve a <strong>Configuración del proyecto</strong> (ícono ⚙️) → <strong>"Tus aplicaciones"</strong> → Web (&lt;/&gt;)<br>
+      5. Registra la app y copia las credenciales abajo 👇
+    </div>
+
+    <div class="setup-field">
+      <label class="setup-label">API Key</label>
+      <input class="setup-input" id="cfg_apiKey" placeholder="AIzaSy...">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Auth Domain</label>
+      <input class="setup-input" id="cfg_authDomain" placeholder="tu-proyecto.firebaseapp.com">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Project ID</label>
+      <input class="setup-input" id="cfg_projectId" placeholder="tu-proyecto">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Storage Bucket</label>
+      <input class="setup-input" id="cfg_storageBucket" placeholder="tu-proyecto.appspot.com">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Messaging Sender ID</label>
+      <input class="setup-input" id="cfg_messagingSenderId" placeholder="123456789">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">App ID</label>
+      <input class="setup-input" id="cfg_appId" placeholder="1:123:web:abc...">
+    </div>
+
+    <button class="setup-btn" onclick="connectFirebase()">
+      <i class="fas fa-plug"></i> Conectar a Firebase
+    </button>
+    <div class="setup-error" id="setupError"></div>
+    <div class="setup-note">
+      Tus credenciales se guardan solo en este navegador (localStorage).<br>
+      Nadie más puede verlas.
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LOGIN SCREEN ===================== -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-icon"><i class="fas fa-lock" style="color:#fff"></i></div>
+    <div class="login-title">Panel de Administrador</div>
+    <div class="login-sub">Ingresa con tu cuenta de Firebase</div>
+    <div class="form-group" style="margin-bottom:12px;text-align:left">
+      <label class="form-label">Correo electrónico</label>
+      <input class="form-input" type="email" id="loginEmail" placeholder="admin@mobileexpresshn.com">
+    </div>
+    <div class="form-group" style="margin-bottom:20px;text-align:left">
+      <label class="form-label">Contraseña</label>
+      <input class="form-input" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="setup-btn" onclick="doLogin()" id="loginBtn">
+      <i class="fas fa-sign-in-alt"></i> Ingresar
+    </button>
+    <div class="setup-error" id="loginError" style="margin-top:10px;text-align:center"></div>
+    <div class="setup-note" style="margin-top:16px">
+      <a href="#" onclick="resetConfig()" style="color:var(--text3)">Cambiar configuración de Firebase</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SIDEBAR ===================== -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"><i class="fas fa-mobile-alt"></i></div>
+    <div>
+      <div class="logo-text">MobileExpressHN</div>
+      <div class="logo-sub">Admin Panel</div>
+    </div>
+  </div>
+
+  <div class="firebase-status" id="fbStatus">
+    <div class="status-dot" id="fbDot"></div>
+    <span id="fbStatusText">Desconectado</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">General</div>
+    <div class="nav-item active" onclick="navigate('dashboard',this)"><i class="fas fa-th-large"></i> Dashboard</div>
+    <div class="nav-item" onclick="navigate('orders',this)"><i class="fas fa-shopping-bag"></i> Pedidos <span class="nav-badge" id="orderBadge">0</span></div>
+
+    <div class="nav-label">Catálogo</div>
+    <div class="nav-item" onclick="navigate('products',this)"><i class="fas fa-box"></i> Productos</div>
+    <div class="nav-item" onclick="navigate('inventory',this)"><i class="fas fa-warehouse"></i> Inventario</div>
+
+    <div class="nav-label">Clientes</div>
+    <div class="nav-item" onclick="navigate('customers',this)"><i class="fas fa-users"></i> Clientes</div>
+    <div class="nav-item" onclick="navigate('tradein',this)"><i class="fas fa-sync-alt"></i> Permutas <span class="nav-badge" id="tradeBadge">0</span></div>
+
+    <div class="nav-label">Sistema</div>
+    <div class="nav-item" onclick="navigate('settings',this)"><i class="fas fa-cog"></i> Configuración</div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-profile">
+      <div class="admin-avatar" id="adminAvatar">A</div>
+      <div>
+        <div class="admin-name" id="adminName">Admin</div>
+        <div class="admin-role">Administrador</div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()" title="Cerrar sesión"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </div>
+</aside>
+
+<!-- ===================== MAIN ===================== -->
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-actions">
+      <div class="search-wrap">
+        <i class="fas fa-search"></i>
+        <input class="tb-search" type="text" placeholder="Buscar..." id="globalSearch" oninput="filterProds()">
+      </div>
+      <div class="notif-btn" id="notifBtn"><i class="fas fa-bell"></i><div class="notif-dot"></div></div>
+      <button class="tb-btn primary" onclick="openAddProduct()"><i class="fas fa-plus"></i> Nuevo Producto</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="section-hd">
+        <h2>Dashboard <span>General</span></h2>
+        <span style="font-size:0.76rem;color:var(--text3)" id="dashDate"></span>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(34,197,94,.1);color:var(--green)"><i class="fas fa-dollar-sign"></i></div>
+          <div class="stat-label">Ingresos Totales</div>
+          <div class="stat-value" style="color:var(--green)" id="statIngresos">L.0</div>
+          <div class="stat-change">Suma de pedidos completados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(59,130,246,.1);color:var(--blue)"><i class="fas fa-shopping-bag"></i></div>
+          <div class="stat-label">Total Pedidos</div>
+          <div class="stat-value" style="color:var(--blue)" id="statPedidos">0</div>
+          <div class="stat-change" id="statPendientes">0 pendientes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(245,158,11,.1);color:var(--yellow)"><i class="fas fa-box"></i></div>
+          <div class="stat-label">Productos</div>
+          <div class="stat-value" style="color:var(--yellow)" id="statProductos">0</div>
+          <div class="stat-change" id="statOfertas">0 en oferta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--glow);color:var(--accent2)"><i class="fas fa-sync-alt"></i></div>
+          <div class="stat-label">Permutas</div>
+          <div class="stat-value" style="color:var(--accent2)" id="statPermutas">0</div>
+          <div class="stat-change" id="statPermuPend">0 por revisar</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:14px">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Ventas por mes (estimado)</div></div>
+          <div class="panel-body">
+            <div class="chart-area" id="salesChart"></div>
+            <div class="chart-labels" id="salesLabels"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Categorías</div></div>
+          <div class="panel-body">
+            <div class="donut-wrap">
+              <svg width="110" height="110" viewBox="0 0 110 110">
+                <circle cx="55" cy="55" r="44" fill="none" stroke="var(--surface3)" stroke-width="16"/>
+                <circle cx="55" cy="55" r="44" fill="none" stroke="var(--accent)" stroke-width="16" stroke-dasharray="166 110" stroke-linecap="round" transform="rotate(-90 55 55)" id="catArc1"/>
+                <circle cx="55" cy="55" r="44" fill="none" stroke="var(--blue)" stroke-width="16" stroke-dasharray="69 207" stroke-linecap="round" stroke-dashoffset="-166" transform="rotate(-90 55 55)" id="catArc2"/>
+                <circle cx="55" cy="55" r="44" fill="none" stroke="var(--yellow)" stroke-width="16" stroke-dasharray="41 235" stroke-linecap="round" stroke-dashoffset="-235" transform="rotate(-90 55 55)" id="catArc3"/>
+                <text x="55" y="51" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700" font-family="Syne,sans-serif" id="donutTotal">0</text>
+                <text x="55" y="64" text-anchor="middle" fill="var(--text3)" font-size="8">productos</text>
+              </svg>
+              <div class="donut-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div><span class="legend-label">Smartphones</span><span class="legend-val" id="lgSmart">0</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div><span class="legend-label">Consolas</span><span class="legend-val" id="lgConsola">0</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div><span class="legend-label">Accesorios</span><span class="legend-val" id="lgAccesorio">0</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Últimos Pedidos</div><span class="panel-action" onclick="navigate('orders',null)">Ver todos</span></div>
+          <table class="data-table"><thead><tr><th>#</th><th>Cliente</th><th>Total</th><th>Estado</th></tr></thead>
+          <tbody id="dashOrders"></tbody></table>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Acciones Rápidas</div></div>
+          <div class="panel-body">
+            <div class="quick-actions">
+              <div class="qa-btn" onclick="openAddProduct()">
+                <div class="qa-icon" style="background:var(--glow);color:var(--accent2)"><i class="fas fa-plus"></i></div>
+                <div><div class="qa-label">Nuevo Producto</div><div class="qa-desc">Agregar al catálogo</div></div>
+              </div>
+              <div class="qa-btn" onclick="navigate('orders',null)">
+                <div class="qa-icon" style="background:rgba(59,130,246,.1);color:var(--blue)"><i class="fas fa-list"></i></div>
+                <div><div class="qa-label">Ver Pedidos</div><div class="qa-desc">Gestionar órdenes</div></div>
+              </div>
+              <div class="qa-btn" onclick="navigate('tradein',null)">
+                <div class="qa-icon" style="background:rgba(245,158,11,.1);color:var(--yellow)"><i class="fas fa-sync-alt"></i></div>
+                <div><div class="qa-label">Permutas</div><div class="qa-desc">Revisar solicitudes</div></div>
+              </div>
+              <div class="qa-btn" onclick="exportCSV()">
+                <div class="qa-icon" style="background:rgba(34,197,94,.1);color:var(--green)"><i class="fas fa-download"></i></div>
+                <div><div class="qa-label">Exportar CSV</div><div class="qa-desc">Descargar catálogo</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="page" id="page-products">
+      <div class="section-hd">
+        <h2>Gestión de <span>Productos</span></h2>
+        <button class="tb-btn primary" onclick="openAddProduct()"><i class="fas fa-plus"></i> Nuevo</button>
+      </div>
+      <div class="filter-bar">
+        <input class="f-input" type="text" placeholder="Buscar producto..." id="prodSearch" oninput="filterProds()">
+        <select class="f-select" id="prodCat" onchange="filterProds()">
+          <option value="">Todas las categorías</option>
+          <option value="smartphones">Smartphones</option>
+          <option value="consolas">Consolas</option>
+          <option value="accesorios">Accesorios</option>
+        </select>
+        <select class="f-select" id="prodOffer" onchange="filterProds()">
+          <option value="">Todos</option>
+          <option value="offer">En oferta</option>
+          <option value="best">Más vendidos</option>
+        </select>
+        <span style="margin-left:auto;font-size:0.76rem;color:var(--text3)">
+          <strong id="prodCount" style="color:var(--text)">0</strong> productos
+        </span>
+      </div>
+      <div class="product-grid" id="productGrid">
+        <div class="loading-overlay" style="grid-column:1/-1"><div class="spinner"></div> Cargando productos...</div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="page" id="page-orders">
+      <div class="section-hd"><h2>Gestión de <span>Pedidos</span></h2></div>
+      <div class="os-wrap">
+        <span class="os-pill active" onclick="filterOrders('all',this)">Todos</span>
+        <span class="os-pill" onclick="filterOrders('pendiente',this)">Pendientes</span>
+        <span class="os-pill" onclick="filterOrders('proceso',this)">En proceso</span>
+        <span class="os-pill" onclick="filterOrders('enviado',this)">Enviados</span>
+        <span class="os-pill" onclick="filterOrders('completado',this)">Completados</span>
+      </div>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Cliente</th><th>Producto</th><th>Total</th><th>Pago</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+          <tbody id="ordersTbody"><tr><td colspan="8"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- INVENTORY -->
+    <div class="page" id="page-inventory">
+      <div class="section-hd"><h2>Control de <span>Inventario</span></h2></div>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Precio Original</th><th>Descuento</th><th>Oferta</th><th>Bestseller</th></tr></thead>
+          <tbody id="inventoryTbody"><tr><td colspan="7"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS -->
+    <div class="page" id="page-customers">
+      <div class="section-hd"><h2>Base de <span>Clientes</span></h2></div>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Cliente</th><th>Teléfono</th><th>Dirección</th><th>Pago</th><th>Pedidos</th><th>Total</th><th>WhatsApp</th></tr></thead>
+          <tbody id="customersTbody"><tr><td colspan="7"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TRADE-IN -->
+    <div class="page" id="page-tradein">
+      <div class="section-hd"><h2>Solicitudes de <span>Permuta</span></h2></div>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>ID</th><th>Dispositivo</th><th>Almacenamiento</th><th>Estado</th><th>Notas</th><th>Fecha</th><th>Acciones</th></tr></thead>
+          <tbody id="tradeTbody"><tr><td colspan="7"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="section-hd"><h2>Configuración <span>del Sistema</span></h2></div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Información de la Tienda</div></div>
+          <div class="panel-body">
+            <div class="form-group" style="margin-bottom:11px"><label class="form-label">Nombre</label><input class="form-input" value="MobileExpressHN"></div>
+            <div class="form-group" style="margin-bottom:11px"><label class="form-label">WhatsApp</label><input class="form-input" value="+504 9681-1650"></div>
+            <div class="form-group" style="margin-bottom:11px"><label class="form-label">Email</label><input class="form-input" value="mobileexpresshn@gmail.com"></div>
+            <div class="form-group" style="margin-bottom:16px"><label class="form-label">Dirección</label><input class="form-input" value="Tegucigalpa, Honduras"></div>
+            <button class="btn primary" onclick="showToast('Guardado correctamente','success')"><i class="fas fa-save"></i> Guardar</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Firebase</div></div>
+          <div class="panel-body">
+            <div class="setting-row">
+              <div class="setting-info"><div class="setting-name">Estado de conexión</div><div class="setting-desc" id="fbSettingStatus">—</div></div>
+              <span class="badge green" id="fbSettingBadge">Conectado</span>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info"><div class="setting-name">Proyecto</div><div class="setting-desc" id="fbProjectId">—</div></div>
+            </div>
+            <div style="margin-top:16px">
+              <button class="btn danger" onclick="resetConfig()"><i class="fas fa-unlink"></i> Desconectar y reconfigurar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- MODAL: PRODUCTO -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modalTitle">Nuevo Producto</span>
+      <button class="modal-close" onclick="closeModal('productModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Nombre *</label><input class="form-input" id="fName" placeholder="iPhone 17 Pro"></div>
+      <div class="form-group"><label class="form-label">Marca *</label><input class="form-input" id="fBrand" placeholder="Apple"></div>
+      <div class="form-group"><label class="form-label">Categoría *</label>
+        <select class="form-select" id="fCategory">
+          <option value="smartphones">Smartphones</option>
+          <option value="consolas">Consolas</option>
+          <option value="accesorios">Accesorios</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Badge</label><input class="form-input" id="fBadge" placeholder="Nuevo, Oferta..."></div>
+      <div class="form-group"><label class="form-label">Precio actual (L.) *</label><input class="form-input" type="number" id="fPrice" placeholder="23500"></div>
+      <div class="form-group"><label class="form-label">Precio original (L.)</label><input class="form-input" type="number" id="fOriginalPrice" placeholder="32995"></div>
+      <div class="form-group"><label class="form-label">Rating (0-5)</label><input class="form-input" type="number" id="fRating" min="0" max="5" step="0.1" placeholder="4.5"></div>
+      <div class="form-group"><label class="form-label">Reseñas</label><input class="form-input" type="number" id="fReviews" placeholder="10"></div>
+      <div class="form-group full"><label class="form-label">URL Imagen Principal</label><input class="form-input" id="fImage" placeholder="https://..."></div>
+      <div class="form-group full"><label class="form-label">Descripción</label><textarea class="form-textarea" id="fDesc" placeholder="Descripción del producto..."></textarea></div>
+      <div class="form-group full" style="flex-direction:row;gap:20px">
+        <label class="form-check"><input type="checkbox" id="fBestseller"> Bestseller</label>
+        <label class="form-check"><input type="checkbox" id="fOffer"> En Oferta</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn secondary" onclick="closeModal('productModal')">Cancelar</button>
+      <button class="btn primary" id="saveProdBtn" onclick="saveProduct()"><i class="fas fa-save"></i> Guardar en Firebase</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PEDIDO -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span>Detalle del Pedido</span>
+      <button class="modal-close" onclick="closeModal('orderModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="orderModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn secondary" onclick="closeModal('orderModal')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===================== SCRIPTS ===================== -->
+<script>
+// ═══════════════════════════════════════════
+//  FIREBASE INIT
+// ═══════════════════════════════════════════
+let db = null;
+let auth = null;
+let currentOrderFilter = 'all';
+let editingId = null;
+let allProducts = [];
+let allOrders = [];
+let allTradeIns = [];
+let unsubscribers = [];
+
+const LS_KEY = 'mexhn_fb_config';
+
+function getSavedConfig() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)); } catch { return null; }
+}
+
+function saveConfig(cfg) {
+  localStorage.setItem(LS_KEY, JSON.stringify(cfg));
+}
+
+function resetConfig() {
+  if (!confirm('¿Desconectar Firebase y reconfigurar?')) return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+}
+
+async function connectFirebase() {
+  const cfg = {
+    apiKey: document.getElementById('cfg_apiKey').value.trim(),
+    authDomain: document.getElementById('cfg_authDomain').value.trim(),
+    projectId: document.getElementById('cfg_projectId').value.trim(),
+    storageBucket: document.getElementById('cfg_storageBucket').value.trim(),
+    messagingSenderId: document.getElementById('cfg_messagingSenderId').value.trim(),
+    appId: document.getElementById('cfg_appId').value.trim(),
+  };
+  const err = document.getElementById('setupError');
+  if (!cfg.apiKey || !cfg.projectId) {
+    err.textContent = 'API Key y Project ID son requeridos.';
+    err.style.display = 'block'; return;
+  }
+  err.style.display = 'none';
+  try {
+    initFirebaseApp(cfg);
+    // test connection
+    await db.collection('_ping').limit(1).get();
+    saveConfig(cfg);
+    document.getElementById('setupScreen').style.display = 'none';
+    showLoginScreen();
+  } catch(e) {
+    err.textContent = 'Error: ' + (e.message || 'No se pudo conectar. Verifica tus credenciales.');
+    err.style.display = 'block';
+  }
+}
+
+function initFirebaseApp(cfg) {
+  if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
+  firebase.initializeApp(cfg);
+  db = firebase.firestore();
+  auth = firebase.auth();
+  setFbStatus('connecting');
+}
+
+function setFbStatus(state) {
+  const dot = document.getElementById('fbDot');
+  const txt = document.getElementById('fbStatusText');
+  if (state === 'connected') { dot.className='status-dot connected'; txt.textContent='Firebase conectado'; }
+  else if (state === 'error') { dot.className='status-dot error'; txt.textContent='Error de conexión'; }
+  else { dot.className='status-dot'; txt.textContent='Conectando...'; }
+}
+
+// ═══════════════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════════════
+function showLoginScreen() {
+  document.getElementById('loginScreen').classList.add('show');
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginError');
+  if (!email || !pass) { err.textContent='Completa todos los campos'; err.style.display='block'; return; }
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ingresando...';
+  err.style.display = 'none';
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+  } catch(e) {
+    const msgs = { 'auth/user-not-found':'Usuario no encontrado.', 'auth/wrong-password':'Contraseña incorrecta.', 'auth/invalid-email':'Email inválido.', 'auth/too-many-requests':'Demasiados intentos. Espera un momento.' };
+    err.textContent = msgs[e.code] || e.message;
+    err.style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Ingresar';
+  }
+}
+
+function doLogout() {
+  if (!confirm('¿Cerrar sesión?')) return;
+  auth.signOut();
+}
+
+// ═══════════════════════════════════════════
+//  REALTIME LISTENERS
+// ═══════════════════════════════════════════
+function startListeners() {
+  // Products
+  const u1 = db.collection('productos').onSnapshot(snap => {
+    allProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderProducts();
+    renderInventory();
+    updateDashStats();
+  }, e => { console.error(e); setFbStatus('error'); });
+
+  // Orders
+  const u2 = db.collection('pedidos').orderBy('fecha','desc').onSnapshot(snap => {
+    allOrders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderOrders();
+    renderCustomers();
+    updateDashStats();
+  }, e => console.error(e));
+
+  // Trade-ins
+  const u3 = db.collection('permutas').orderBy('fecha','desc').onSnapshot(snap => {
+    allTradeIns = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderTradeIns();
+    updateDashStats();
+  }, e => console.error(e));
+
+  unsubscribers = [u1, u2, u3];
+  setFbStatus('connected');
+}
+
+function stopListeners() {
+  unsubscribers.forEach(u => u && u());
+  unsubscribers = [];
+}
+
+// ═══════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════
+function navigate(page, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  if (el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
+  const titles = { dashboard:'Dashboard', products:'Productos', orders:'Pedidos', inventory:'Inventario', customers:'Clientes', tradein:'Permutas', settings:'Configuración' };
+  document.getElementById('topbarTitle').textContent = titles[page] || page;
+}
+
+// ═══════════════════════════════════════════
+//  PRODUCTS
+// ═══════════════════════════════════════════
+function filterProds() {
+  const s = (document.getElementById('prodSearch')?.value || document.getElementById('globalSearch')?.value || '').toLowerCase();
+  const cat = document.getElementById('prodCat')?.value || '';
+  const offer = document.getElementById('prodOffer')?.value || '';
+  return allProducts.filter(p => {
+    if (s && !p.name?.toLowerCase().includes(s) && !p.brand?.toLowerCase().includes(s)) return false;
+    if (cat && p.category !== cat) return false;
+    if (offer === 'offer' && !p.isOnOffer) return false;
+    if (offer === 'best' && !p.isBestseller) return false;
+    return true;
+  });
+}
+
+function renderProducts() {
+  const list = filterProds();
+  const el = document.getElementById('productGrid');
+  document.getElementById('prodCount').textContent = list.length;
+  if (!list.length) { el.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-box-open"></i><p>No hay productos</p></div>'; return; }
+  el.innerHTML = list.map(p => {
+    const disc = p.originalPrice ? Math.round((1-p.price/p.originalPrice)*100) : 0;
+    const stars = '★'.repeat(Math.round(p.rating||0)) + '☆'.repeat(5-Math.round(p.rating||0));
+    return `<div class="prod-card">
+      <div class="prod-img-wrap">
+        <img class="prod-img" src="${p.images?.[0]||''}" onerror="this.style.opacity=0.15" alt="${p.name}">
+        <div class="prod-badges">
+          ${p.isOnOffer?'<span class="badge orange">Oferta</span>':''}
+          ${p.isBestseller?'<span class="badge yellow">Top</span>':''}
+        </div>
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-brand">${p.brand} · ${p.category}</div>
+        <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:3px">
+          <div class="prod-price">L.${Number(p.price).toLocaleString()}</div>
+          ${p.originalPrice?`<div class="prod-orig">L.${Number(p.originalPrice).toLocaleString()}</div>`:''}
+          ${disc>0?`<span class="badge green">-${disc}%</span>`:''}
+        </div>
+        <div style="color:var(--yellow);font-size:0.68rem">${stars} <span style="color:var(--text3)">(${p.reviews||0})</span></div>
+        <div class="prod-footer">
+          <span class="badge ${p.badge?'orange':'gray'}">${p.badge||'Sin badge'}</span>
+          <div class="prod-actions">
+            <div class="icon-btn" onclick="openEditProduct('${p.id}')" title="Editar"><i class="fas fa-pen"></i></div>
+            <div class="icon-btn del" onclick="deleteProduct('${p.id}','${p.name}')" title="Eliminar"><i class="fas fa-trash"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openAddProduct() {
+  editingId = null;
+  document.getElementById('modalTitle').textContent = 'Nuevo Producto';
+  ['fName','fBrand','fBadge','fImage','fDesc'].forEach(id => document.getElementById(id).value='');
+  ['fPrice','fOriginalPrice','fRating','fReviews'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('fCategory').value = 'smartphones';
+  document.getElementById('fBestseller').checked = false;
+  document.getElementById('fOffer').checked = false;
+  openModal('productModal');
+}
+
+function openEditProduct(id) {
+  const p = allProducts.find(x => x.id===id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('modalTitle').textContent = 'Editar Producto';
+  document.getElementById('fName').value = p.name||'';
+  document.getElementById('fBrand').value = p.brand||'';
+  document.getElementById('fCategory').value = p.category||'smartphones';
+  document.getElementById('fBadge').value = p.badge||'';
+  document.getElementById('fPrice').value = p.price||'';
+  document.getElementById('fOriginalPrice').value = p.originalPrice||'';
+  document.getElementById('fRating').value = p.rating||'';
+  document.getElementById('fReviews').value = p.reviews||'';
+  document.getElementById('fImage').value = p.images?.[0]||'';
+  document.getElementById('fDesc').value = p.description||'';
+  document.getElementById('fBestseller').checked = !!p.isBestseller;
+  document.getElementById('fOffer').checked = !!p.isOnOffer;
+  openModal('productModal');
+}
+
+async function saveProduct() {
+  const name = document.getElementById('fName').value.trim();
+  const price = parseFloat(document.getElementById('fPrice').value);
+  if (!name || !price) { showToast('Nombre y precio son requeridos','error'); return; }
+  const btn = document.getElementById('saveProdBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+  const data = {
+    name, brand: document.getElementById('fBrand').value.trim(),
+    category: document.getElementById('fCategory').value,
+    badge: document.getElementById('fBadge').value.trim(),
+    price, originalPrice: parseFloat(document.getElementById('fOriginalPrice').value)||null,
+    rating: parseFloat(document.getElementById('fRating').value)||0,
+    reviews: parseInt(document.getElementById('fReviews').value)||0,
+    images: [document.getElementById('fImage').value.trim()].filter(Boolean),
+    description: document.getElementById('fDesc').value.trim(),
+    isBestseller: document.getElementById('fBestseller').checked,
+    isOnOffer: document.getElementById('fOffer').checked,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+  try {
+    if (editingId) {
+      await db.collection('productos').doc(editingId).update(data);
+      showToast('Producto actualizado ✓','success');
+    } else {
+      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('productos').add(data);
+      showToast('Producto guardado en Firebase ✓','success');
+    }
+    closeModal('productModal');
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Guardar en Firebase';
+}
+
+async function deleteProduct(id, name) {
+  if (!confirm(`¿Eliminar "${name}" de Firebase?\nEsta acción no se puede deshacer.`)) return;
+  try {
+    await db.collection('productos').doc(id).delete();
+    showToast('Producto eliminado','error');
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+}
+
+// ═══════════════════════════════════════════
+//  ORDERS
+// ═══════════════════════════════════════════
+const SC = { completado:'green', proceso:'yellow', enviado:'blue', pendiente:'orange' };
+const SL = { completado:'Completado', proceso:'En proceso', enviado:'Enviado', pendiente:'Pendiente' };
+
+function filterOrders(status, el) {
+  currentOrderFilter = status;
+  document.querySelectorAll('.os-pill').forEach(p => p.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderOrders();
+}
+
+function renderOrders() {
+  const list = currentOrderFilter==='all' ? allOrders : allOrders.filter(o=>o.status===currentOrderFilter);
+  const tbody = document.getElementById('ordersTbody');
+  if (!list.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><p>Sin pedidos</p></div></td></tr>`; return; }
+  tbody.innerHTML = list.map(o => `<tr>
+    <td class="bold">#${o.id?.slice(-4)||'—'}</td>
+    <td><div style="font-weight:500;color:var(--text)">${o.customer||'—'}</div><div style="font-size:0.7rem;color:var(--text3)">${o.phone||''}</div></td>
+    <td class="bold">${o.product||'—'}</td>
+    <td class="bold" style="color:var(--green)">L.${Number(o.total||0).toLocaleString()}</td>
+    <td><span class="badge gray">${o.payment||'—'}</span></td>
+    <td><span class="badge ${SC[o.status]||'gray'}">${SL[o.status]||o.status}</span></td>
+    <td>${o.fecha?.toDate?.()?.toLocaleDateString('es-HN')||o.fecha||'—'}</td>
+    <td><div style="display:flex;gap:5px">
+      <div class="icon-btn" onclick="viewOrder('${o.id}')" title="Ver"><i class="fas fa-eye"></i></div>
+      <div class="icon-btn" onclick="waOrder('${o.id}')" title="WhatsApp"><i class="fab fa-whatsapp" style="color:#25D366"></i></div>
+    </div></td>
+  </tr>`).join('');
+  updateBadges();
+}
+
+function viewOrder(id) {
+  const o = allOrders.find(x=>x.id===id);
+  if(!o) return;
+  document.getElementById('orderModalBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px">
+      <div><div class="form-label">Pedido</div><div style="font-weight:600;color:var(--accent2)">#${o.id?.slice(-6)}</div></div>
+      <div><div class="form-label">Fecha</div>${o.fecha?.toDate?.()?.toLocaleDateString('es-HN')||o.fecha||'—'}</div>
+      <div><div class="form-label">Cliente</div><div style="font-weight:600">${o.customer||'—'}</div></div>
+      <div><div class="form-label">Teléfono</div>${o.phone||'—'}</div>
+      <div style="grid-column:span 2"><div class="form-label">Dirección</div>${o.address||'—'}</div>
+      <div><div class="form-label">Producto</div><div style="font-weight:600">${o.product||'—'}</div></div>
+      <div><div class="form-label">Total</div><div style="font-weight:700;color:var(--green);font-size:1.05rem">L.${Number(o.total||0).toLocaleString()}</div></div>
+      <div><div class="form-label">Pago</div><span class="badge gray">${o.payment||'—'}</span></div>
+      <div><div class="form-label">Estado</div><span class="badge ${SC[o.status]||'gray'}">${SL[o.status]||o.status}</span></div>
+      ${o.notes?`<div style="grid-column:span 2"><div class="form-label">Notas</div><div style="color:var(--text2)">${o.notes}</div></div>`:''}
+    </div>
+    <div><div class="form-label" style="margin-bottom:7px">Cambiar estado</div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        ${Object.entries(SL).map(([k,v])=>`<button class="btn ${k===o.status?'primary':'secondary'}" onclick="changeOrderStatus('${o.id}','${k}')">${v}</button>`).join('')}
+      </div>
+    </div>`;
+  openModal('orderModal');
+}
+
+async function changeOrderStatus(id, status) {
+  try {
+    await db.collection('pedidos').doc(id).update({ status, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    showToast(`Pedido → ${SL[status]}`,'success');
+    closeModal('orderModal');
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+}
+
+function waOrder(id) {
+  const o = allOrders.find(x=>x.id===id);
+  if(!o) return;
+  const msg = `Hola ${o.customer}! Tu pedido de ${o.product} por L.${Number(o.total).toLocaleString()} está ${(SL[o.status]||o.status).toLowerCase()}. Gracias por comprar en MobileExpressHN 📱`;
+  window.open(`https://wa.me/${(o.phone||'').replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ═══════════════════════════════════════════
+//  INVENTORY
+// ═══════════════════════════════════════════
+function renderInventory() {
+  const tbody = document.getElementById('inventoryTbody');
+  if(!allProducts.length) { tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fas fa-box-open"></i><p>Sin productos</p></div></td></tr>`; return; }
+  tbody.innerHTML = allProducts.map(p => {
+    const disc = p.originalPrice ? Math.round((1-p.price/p.originalPrice)*100) : 0;
+    return `<tr>
+      <td><div style="display:flex;align-items:center;gap:9px">
+        <img src="${p.images?.[0]||''}" style="width:32px;height:32px;object-fit:contain;border-radius:6px;background:var(--surface3)" onerror="this.style.opacity=0.1">
+        <div><div style="font-weight:500;color:var(--text)">${p.name}</div><div style="font-size:0.7rem;color:var(--text3)">${p.brand}</div></div>
+      </div></td>
+      <td><span class="badge gray">${p.category}</span></td>
+      <td class="bold" style="color:var(--green)">L.${Number(p.price).toLocaleString()}</td>
+      <td style="color:var(--text3)">${p.originalPrice?'L.'+Number(p.originalPrice).toLocaleString():'—'}</td>
+      <td>${disc>0?`<span class="badge green">-${disc}%</span>`:'—'}</td>
+      <td>${p.isOnOffer?'<span class="badge orange">Sí</span>':'<span class="badge gray">No</span>'}</td>
+      <td>${p.isBestseller?'<span class="badge yellow">Sí</span>':'<span class="badge gray">No</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════
+//  CUSTOMERS (derived from orders)
+// ═══════════════════════════════════════════
+function renderCustomers() {
+  const tbody = document.getElementById('customersTbody');
+  const map = {};
+  allOrders.forEach(o => {
+    if(!o.customer) return;
+    if(!map[o.customer]) map[o.customer] = { name:o.customer, phone:o.phone||'—', address:o.address||'—', payment:o.payment||'—', orders:0, total:0 };
+    map[o.customer].orders++;
+    map[o.customer].total += Number(o.total)||0;
+  });
+  const list = Object.values(map);
+  if(!list.length) { tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fas fa-users"></i><p>Sin clientes aún</p></div></td></tr>`; return; }
+  tbody.innerHTML = list.map(c => `<tr>
+    <td><div style="display:flex;align-items:center;gap:9px">
+      <div style="width:30px;height:30px;border-radius:50%;background:var(--glow);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.78rem;flex-shrink:0">${c.name[0]}</div>
+      <span class="bold">${c.name}</span></div></td>
+    <td>${c.phone}</td>
+    <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.address}</td>
+    <td><span class="badge gray">${c.payment}</span></td>
+    <td style="text-align:center"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--glow);color:var(--accent2);border-radius:6px;font-size:0.7rem;font-weight:700">${c.orders}</span></td>
+    <td class="bold" style="color:var(--green)">L.${c.total.toLocaleString()}</td>
+    <td><div class="icon-btn" onclick="window.open('https://wa.me/${c.phone.replace(/\D/g,'')}','_blank')"><i class="fab fa-whatsapp" style="color:#25D366"></i></div></td>
+  </tr>`).join('');
+}
+
+// ═══════════════════════════════════════════
+//  TRADE-IN
+// ═══════════════════════════════════════════
+const TC = { pendiente:'orange', revisado:'blue', aprobado:'green', rechazado:'red' };
+const TL = { pendiente:'Pendiente', revisado:'Revisado', aprobado:'Aprobado', rechazado:'Rechazado' };
+
+function renderTradeIns() {
+  const tbody = document.getElementById('tradeTbody');
+  if(!allTradeIns.length) { tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fas fa-sync-alt"></i><p>Sin permutas</p></div></td></tr>`; return; }
+  tbody.innerHTML = allTradeIns.map(t => `<tr>
+    <td class="bold">${t.id?.slice(-6)}</td>
+    <td><div style="font-weight:500;color:var(--text)">${t.deviceName||t.device||'—'}</div><div style="font-size:0.7rem;color:var(--text3)">${t.deviceBrand||t.brand||'—'}</div></td>
+    <td>${t.deviceStorage||t.storage||'—'}</td>
+    <td><span class="badge ${t.condition==='Excelente'?'green':t.condition==='Bueno'?'blue':'yellow'}">${t.condition||'—'}</span></td>
+    <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">${t.additionalNotes||t.notes||'—'}</td>
+    <td>${t.fecha?.toDate?.()?.toLocaleDateString('es-HN')||t.fecha||'—'}</td>
+    <td><div style="display:flex;gap:5px;align-items:center">
+      <span class="badge ${TC[t.status]||'gray'}">${TL[t.status]||t.status}</span>
+      ${t.status==='pendiente'?`
+        <div class="icon-btn" onclick="updateTrade('${t.id}','aprobado')" title="Aprobar" style="color:var(--green)"><i class="fas fa-check"></i></div>
+        <div class="icon-btn del" onclick="updateTrade('${t.id}','rechazado')" title="Rechazar"><i class="fas fa-times"></i></div>`:''}
+    </div></td>
+  </tr>`).join('');
+}
+
+async function updateTrade(id, status) {
+  try {
+    await db.collection('permutas').doc(id).update({ status, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    showToast(`Permuta ${TL[status].toLowerCase()}`,'success');
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+}
+
+// ═══════════════════════════════════════════
+//  DASHBOARD STATS
+// ═══════════════════════════════════════════
+function updateDashStats() {
+  // products
+  document.getElementById('statProductos').textContent = allProducts.length;
+  document.getElementById('statOfertas').textContent = allProducts.filter(p=>p.isOnOffer).length + ' en oferta';
+  document.getElementById('donutTotal').textContent = allProducts.length;
+  const sm = allProducts.filter(p=>p.category==='smartphones').length;
+  const co = allProducts.filter(p=>p.category==='consolas').length;
+  const ac = allProducts.filter(p=>p.category==='accesorios').length;
+  document.getElementById('lgSmart').textContent = sm;
+  document.getElementById('lgConsola').textContent = co;
+  document.getElementById('lgAccesorio').textContent = ac;
+
+  // orders
+  document.getElementById('statPedidos').textContent = allOrders.length;
+  const pend = allOrders.filter(o=>o.status==='pendiente').length;
+  document.getElementById('statPendientes').textContent = pend + ' pendientes';
+  const totalIng = allOrders.filter(o=>o.status==='completado').reduce((s,o)=>s+Number(o.total||0),0);
+  document.getElementById('statIngresos').textContent = 'L.' + totalIng.toLocaleString();
+
+  // trades
+  document.getElementById('statPermutas').textContent = allTradeIns.length;
+  const tpend = allTradeIns.filter(t=>t.status==='pendiente').length;
+  document.getElementById('statPermuPend').textContent = tpend + ' por revisar';
+
+  // dash orders table
+  const last5 = allOrders.slice(0,5);
+  document.getElementById('dashOrders').innerHTML = last5.length
+    ? last5.map(o=>`<tr><td class="bold">#${o.id?.slice(-4)}</td><td>${o.customer||'—'}</td><td class="bold" style="color:var(--green)">L.${Number(o.total||0).toLocaleString()}</td><td><span class="badge ${SC[o.status]||'gray'}">${SL[o.status]||o.status}</span></td></tr>`).join('')
+    : '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px">Sin pedidos aún</td></tr>';
+
+  updateBadges();
+}
+
+function updateBadges() {
+  document.getElementById('orderBadge').textContent = allOrders.filter(o=>o.status==='pendiente').length;
+  document.getElementById('tradeBadge').textContent = allTradeIns.filter(t=>t.status==='pendiente').length;
+}
+
+// ═══════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); }));
+
+function showToast(msg, type='success') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  const icons = { success:'check-circle', error:'exclamation-circle', info:'info-circle' };
+  t.innerHTML = `<i class="fas fa-${icons[type]||'info-circle'}"></i> ${msg}`;
+  c.appendChild(t);
+  setTimeout(() => { t.style.cssText='opacity:0;transform:translateX(18px);transition:all .25s'; setTimeout(()=>t.remove(),250); }, 3000);
+}
+
+function buildChart() {
+  const months = ['Ago','Sep','Oct','Nov','Dic','Ene','Feb','Mar'];
+  const values = [72,110,88,165,290,135,178,260];
+  const max = Math.max(...values);
+  document.getElementById('salesChart').innerHTML = values.map((v,i)=>
+    `<div class="chart-bar" style="height:${Math.round(v/max*165)}px;opacity:${0.2+(i/values.length*0.8)}" title="${months[i]}: L.${(v*1000).toLocaleString()}"></div>`
+  ).join('');
+  document.getElementById('salesLabels').innerHTML = months.map(m=>`<div class="chart-label">${m}</div>`).join('');
+}
+
+function exportCSV() {
+  const rows = [['ID','Nombre','Marca','Categoría','Precio','Precio Original','Rating','Reseñas','Oferta','Bestseller']];
+  allProducts.forEach(p=>rows.push([p.id,p.name,p.brand,p.category,p.price,p.originalPrice||'',p.rating||'',p.reviews||'',p.isOnOffer?'Sí':'No',p.isBestseller?'Sí':'No']));
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));
+  a.download = 'productos_mobileexpresshn.csv';
+  a.click();
+  showToast('CSV descargado ✓','success');
+}
+
+// ═══════════════════════════════════════════
+//  BOOT — config viene de firebase-config.js
+// ═══════════════════════════════════════════
+(function boot() {
+  document.getElementById('dashDate').textContent = new Date().toLocaleDateString('es-HN',{day:'numeric',month:'long',year:'numeric'});
+  buildChart();
+
+  // Ocultar pantalla de setup (ya no se usa en producción)
+  const setup = document.getElementById('setupScreen');
+  if (setup) setup.style.display = 'none';
+
+  // db y auth los declara firebase-config.js
+  if (typeof db === 'undefined' || typeof auth === 'undefined') {
+    alert('Error: firebase-config.js no cargó correctamente.\nVerifica que el archivo existe y tiene tus credenciales.');
+    return;
+  }
+
+  // Actualizar settings page
+  const cfg = firebase.app().options;
+  const pidEl = document.getElementById('fbProjectId');
+  if (pidEl) pidEl.textContent = cfg.projectId || '—';
+  const stEl = document.getElementById('fbSettingStatus');
+  if (stEl) stEl.textContent = 'Firestore activo';
+
+  // Esperar auth state
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      const ls = document.getElementById('loginScreen');
+      if (ls) ls.classList.remove('show');
+      const an = document.getElementById('adminName');
+      if (an) an.textContent = user.email?.split('@')[0] || 'Admin';
+      const av = document.getElementById('adminAvatar');
+      if (av) av.textContent = (user.email?.[0]||'A').toUpperCase();
+      startListeners();
+      showToast('Bienvenido de vuelta 👋','info');
+    } else {
+      stopListeners();
+      showLoginScreen();
+    }
+  });
+})();
+</script>
+</body>
+</html>
