@@ -92,27 +92,24 @@
 
   // ── Actualiza todo lo visible en la tienda ───────────────
   function refreshStore(newProducts) {
-    // Reemplaza el array global que usa script.js
     window.products = newProducts;
 
-    // Re-renderiza secciones principales
-    if (typeof renderProducts === 'function') {
-      try { renderProducts(); } catch(e) { console.error('[FB Products] renderProducts:', e); }
+    // Si renderProducts no existe todavía, reintenta en 500ms
+    if (typeof renderProducts !== 'function') {
+      console.warn('[Firebase Products] renderProducts no disponible, reintentando...');
+      setTimeout(() => refreshStore(newProducts), 500);
+      return;
     }
 
-    // Re-renderiza carrusel de nuevos productos
+    try { renderProducts(); } catch(e) { console.error('[FB Products] renderProducts:', e); }
     if (typeof generateNewProductsCarousel === 'function') {
       try { generateNewProductsCarousel(); } catch(e) {}
     }
-
-    // Re-renderiza carrusel de marcas
     if (typeof generateBrandsCarousel === 'function') {
       try { generateBrandsCarousel(); } catch(e) {}
     }
-
-    // Re-inicializa carruseles de imágenes de producto
     if (typeof initializeCarousels === 'function') {
-      try { setTimeout(() => initializeCarousels(), 50); } catch(e) {}
+      try { setTimeout(() => initializeCarousels(), 100); } catch(e) {}
     }
 
     console.log(`[Firebase Products] ${newProducts.length} productos cargados ✓`);
@@ -213,22 +210,17 @@
   // ── Arranque ─────────────────────────────────────────────
   function init() {
     // Guarda una copia del array original antes de que Firebase lo sobreescriba
-    // (por si Firestore está vacío y hay que subirlos)
     if (typeof products !== 'undefined' && products.length > 0) {
       window.__originalProducts = [...products];
     }
-
     showStoreLoader();
     waitForFirebase(startProductListener);
   }
 
-  // Espera a que el DOM y script.js estén listos
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    // DOM ya listo (el script se cargó después de DOMContentLoaded)
-    // Pequeño delay para que script.js termine de ejecutarse
-    setTimeout(init, 0);
-  }
+  // Espera a que script.js termine de ejecutarse completamente
+  // usando el evento 'load' que dispara DESPUÉS de que todo cargó
+  window.addEventListener('load', () => {
+    setTimeout(init, 300);
+  });
 
 })();
