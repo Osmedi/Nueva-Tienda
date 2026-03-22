@@ -484,7 +484,7 @@
       <input class="setup-input" id="cfg_appId" placeholder="1:123:web:abc...">
     </div>
 
-    <button class="setup-btn" onclick="connectFirebase()">
+    <button class="setup-btn" onclick="location.reload()">
       <i class="fas fa-plug"></i> Conectar a Firebase
     </button>
     <div class="setup-error" id="setupError"></div>
@@ -843,10 +843,8 @@
 <!-- ===================== SCRIPTS ===================== -->
 <script>
 // ═══════════════════════════════════════════
-//  FIREBASE INIT
+//  FIREBASE — db y auth vienen de firebase-config.js
 // ═══════════════════════════════════════════
-let db = null;
-let auth = null;
 let currentOrderFilter = 'all';
 let editingId = null;
 let allProducts = [];
@@ -854,56 +852,17 @@ let allOrders = [];
 let allTradeIns = [];
 let unsubscribers = [];
 
-const LS_KEY = 'mexhn_fb_config';
-
-function getSavedConfig() {
-  try { return JSON.parse(localStorage.getItem(LS_KEY)); } catch { return null; }
-}
-
-function saveConfig(cfg) {
-  localStorage.setItem(LS_KEY, JSON.stringify(cfg));
-}
-
 function resetConfig() {
-  if (!confirm('¿Desconectar Firebase y reconfigurar?')) return;
-  localStorage.removeItem(LS_KEY);
+  if (!confirm('¿Recargar la página?')) return;
   location.reload();
 }
 
-async function connectFirebase() {
-  const cfg = {
-    apiKey: document.getElementById('cfg_apiKey').value.trim(),
-    authDomain: document.getElementById('cfg_authDomain').value.trim(),
-    projectId: document.getElementById('cfg_projectId').value.trim(),
-    storageBucket: document.getElementById('cfg_storageBucket').value.trim(),
-    messagingSenderId: document.getElementById('cfg_messagingSenderId').value.trim(),
-    appId: document.getElementById('cfg_appId').value.trim(),
-  };
-  const err = document.getElementById('setupError');
-  if (!cfg.apiKey || !cfg.projectId) {
-    err.textContent = 'API Key y Project ID son requeridos.';
-    err.style.display = 'block'; return;
-  }
-  err.style.display = 'none';
-  try {
-    initFirebaseApp(cfg);
-    // test connection
-    await db.collection('_ping').limit(1).get();
-    saveConfig(cfg);
-    document.getElementById('setupScreen').style.display = 'none';
-    showLoginScreen();
-  } catch(e) {
-    err.textContent = 'Error: ' + (e.message || 'No se pudo conectar. Verifica tus credenciales.');
-    err.style.display = 'block';
-  }
-}
-
-function initFirebaseApp(cfg) {
-  if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
-  firebase.initializeApp(cfg);
-  db = firebase.firestore();
-  auth = firebase.auth();
-  setFbStatus('connecting');
+function setFbStatus(state) {
+  const dot = document.getElementById('fbDot');
+  const txt = document.getElementById('fbStatusText');
+  if (state === 'connected') { dot.className='status-dot connected'; txt.textContent='Firebase conectado'; }
+  else if (state === 'error') { dot.className='status-dot error'; txt.textContent='Error de conexión'; }
+  else { dot.className='status-dot'; txt.textContent='Conectando...'; }
 }
 
 function setFbStatus(state) {
