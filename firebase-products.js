@@ -127,7 +127,6 @@
 
     unsubscribe = db
       .collection('productos')
-      .orderBy('createdAt', 'desc')
       .onSnapshot(
         snapshot => {
           const newProducts = snapshot.docs.map(normalize);
