@@ -224,3 +224,29 @@
   });
 
 })();
+
+// ── Parche: intercepta renderProducts para forzar uso de window.products ──
+window.addEventListener('load', () => {
+  const originalRender = window.renderProducts;
+  if (typeof originalRender === 'function') {
+    window.renderProducts = function() {
+      // Si Firebase ya cargó productos, usa esos
+      if (window.products && window.products.length > 0) {
+        // Asegura que el array global tenga los datos de Firebase
+        return originalRender.call(this);
+      }
+      return originalRender.call(this);
+    };
+  }
+
+  // Fuerza una re-renderización 1 segundo después de que todo cargó
+  // Esto asegura que Firebase ya respondió y window.products está actualizado
+  setTimeout(() => {
+    if (window.products && window.products.length > 0) {
+      if (typeof renderProducts === 'function') renderProducts();
+      if (typeof generateNewProductsCarousel === 'function') generateNewProductsCarousel();
+      if (typeof generateBrandsCarousel === 'function') generateBrandsCarousel();
+      console.log('[Firebase Products] Re-render forzado ✓', window.products.length, 'productos');
+    }
+  }, 1000);
+});
