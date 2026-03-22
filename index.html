@@ -1,526 +1,920 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon  -->
-    <link rel="icon" href="images/favicon-32x32.png" type="image/x-icon">
-    <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c2470a">
+  <title>MobileExpressHN - Smartphones y Consolas de Lujo</title>
+  <link rel="icon" href="images/favicon-32x32.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 
-    <!-- Para dispositivos Apple -->
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <!-- Firebase cargado ANTES que todo -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
-    <!-- Para Android/Chrome -->
-    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png">
+  <style>
+    :root{--primary:#F28C38;--bg:#F5F5F5;--bg2:#fff;--surface:rgba(255,255,255,0.88);--text:#1a1a1a;--text2:#555;--text3:#999;--border:#e0e0e0;--shadow:0 4px 16px rgba(0,0,0,0.1);--r:12px;--t:all 0.3s ease}
+    [data-theme="dark"]{--bg:#1a1a1a;--bg2:#2a2a2a;--surface:rgba(30,30,30,0.94);--text:#f0f0f0;--text2:#aaa;--text3:#666;--border:#444}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);transition:var(--t)}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
 
-    <!-- Para Windows Metro -->
-    <meta name="msapplication-TileImage" content="mstile-150x150.png">
-    <meta name="theme-color" content="#c2470a">
-    <title>MobileExpressHN - Smartphones y Consolas de Lujo</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap"
-        rel="stylesheet">
+    /* PRELOADER */
+    .preloader{position:fixed;inset:0;background:#111;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.5s}
+    .preloader img{width:110px;animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.8}}
+
+    /* HEADER */
+    .glass-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+    nav{display:flex;align-items:center;gap:16px;padding:10px 20px;max-width:1200px;margin:0 auto}
+    .logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
+    .logo-img{height:38px}
+    .logo-text{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;color:var(--primary)}
+    .nav-content{display:flex;align-items:center;gap:16px;flex:1;justify-content:flex-end}
+    .nav-links{display:flex;list-style:none;gap:4px}
+    .nav-link{padding:6px 11px;border-radius:8px;font-size:.83rem;font-weight:500;color:var(--text2);transition:var(--t)}
+    .nav-link:hover{color:var(--primary);background:rgba(242,140,56,.1)}
+    .header-actions{display:flex;align-items:center;gap:9px}
+    .search-container{position:relative}
+    .search-container input{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:7px 34px 7px 13px;font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--text);width:190px;transition:var(--t)}
+    .search-container input:focus{outline:none;border-color:var(--primary);width:230px}
+    .search-button{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:.82rem}
+    .search-suggestions{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);max-height:280px;overflow-y:auto;z-index:200;display:none}
+    .sug-item{display:flex;align-items:center;gap:10px;padding:9px 13px;cursor:pointer;font-size:.8rem;transition:background .2s}
+    .sug-item:hover{background:rgba(242,140,56,.07)}
+    .sug-item img{width:34px;height:34px;object-fit:contain;border-radius:6px;background:var(--bg)}
+    /* Theme */
+    .theme-switch{cursor:pointer;display:flex;align-items:center}
+    .theme-switch__checkbox{display:none}
+    .ts-cont{width:50px;height:25px;border-radius:13px;background:linear-gradient(135deg,#74b9ff,#0984e3);position:relative;transition:var(--t);border:1px solid rgba(0,0,0,.1)}
+    [data-theme="dark"] .ts-cont{background:linear-gradient(135deg,#2d3436,#636e72)}
+    .ts-circle{position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:#ffeaa7;display:flex;align-items:center;justify-content:center;font-size:10px;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .3s}
+    .ts-circle::after{content:'☀️'}
+    .theme-switch__checkbox:checked~.ts-cont .ts-circle{transform:translateX(25px);background:#dfe6e9}
+    .theme-switch__checkbox:checked~.ts-cont .ts-circle::after{content:'🌙'}
+    .tradein-btn{background:var(--primary);color:#fff;border:none;padding:7px 13px;border-radius:20px;font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:var(--t)}
+    .tradein-btn:hover{background:#e07c28;transform:translateY(-1px)}
+    .mobile-menu-toggle{display:none;background:none;border:none;font-size:1.2rem;color:var(--text);cursor:pointer}
+
+    /* MARQUEE */
+    .shipping-marquee{background:var(--primary);color:#fff;font-size:.76rem;padding:5px 0;margin-top:60px}
+
+    /* HERO */
+    .hero{position:relative;min-height:80vh;display:flex;align-items:center;background:linear-gradient(135deg,#111 0%,#2a2a2a 100%);overflow:hidden}
+    .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(242,140,56,.15),transparent 70%)}
+    .hero-content{position:relative;z-index:2;padding:60px 20px;max-width:1200px;margin:0 auto;width:100%}
+    .hero-title{font-size:clamp(1.9rem,5vw,3.4rem);color:#fff;line-height:1.15;margin-bottom:14px}
+    .hero-title .highlight{color:var(--primary)}
+    .hero-subtitle{color:rgba(255,255,255,.7);font-size:.95rem;margin-bottom:28px;max-width:480px}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-primary{background:var(--primary);color:#fff;padding:12px 26px;border-radius:25px;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:var(--t)}
+    .btn-primary:hover{background:#e07c28;transform:translateY(-2px);box-shadow:0 8px 20px rgba(242,140,56,.4)}
+    .btn-secondary{background:rgba(255,255,255,.1);color:#fff;padding:12px 26px;border-radius:25px;font-weight:600;font-size:.88rem;border:1px solid rgba(255,255,255,.3);display:inline-flex;align-items:center;gap:7px;transition:var(--t);backdrop-filter:blur(8px)}
+    .btn-secondary:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+
+    /* FLOATING CART */
+    .floating-cart{position:fixed;bottom:28px;right:28px;z-index:500}
+    .cart-icon{width:52px;height:52px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.15rem;cursor:pointer;box-shadow:0 4px 16px rgba(242,140,56,.4);transition:var(--t);position:relative}
+    .cart-icon:hover{transform:scale(1.1)}
+    .cart-count{position:absolute;top:-4px;right:-4px;width:19px;height:19px;border-radius:50%;background:#e74c3c;color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)}
+    .scroll-top{position:fixed;bottom:92px;right:28px;z-index:500;display:none}
+    .scroll-top-btn{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow);transition:var(--t)}
+    .scroll-top-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+    /* SECTIONS */
+    .section-title{font-size:1.7rem;margin-bottom:7px}
+    .section-title span{color:var(--primary)}
+    .section-subtitle{color:var(--text2);font-size:.88rem;margin-bottom:28px}
+    .section-header{margin-bottom:26px}
+    .section-header-center{text-align:center}
+    .section-decorator{display:flex;align-items:center;gap:10px;margin-top:9px}
+    .decorator-line{flex:1;height:1px;background:var(--border);max-width:80px}
+    .decorator-dot{width:8px;height:8px;border-radius:50%;background:var(--primary)}
+
+    /* BANNERS */
+    .custom-carousels-section{padding:18px 0}
+    .carousel-wrapper{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+    .custom-carousel{position:relative;border-radius:var(--r);overflow:hidden}
+    .carousel-container{position:relative;width:100%}
+    .carousel-image{width:100%;display:none;border-radius:var(--r)}
+    .carousel-image.active{display:block}
+    @media(min-width:768px){.desktop-image{display:none!important}.carousel-image.desktop-image.active{display:block!important}.mobile-image{display:none!important}}
+    @media(max-width:767px){.mobile-image{display:none!important}.carousel-image.mobile-image.active{display:block!important}.desktop-image{display:none!important}}
+    .carousel-dots{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+    .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:var(--t)}
+    .dot.active{background:#fff;transform:scale(1.3)}
+    .carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.85);border:none;cursor:pointer;font-size:.7rem;z-index:3;display:flex;align-items:center;justify-content:center}
+    .carousel-prev{left:8px}.carousel-next{right:8px}
+
+    /* BRANDS */
+    .brands-carousel-section{padding:48px 0;overflow:hidden}
+    .brands-carousel-container{overflow:hidden;position:relative}
+    .brands-carousel-container::before,.brands-carousel-container::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+    .brands-carousel-container::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+    .brands-carousel-container::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+    .brands-list{display:flex;gap:14px;width:max-content;animation:scrollBrands 30s linear infinite}
+    .brands-list:hover{animation-play-state:paused}
+    @keyframes scrollBrands{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .brand-carousel-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 22px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:var(--t);min-width:115px}
+    .brand-carousel-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow)}
+    .brand-carousel-logo{height:34px;object-fit:contain;filter:grayscale(1);transition:var(--t)}
+    .brand-carousel-card:hover .brand-carousel-logo{filter:grayscale(0)}
+    .brand-carousel-card h3{font-size:.75rem;font-weight:600;color:var(--text2)}
+
+    /* CATEGORIES */
+    .categories-section{padding:48px 0}
+    .categories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:13px}
+    .category-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px 14px;text-align:center;cursor:pointer;transition:var(--t)}
+    .category-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:var(--shadow)}
+    .category-icon{width:50px;height:50px;border-radius:13px;background:rgba(242,140,56,.1);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin:0 auto 9px}
+    .category-card h3{font-size:.85rem;font-weight:600}
+
+    /* FILTERS */
+    .minimal-filter-section{padding:12px 0}
+    .minimal-filter-container{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+    .filter-toggle{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-family:'Poppins',sans-serif;font-size:.8rem;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:6px;transition:var(--t)}
+    .filter-toggle:hover{border-color:var(--primary);color:var(--primary)}
+    .filter-dropdown{position:relative}
+    .filter-dropdown-content{position:absolute;top:calc(100% + 7px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:15px;min-width:250px;box-shadow:var(--shadow);z-index:200;display:none}
+    .filter-dropdown-content.open{display:block}
+    .filter-option{margin-bottom:11px}
+    .filter-option label{display:block;font-size:.75rem;color:var(--text2);margin-bottom:4px;font-weight:500}
+    .filter-option select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--text);cursor:pointer}
+    .apply-filter-btn{width:100%;background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px;font-family:'Poppins',sans-serif;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:3px}
+    .active-filters{display:flex;gap:7px;flex-wrap:wrap}
+    .filter-tag{background:rgba(242,140,56,.1);color:var(--primary);border:1px solid rgba(242,140,56,.25);border-radius:20px;padding:4px 11px;font-size:.73rem;font-weight:500;display:flex;align-items:center;gap:5px}
+    .remove-filter{cursor:pointer;font-weight:700;opacity:.7}
+    .remove-filter:hover{opacity:1}
+
+    /* PRODUCTS */
+    .products-section{padding:48px 0}
+    .bg-accent{background:rgba(242,140,56,.04)}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+    .product-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:var(--t);position:relative}
+    .product-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,.12);border-color:var(--primary)}
+    .product-badge{position:absolute;top:9px;left:9px;z-index:2;background:var(--primary);color:#fff;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:600}
+    .product-badge.best{background:#e74c3c}
+    .product-carousel{position:relative;height:195px;overflow:hidden;background:var(--bg)}
+    .product-carousel img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .4s}
+    .product-carousel img.active{opacity:1}
+    .card-nav{position:absolute;top:50%;transform:translateY(-50%);width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.68rem;color:var(--text);opacity:0;transition:opacity .2s;z-index:3}
+    .product-card:hover .card-nav{opacity:1}
+    .card-nav.prev{left:7px}.card-nav.next{right:7px}
+    .product-info{padding:13px}
+    .product-title{font-size:.87rem;font-weight:600;margin-bottom:5px;color:var(--text);line-height:1.3}
+    .product-price{font-size:1.05rem;font-weight:700;color:var(--primary);margin-bottom:3px}
+    .original-price{font-size:.75rem;color:var(--text3);text-decoration:line-through;margin-right:5px}
+    .stars{color:#f39c12;font-size:.78rem}
+    .add-to-cart{width:100%;background:var(--primary);color:#fff;border:none;padding:9px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:6px;transition:var(--t)}
+    .add-to-cart:hover{background:#e07c28}
+    .loading-grid{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:11px;padding:56px;color:var(--text3);font-size:.87rem}
+    .spinner{width:21px;height:21px;border-radius:50%;border:2px solid rgba(242,140,56,.2);border-top-color:var(--primary);animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty-grid{grid-column:1/-1;text-align:center;padding:56px;color:var(--text3)}
+
+    /* NEW PRODUCTS */
+    .new-products-section{padding:48px 0;overflow:hidden}
+    .new-products-list{display:flex;gap:14px;width:max-content;animation:scrollP 40s linear infinite}
+    .new-products-list:hover{animation-play-state:paused}
+    @keyframes scrollP{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .new-product-item{flex-shrink:0;width:175px}
+    .new-product-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;text-align:center;cursor:pointer;transition:var(--t);position:relative}
+    .new-product-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow)}
+    .new-product-badge{position:absolute;top:7px;left:7px;background:var(--primary);color:#fff;padding:2px 8px;border-radius:10px;font-size:.63rem;font-weight:600}
+    .new-product-image{height:115px;object-fit:contain;width:100%}
+    .new-product-name{font-size:.76rem;font-weight:600;margin:7px 0 6px;color:var(--text)}
+    .view-product-btn{background:var(--primary);color:#fff;border:none;border-radius:20px;padding:5px 13px;font-family:'Poppins',sans-serif;font-size:.7rem;font-weight:600;cursor:pointer;transition:var(--t)}
+    .view-product-btn:hover{background:#e07c28}
+
+    /* FEATURES */
+    .features-section{padding:56px 0}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px}
+    .feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:26px 18px;text-align:center;transition:var(--t)}
+    .feature-card:hover{border-color:var(--primary);transform:translateY(-3px)}
+    .feature-icon{width:52px;height:52px;border-radius:14px;background:rgba(242,140,56,.1);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto 12px}
+    .feature-card h3{font-size:.9rem;margin-bottom:5px}
+    .feature-card p{font-size:.8rem;color:var(--text2)}
+
+    /* MODALS */
+    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;overflow-y:auto;padding:20px}
+    .modal.open{display:flex;align-items:flex-start;justify-content:center}
+    .modal-content{background:var(--bg2);border-radius:16px;padding:26px;max-width:540px;width:100%;margin:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:mIn .25s ease}
+    @keyframes mIn{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .close-modal{position:absolute;top:13px;right:13px;width:29px;height:29px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--text2);transition:var(--t)}
+    .close-modal:hover{background:#e74c3c;color:#fff;border-color:#e74c3c}
+    .modal-content h2{font-size:1.15rem;margin-bottom:16px;padding-right:30px}
+
+    /* Product modal */
+    .product-modal-content{max-width:800px}
+    .product-modal-body{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .product-modal-main-image{border-radius:10px;overflow:hidden;background:var(--bg);height:265px;display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+    .product-modal-main-image img{max-height:245px;max-width:100%;object-fit:contain;transition:opacity .3s}
+    .product-modal-thumbnails{display:flex;gap:7px;flex-wrap:wrap}
+    .product-modal-thumbnail{width:55px;height:55px;border-radius:7px;overflow:hidden;border:2px solid var(--border);cursor:pointer;background:var(--bg);transition:var(--t)}
+    .product-modal-thumbnail.active{border-color:var(--primary)}
+    .product-modal-thumbnail img{width:100%;height:100%;object-fit:contain}
+    .product-modal-details{overflow-y:auto;max-height:420px}
+    .product-modal-details h2{font-size:1.1rem;margin-bottom:7px}
+    .product-modal-price{font-size:1.35rem;font-weight:700;color:var(--primary);margin-bottom:5px}
+    .product-modal-rating{display:flex;align-items:center;gap:7px;margin-bottom:11px;font-size:.8rem;color:var(--text2)}
+    .product-modal-description{font-size:.8rem;color:var(--text2);line-height:1.6;margin-bottom:13px}
+    .product-modal-specs h3,.product-modal-features h3{font-size:.87rem;margin-bottom:7px}
+    .specs-grid{display:flex;flex-direction:column;gap:4px;margin-bottom:13px}
+    .spec-item{display:flex;gap:7px;font-size:.76rem;padding:4px 0;border-bottom:1px solid var(--border)}
+    .spec-key{font-weight:600;color:var(--text2);min-width:88px;flex-shrink:0}
+    .product-modal-features ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+    .product-modal-features li{font-size:.76rem;color:var(--text2);display:flex;align-items:flex-start;gap:6px}
+    .product-modal-features li::before{content:'✓';color:var(--primary);font-weight:700;flex-shrink:0}
+    .product-modal-actions{display:flex;gap:9px;flex-wrap:wrap}
+    .selector-group{margin-bottom:13px}
+    .selector-label{font-size:.76rem;font-weight:600;color:var(--text2);margin-bottom:5px}
+    .selector-options{display:flex;gap:6px;flex-wrap:wrap}
+    .selector-option{padding:4px 11px;border-radius:20px;font-size:.73rem;font-weight:500;border:1px solid var(--border);cursor:pointer;transition:var(--t);background:var(--bg);color:var(--text)}
+    .selector-option:hover{border-color:var(--primary)}
+    .selector-option.selected{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+    /* Cart modal */
+    .cart-modal-content{max-width:580px}
+    .cart-items{max-height:250px;overflow-y:auto;margin:14px 0}
+    .cart-item{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border)}
+    .cart-item img{width:50px;height:50px;object-fit:contain;border-radius:7px;background:var(--bg)}
+    .cart-item-info{flex:1}
+    .cart-item-name{font-size:.8rem;font-weight:600;margin-bottom:2px}
+    .cart-item-opts{font-size:.7rem;color:var(--text3)}
+    .cart-item-price{font-size:.83rem;font-weight:700;color:var(--primary)}
+    .qty-controls{display:flex;align-items:center;gap:5px;margin-top:4px}
+    .qty-btn{width:23px;height:23px;border-radius:50%;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-size:.83rem;color:var(--text);display:flex;align-items:center;justify-content:center;transition:var(--t)}
+    .qty-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .rm-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:.78rem;margin-left:4px}
+    .rm-btn:hover{color:#e74c3c}
+    .cart-total{font-size:1.05rem;font-weight:700;text-align:right;padding:9px 0;border-top:1px solid var(--border);color:var(--primary)}
+    .checkout-form h3{font-size:.95rem;margin:14px 0 9px}
+    .form-group{position:relative;margin-bottom:13px}
+    .form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:9px;background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;font-size:.82rem;transition:var(--t)}
+    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--primary)}
+    .form-group label{position:absolute;left:13px;top:10px;font-size:.8rem;color:var(--text3);transition:var(--t);pointer-events:none}
+    .form-group input:focus~label,.form-group input:not(:placeholder-shown)~label,.form-group textarea:focus~label,.form-group textarea:not(:placeholder-shown)~label{top:-8px;left:9px;font-size:.68rem;background:var(--bg2);padding:0 4px;color:var(--primary)}
+    .payment-methods{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+    .payment-option{display:flex;align-items:center;gap:9px;font-size:.8rem;cursor:pointer}
+    .payment-option input[type="radio"]{accent-color:var(--primary)}
+    .btn-whatsapp{width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:9px;font-family:'Poppins',sans-serif;font-size:.87rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:var(--t)}
+    .btn-whatsapp:hover{background:#1da851;transform:translateY(-1px)}
+
+    /* Trade-in */
+    .tradein-content{max-width:460px}
+
+    /* Notifications */
+    .notification{position:fixed;top:76px;right:18px;z-index:2000;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:11px 14px;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow);font-size:.8rem;animation:nIn .3s ease;max-width:300px}
+    .notification.success{border-color:#2ecc71}.notification.success i{color:#2ecc71}
+    .notification.warning{border-color:#f39c12}.notification.warning i{color:#f39c12}
+    .notification-close{margin-left:auto;cursor:pointer;opacity:.6}.notification-close:hover{opacity:1}
+    @keyframes nIn{from{transform:translateX(18px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+    /* FOOTER */
+    footer{background:#111;color:#ccc;padding:48px 0 0}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:34px;padding-bottom:38px}
+    .footer-logo{height:46px;margin-bottom:11px}
+    .footer-about p{font-size:.8rem;line-height:1.7;color:#888;margin-bottom:14px}
+    .social-links{display:flex;gap:9px}
+    .share-icon{width:34px;height:34px;border-radius:50%;border:1px solid #333;display:flex;align-items:center;justify-content:center;font-size:.82rem;color:#888;transition:var(--t)}
+    .share-icon:hover{border-color:var(--primary);color:var(--primary)}
+    .footer-col h3{font-size:.87rem;color:#fff;margin-bottom:12px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .footer-col a{font-size:.8rem;color:#777;transition:color .2s}
+    .footer-col a:hover{color:var(--primary)}
+    .contact-info li{display:flex;align-items:flex-start;gap:7px;font-size:.8rem;color:#777}
+    .contact-info i{color:var(--primary);margin-top:2px;flex-shrink:0}
+    .footer-bottom{border-top:1px solid #222;padding:14px 20px;text-align:center;font-size:.76rem;color:#555;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+    .developer-credit{display:flex;align-items:center;gap:5px}
+    .dev-email{color:var(--primary)}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .nav-links,.header-actions .search-container{display:none}
+      .mobile-menu-toggle{display:block}
+      .nav-content.active{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:var(--bg2);padding:14px;border-bottom:1px solid var(--border);z-index:99}
+      .nav-content.active .nav-links{display:flex;flex-direction:column}
+      .nav-content.active .search-container{display:block;width:100%}
+      .nav-content.active .search-container input{width:100%}
+      .carousel-wrapper{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .product-modal-body{grid-template-columns:1fr}
+      .hero-title{font-size:1.75rem}
+    }
+    @media(max-width:480px){
+      .footer-grid{grid-template-columns:1fr}
+      .products-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="loader">
-            <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/assets/images/Logo_MobileExpresHN%20(1)%20(2).png?raw=true"
-                alt="MobileExpressHN Logo">
-        </div>
+
+<div class="preloader" id="preloader">
+  <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/assets/images/Logo_MobileExpresHN%20(1)%20(2).png?raw=true" alt="MobileExpressHN">
+</div>
+
+<header class="glass-header">
+  <nav class="container">
+    <div class="logo">
+      <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true" alt="MobileExpressHN" class="logo-img">
+      <span class="logo-text">MobileExpressHN</span>
     </div>
-    <!-- Header -->
-    <header class="glass-header">
-        <nav class="container">
-            <div class="logo">
-                <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true"
-                    alt="MobileExpressHN Logo" class="logo-img">
-                <span class="logo-text">MobileExpressHN</span>
-            </div>
-            <div class="nav-content">
-                <ul class="nav-links">
-                    <li><a href="#home" class="nav-link">Inicio</a></li>
-                    <li><a href="#brands" class="nav-link">Marcas</a></li>
-                    <li><a href="#products" class="nav-link">Productos</a></li>
-                    <li><a href="#offers" class="nav-link">Ofertas</a></li>
-                    <li><a href="#contact" class="nav-link">Contacto</a></li>
-                </ul>
-                <div class="header-actions">
-                    <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Buscar dispositivos...">
-                        <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
-                        <div class="search-suggestions" id="searchSuggestions"></div>
-                    </div>
-                    <div class="action-buttons">
-                        <label class="theme-switch">
-                            <input type="checkbox" class="theme-switch__checkbox" id="theme-checkbox">
-                            <div class="theme-switch__container">
-                                <div class="theme-switch__clouds"></div>
-                                <div class="theme-switch__stars-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M135.831 3.00688C135.055 3.85027 134.111 4.29946 133 4.35447C134.111 4.40947 135.055 4.85867 135.831 5.71123C136.607 6.55462 136.996 7.56303 136.996 8.72727C136.996 7.95722 137.172 7.25134 137.525 6.59129C137.886 5.93124 138.372 5.39954 138.98 5.00535C139.598 4.60199 140.268 4.39114 141 4.35447C139.88 4.2903 138.936 3.85027 138.16 3.00688C137.384 2.16348 136.996 1.16425 136.996 0C136.996 1.16425 136.607 2.16348 135.831 3.00688ZM31 23.3545C32.1114 23.2995 33.0551 22.8503 33.8313 22.0069C34.6075 21.1635 34.9956 20.1642 34.9956 19C34.9956 20.1642 35.3837 21.1635 36.1599 22.0069C36.9361 22.8503 37.8798 23.2903 39 23.3545C38.2679 23.3911 37.5976 23.602 36.9802 24.0053C36.3716 24.3995 35.8864 24.9312 35.5248 25.5913C35.172 26.2513 34.9956 26.9572 34.9956 27.7273C34.9956 26.563 34.6075 25.5546 33.8313 24.7112C33.0551 23.8587 32.1114 23.4095 31 23.3545ZM0 36.3545C1.11136 36.2995 2.05513 35.8503 2.83131 35.0069C3.6075 34.1635 3.99559 33.1642 3.99559 32C3.99559 33.1642 4.38368 34.1635 5.15987 35.0069C5.93605 35.8503 6.87982 36.2903 8 36.3545C7.26792 36.3911 6.59757 36.602 5.98015 37.0053C5.37155 37.3995 4.88644 37.9312 4.52481 38.5913C4.172 39.2513 3.99559 39.9572 3.99559 40.7273C3.99559 39.563 3.6075 38.5546 2.83131 37.7112C2.05513 36.8587 1.11136 36.4095 0 36.3545ZM56.8313 24.0069C56.0551 24.8503 55.1114 25.2995 54 25.3545C55.1114 25.4095 56.0551 25.8587 56.8313 26.7112C57.6075 27.5546 57.9956 28.563 57.9956 29.7273C57.9956 28.9572 58.172 28.2513 58.5248 27.5913C58.8864 26.9312 59.3716 26.3995 59.9802 26.0053C60.5976 25.602 61.2679 25.3911 62 25.3545C60.8798 25.2903 59.9361 24.8503 59.1599 24.0069C58.3837 23.1635 57.9956 22.1642 57.9956 21C57.9956 22.1642 57.6075 23.1635 56.8313 24.0069ZM81 25.3545C82.1114 25.2995 83.0551 24.8503 83.8313 24.0069C84.6075 23.1635 84.9956 22.1642 84.9956 21C84.9956 22.1642 85.3837 23.1635 86.1599 24.0069C86.9361 24.8503 87.8798 25.2903 89 25.3545C88.2679 25.3911 87.5976 25.602 86.9802 26.0053C86.3716 26.3995 85.8864 26.9312 85.5248 27.5913C85.172 28.2513 84.9956 28.9572 84.9956 29.7273C84.9956 28.563 84.6075 27.5546 83.8313 26.7112C83.0551 25.8587 82.1114 25.4095 81 25.3545ZM136 36.3545C137.111 36.2995 138.055 35.8503 138.831 35.0069C139.607 34.1635 139.996 33.1642 139.996 32C139.996 33.1642 140.384 34.1635 141.16 35.0069C141.936 35.8503 142.88 36.2903 144 36.3545C143.268 36.3911 142.598 36.602 141.98 37.0053C141.372 37.3995 140.886 37.9312 140.525 38.5913C140.172 39.2513 139.996 39.9572 139.996 40.7273C139.996 39.563 139.607 38.5546 138.831 37.7112C138.055 36.8587 137.111 36.4095 136 36.3545ZM101.831 49.0069C101.055 49.8503 100.111 50.2995 99 50.3545C100.111 50.4095 101.055 50.8587 101.831 51.7112C102.607 52.5546 102.996 53.563 102.996 54.7273C102.996 53.9572 103.172 53.2513 103.525 52.5913C103.886 51.9312 104.372 51.3995 104.98 51.0053C105.598 50.602 106.268 50.3911 107 50.3545C105.88 50.2903 104.936 49.8503 104.16 49.0069C103.384 48.1635 102.996 47.1642 102.996 46C102.996 47.1642 102.607 48.1635 101.831 49.0069Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </div>
-                                <div class="theme-switch__circle-container">
-                                    <div class="theme-switch__sun-moon-container">
-                                        <div class="theme-switch__moon">
-                                            <div class="theme-switch__spot"></div>
-                                            <div class="theme-switch__spot"></div>
-                                            <div class="theme-switch__spot"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                        <button class="tradein-btn" onclick="toggleTradeInModal()"><i class="fas fa-sync-alt"></i>
-                            Permuta</button>
-                    </div>
-                </div>
-            </div>
-            <button class="mobile-menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-        </nav>
-    </header>
+    <div class="nav-content" id="navContent">
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link">Inicio</a></li>
+        <li><a href="#brands" class="nav-link">Marcas</a></li>
+        <li><a href="#products" class="nav-link">Productos</a></li>
+        <li><a href="#offers" class="nav-link">Ofertas</a></li>
+        <li><a href="#contact" class="nav-link">Contacto</a></li>
+      </ul>
+      <div class="header-actions">
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Buscar dispositivos...">
+          <button class="search-button"><i class="fas fa-search"></i></button>
+          <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+        <label class="theme-switch">
+          <input type="checkbox" class="theme-switch__checkbox" id="themeCheckbox">
+          <div class="ts-cont">
+            <div class="ts-circle"></div>
+          </div>
+        </label>
+        <button class="tradein-btn" onclick="openTradeIn()"><i class="fas fa-sync-alt"></i> Permuta</button>
+      </div>
+    </div>
+    <button class="mobile-menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+  </nav>
+</header>
+
 <div class="shipping-marquee">
-    <marquee behavior="scroll" direction="left" scrollamount="4">
-        <i class="fas fa-truck"></i> <strong>ENVÍOS A TODA HONDURAS</strong> • Realizamos envíos a todos los departamentos con costo adicional • 
-        <i class="fas fa-shipping-fast"></i> <strong>ENVÍOS GRATIS</strong> en Tegucigalpa en compras mayores a L. 5,000 • 
-        <i class="fas fa-clock"></i> <strong>ENTREGAS</strong> de 24 a 48 horas • 
-        <i class="fas fa-phone-alt"></i> <strong>CONTACTO:</strong> +504 9681-1650 • 
-        <i class="fab fa-whatsapp"></i> <strong>WHATSAPP:</strong> +504 9681-1650
-    </marquee>
+  <marquee behavior="scroll" direction="left" scrollamount="4">
+    <i class="fas fa-truck"></i> <strong>ENVÍOS A TODA HONDURAS</strong> • Con costo adicional •
+    <i class="fas fa-shipping-fast"></i> <strong>ENVÍOS GRATIS</strong> en Tegucigalpa en compras mayores a L.5,000 •
+    <i class="fas fa-clock"></i> <strong>ENTREGAS</strong> 24 a 48 horas •
+    <i class="fas fa-phone-alt"></i> <strong>CONTACTO:</strong> +504 9681-1650 •
+    <i class="fab fa-whatsapp"></i> <strong>WHATSAPP:</strong> +504 9681-1650
+  </marquee>
 </div>
-    <!-- Floating Cart -->
-    <div class="floating-cart">
-        <div class="cart-icon" onclick="toggleCart()">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count" id="cartCount">0</span>
-        </div>
+
+<div class="floating-cart">
+  <div class="cart-icon" onclick="openCart()">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count" id="cartCount">0</span>
+  </div>
+</div>
+<div class="scroll-top" id="scrollTop">
+  <button class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1 class="hero-title">Descubre tu <span class="highlight">Dispositivo Perfecto</span></h1>
+    <p class="hero-subtitle">Smartphones y consolas de lujo al mejor precio en Honduras</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary"><i class="fas fa-mobile-alt"></i> Ver Productos</a>
+      <a href="#offers" class="btn-secondary"><i class="fas fa-tags"></i> Ofertas Especiales</a>
     </div>
+  </div>
+</section>
 
-    <!-- Scroll to Top Button -->
-    <div class="scroll-top">
-        <button class="scroll-top-btn"><i class="fas fa-arrow-up"></i></button>
+<section class="custom-carousels-section">
+  <div class="container">
+    <div class="carousel-wrapper">
+      <div class="custom-carousel" id="c1">
+        <div class="carousel-container">
+          <img src="assets/images/Banner-Desktop 1.png" class="carousel-image desktop-image active" alt="Banner 1">
+          <img src="assets/images/Banner-Mobile 1.png" class="carousel-image mobile-image active" alt="Banner 1 Mobile">
+          <img src="assets/images/Banner-Desktop 2.png" class="carousel-image desktop-image" alt="">
+          <img src="assets/images/Banner-Mobile 2.png" class="carousel-image mobile-image" alt="">
+          <img src="assets/images/Banner-Desktop 3.png" class="carousel-image desktop-image" alt="">
+          <img src="assets/images/Banner-Mobile 3.png" class="carousel-image mobile-image" alt="">
+          <img src="assets/images/Banner-Desktop 4.png" class="carousel-image desktop-image" alt="">
+          <img src="assets/images/Banner-Mobile 4.png" class="carousel-image mobile-image" alt="">
+        </div>
+        <button class="carousel-nav carousel-prev" onclick="slideC('c1',-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-nav carousel-next" onclick="slideC('c1',1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="d1"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="custom-carousel" id="c2">
+        <div class="carousel-container">
+          <img src="assets/images/Banner-1-2.png" class="carousel-image active" alt="">
+          <img src="assets/images/Banner-2-2.png" class="carousel-image" alt="">
+        </div>
+        <button class="carousel-nav carousel-prev" onclick="slideC('c2',-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-nav carousel-next" onclick="slideC('c2',1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="d2"><span class="dot active"></span><span class="dot"></span></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <video autoplay muted loop class="hero-video">
-            <source src="" type="video/mp4">
-            Tu navegador no soporta videos HTML5.
-        </video>
-        <button class="video-toggle"><i class="fas fa-pause"></i></button>
-        <div class="hero-content">
-            <h1 class="hero-title">Descubre tu <span class="highlight">Dispositivo Perfecto</span></h1>
-            <p class="hero-subtitle">Explora nuestra colección de smartphones y consolas de lujo al mejor precio</p>
-            <div class="hero-cta">
-                <a href="#products" class="btn-primary"><i class="fas fa-mobile-alt"></i> Ver Productos</a>
-                <a href="#offers" class="btn-secondary"><i class="fas fa-tags"></i> Ofertas Especiales</a>
-            </div>
-        </div>
-        <a href="#brands" class="hero-scroll"><i class="fas fa-chevron-down"></i></a>
-    </section>
-    <section class="custom-carousels-section">
-        <div class="container">
-            <div class="carousel-wrapper">
-                <!-- Primer Carrusel (4 imágenes) -->
-                <div class="custom-carousel large-carousel">
-                    <div class="carousel-container" data-index="0">
-                        <img src="assets/images/Banner-Desktop 1.png" alt="iPhone 16"
-                            class="carousel-image desktop-image">
-                        <img src="assets/images/Banner-Mobile 1.png" alt="iPhone 16 Mobile"
-                            class="carousel-image mobile-image">
-
-                        <img src="assets/images/Banner-Desktop 2.png" alt="Samsung S25 Ultra"
-                            class="carousel-image desktop-image">
-                        <img src="assets/images/Banner-Mobile 2.png" alt="Samsung S25 Ultra Mobile"
-                            class="carousel-image mobile-image">
-
-                        <img src="assets/images/Banner-Desktop 3.png" alt="Google Pixel 9"
-                            class="carousel-image desktop-image">
-                        <img src="assets/images/Banner-Mobile 3.png" alt="Google Pixel 9 Mobile"
-                            class="carousel-image mobile-image">
-
-                        <img src="assets/images/Banner-Desktop 4.png" alt="ASUS ROG Phone 8"
-                            class="carousel-image desktop-image">
-                        <img src="assets/images/Banner-Mobile 4.png" class="carousel-image mobile-image">
-                    </div>
-                    <button class="carousel-nav carousel-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-nav carousel-next"><i class="fas fa-chevron-right"></i></button>
-                    <div class="carousel-dots">
-                        <span class="dot active" data-index="0"></span>
-                        <span class="dot" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
-                        <span class="dot" data-index="3"></span>
-                    </div>
-                </div>
-                <!-- Segundo Carrusel (2 imágenes) -->
-                <div class="custom-carousel small-carousel">
-                    <div class="carousel-container" data-index="0">
-                        <img src="assets/images/Banner-1-2.png" alt="Xbox Series S"
-                            class="carousel-image desktop-image">
-                        <img src="assets/images/Banner-1-2.png" alt="Xbox Series S Mobile"
-                            class="carousel-image mobile-image">
-                        <img src="assets/images/Banner-2-2.png" alt="Apple Watch Ultra 2"
-                            class="carousel-image desktop-image">
-                        <img src="assets/images/Banner-2-2.png" alt="Apple Watch Ultra 2 Mobile"
-                            class="carousel-image mobile-image">
-                    </div>
-                    <button class="carousel-nav carousel-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-nav carousel-next"><i class="fas fa-chevron-right"></i></button>
-                    <div class="carousel-dots">
-                        <span class="dot active" data-index="0"></span>
-                        <span class="dot" data-index="1"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Brands Section - Carrusel Infinito -->
-    <section class="brands-carousel-section" id="brands">
-        <div class="container">
-            <div class="section-header-center">
-                <h2 class="section-title">Nuestras <span>Marcas</span></h2>
-                <p class="section-subtitle">Trabajamos con las mejores marcas del mercado para ofrecerte calidad y
-                    confianza</p>
-            </div>
-            <div class="brands-carousel-container">
-                <div class="brands-list" id="brandsList">
-                    <!-- Las marcas se generarán dinámicamente con JavaScript -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- New Products Section - Carrusel Infinito -->
-    <section class="new-products-section" id="new-products">
-        <div class="container">
-            <div class="section-header-center">
-                <h2 class="section-title">Productos <span>Más Nuevos</span></h2>
-                <p class="section-subtitle">Descubre los últimos lanzamientos y tecnologías más avanzadas</p>
-            </div>
-            <div class="new-products-carousel">
-                <div class="new-products-list" id="newProductsList">
-                    <!-- Los productos nuevos se generarán dinámicamente con JavaScript -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Categories Section -->
-    <section class="categories-section">
-        <div class="container">
-            <h2 class="section-title">Nuestras <span>Categorías</span></h2>
-            <div class="categories-grid">
-                <div class="category-card" onclick="filterProducts('all')">
-                    <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Todos</h3>
-                </div>
-                <div class="category-card" onclick="filterProducts('smartphones')">
-                    <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Smartphones</h3>
-                </div>
-                <div class="category-card" onclick="filterProducts('consolas')">
-                    <div class="category-icon"><i class="fas fa-gamepad"></i></div>
-                    <h3>Consolas</h3>
-                </div>
-                <div class="category-card" onclick="filterProducts('accesorios')">
-                    <div class="category-icon"><i class="fas fa-headphones"></i></div>
-                    <h3>Accesorios</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Minimal Filter Section -->
-    <section class="minimal-filter-section">
-        <div class="container minimal-filter-container">
-            <div class="filter-dropdown">
-                <button class="filter-toggle" onclick="toggleFilterDropdown()">
-                    <i class="fas fa-filter"></i> Filtros
-                </button>
-                <div class="filter-dropdown-content" id="filterDropdown">
-                    <div class="filter-option">
-                        <label>Categoría</label>
-                        <select id="categoryFilter">
-                            <option value="all">Todas las categorías</option>
-                            <option value="smartphones">Smartphones</option>
-                            <option value="consolas">Consolas</option>
-                            <option value="accesorios">Accesorios</option>
-                        </select>
-                    </div>
-                    <div class="filter-option">
-                        <label>Precio máximo</label>
-                        <select id="priceFilter">
-                            <option value="0">Cualquier precio</option>
-                            <option value="5000">L.5,000</option>
-                            <option value="10000">L.10,000</option>
-                            <option value="15000">L.15,000</option>
-                            <option value="20000">L.20,000</option>
-                            <option value="30000">L.30,000+</option>
-                        </select>
-                    </div>
-                    <div class="filter-option">
-                        <label>Ordenar por</label>
-                        <select id="sortFilter">
-                            <option value="default">Recomendados</option>
-                            <option value="price-asc">Precio: Menor a Mayor</option>
-                            <option value="price-desc">Precio: Mayor a Menor</option>
-                            <option value="rating">Mejor Valorados</option>
-                        </select>
-                    </div>
-                    <button class="apply-filter-btn" onclick="applyMinimalFilters()">Aplicar</button>
-                </div>
-            </div>
-            <div class="active-filters" id="activeFilters"></div>
-        </div>
-    </section>
-
-    <!-- Offers Section -->
-    <section class="products-section bg-accent" id="offers">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Ofertas <span>Especiales</span></h2>
-                <div class="section-decorator">
-                    <div class="decorator-line"></div>
-                    <div class="decorator-dot"></div>
-                    <div class="decorator-line"></div>
-                </div>
-            </div>
-            <div class="products-grid" id="offersGrid"></div>
-        </div>
-    </section>
-
-    <!-- Bestsellers Section -->
-    <section class="products-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Los Más <span>Vendidos</span></h2>
-                <div class="section-decorator">
-                    <div class="decorator-line"></div>
-                    <div class="decorator-dot"></div>
-                    <div class="decorator-line"></div>
-                </div>
-            </div>
-            <div class="products-grid" id="bestsellersGrid"></div>
-        </div>
-    </section>
-
-    <!-- All Products Section -->
-    <section class="products-section" id="productsSection">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Todos los <span>Productos</span></h2>
-                <div class="section-decorator">
-                    <div class="decorator-line"></div>
-                    <div class="decorator-dot"></div>
-                    <div class="decorator-line"></div>
-                </div>
-            </div>
-            <div class="products-grid" id="productsGrid"></div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Productos Originales</h3>
-                    <p>Todos nuestros dispositivos son 100% originales con garantía</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                    <h3>Envío Rápido</h3>
-                    <p>Recibe tu pedido en 24-48 horas en todo el país</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-certificate"></i></div>
-                    <h3>Garantía</h3>
-                    <p>Todos nuestros productos incluyen garantía</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                    <h3>Soporte 24/7</h3>
-                    <p>Nuestro equipo está disponible para ayudarte</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cart Modal -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="toggleCart()">&times;</span>
-            <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
-            <div class="cart-items" id="cartItems"></div>
-            <div class="cart-total" id="cartTotal">Total: L.0.00</div>
-            <div class="checkout-form">
-                <h3>Información de Envío</h3>
-                <form id="checkoutForm">
-                    <div class="form-group">
-                        <input type="text" id="customerName" required placeholder=" ">
-                        <label>Nombre Completo *</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="customerPhone" required placeholder=" ">
-                        <label>Teléfono *</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="customerAddress" required placeholder=" ">
-                        <label>Dirección *</label>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="customerNotes" placeholder=" "></textarea>
-                        <label>Notas Adicionales</label>
-                    </div>
-                    <h3>Método de Pago</h3>
-                    <div class="payment-methods">
-                        <div class="payment-option">
-                            <input type="radio" name="paymentMethod" id="paymentBac" value="Tarjeta Bac" required>
-                            <label for="paymentBac"><i class="fas fa-credit-card"></i> Tarjeta Bac</label>
-                        </div>
-                        <div class="payment-option">
-                            <input type="radio" name="paymentMethod" id="paymentFicohsa" value="Tarjeta Ficohsa">
-                            <label for="paymentFicohsa"><i class="fas fa-credit-card"></i> Tarjeta Ficohsa</label>
-                        </div>
-                        <div class="payment-option">
-                            <input type="radio" name="paymentMethod" id="paymentAmex" value="American Express">
-                            <label for="paymentAmex"><i class="fas fa-credit-card"></i> American Express</label>
-                        </div>
-                        <div class="payment-option">
-                            <input type="radio" name="paymentMethod" id="paymentTransfer" value="Transferencia">
-                            <label for="paymentTransfer"><i class="fas fa-university"></i> Transferencia</label>
-                        </div>
-                        <div class="payment-option">
-                            <input type="radio" name="paymentMethod" id="paymentCash" value="Efectivo">
-                            <label for="paymentCash"><i class="fas fa-money-bill-wave"></i> Efectivo</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Finalizar por
-                        WhatsApp</button>
-                </form>
-            </div>
-        </div>
+<section class="brands-carousel-section" id="brands">
+  <div class="container">
+    <div class="section-header-center">
+      <h2 class="section-title">Nuestras <span>Marcas</span></h2>
+      <p class="section-subtitle">Trabajamos con las mejores marcas del mercado</p>
     </div>
-
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-        <div class="modal-content product-modal-content">
-            <span class="close-modal" onclick="closeProductModal()">&times;</span>
-            <div class="product-modal-body" id="productModalBody"></div>
-        </div>
+    <div class="brands-carousel-container">
+      <div class="brands-list" id="brandsList"></div>
     </div>
+  </div>
+</section>
 
-    <!-- Trade-In Modal -->
-    <div class="modal" id="tradeInModal">
-        <div class="modal-content tradein-content">
-            <span class="close-modal" onclick="closeTradeInModal()">&times;</span>
-            <h2><i class="fas fa-sync-alt"></i> Permuta tu Dispositivo</h2>
-            <form id="tradeInForm">
-                <div class="form-group">
-                    <input type="text" id="deviceBrand" required placeholder=" ">
-                    <label>Marca del Dispositivo *</label>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="deviceName" required placeholder=" ">
-                    <label>Modelo del Dispositivo *</label>
-                </div>
-                <div class="form-group">
-                    <input type="number" id="deviceStorage" required placeholder=" ">
-                    <label>Almacenamiento (GB) *</label>
-                </div>
-                <div class="form-group">
-                    <select id="condition" required>
-                        <option value="" disabled selected></option>
-                        <option value="Excelente">Excelente (sin uso)</option>
-                        <option value="Bueno">Bueno (poco uso)</option>
-                        <option value="Regular">Regular (uso visible)</option>
-                    </select>
-                    <label>Estado del Dispositivo *</label>
-                </div>
-                <div class="form-group">
-                    <textarea id="additionalNotes" placeholder=" "></textarea>
-                    <label>Notas Adicionales</label>
-                </div>
-                <div class="form-note">
-                    <i class="fab fa-whatsapp"></i> Envíanos fotos del dispositivo por WhatsApp
-                </div>
-                <button type="submit" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Enviar Solicitud</button>
-            </form>
-        </div>
+<section class="new-products-section" id="new-products">
+  <div class="container">
+    <div class="section-header-center">
+      <h2 class="section-title">Productos <span>Más Nuevos</span></h2>
+      <p class="section-subtitle">Los últimos lanzamientos disponibles</p>
     </div>
+    <div style="overflow:hidden">
+      <div class="new-products-list" id="newProductsList">
+        <div style="padding:40px;color:var(--text3);display:flex;align-items:center;gap:10px"><div class="spinner"></div> Cargando...</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container footer-grid">
-            <div class="footer-about">
-                <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true"
-                    alt="MobileExpressHN Logo" class="footer-logo">
-                <p>Tu tienda de tecnología de confianza. Productos de calidad, precios increíbles y el mejor servicio al
-                    cliente.</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/MobileExpressHN" target="_blank" class="share-icon facebook"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/mobile.expresshn?igsh=ODdsMW41ZG43eGNr" target="_blank"
-                        class="share-icon instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/50496811650" target="_blank" class="share-icon whatsapp"><i
-                            class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h3>Categorías</h3>
-                <ul>
-                    <li><a href="#products" onclick="filterProducts('smartphones')">Smartphones</a></li>
-                    <li><a href="#products" onclick="filterProducts('consolas')">Consolas</a></li>
-                    <li><a href="#products" onclick="filterProducts('accesorios')">Accesorios</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Servicios</h3>
-                <ul>
-                    <li><a href="#">Garantías</a></li>
-                    <li><a href="#">Asesoría Técnica</a></li>
-                    <li><a href="#">Soporte Post-Venta</a></li>
-                    <li><a href="#" onclick="toggleTradeInModal()">Permutas</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Contacto</h3>
-                <ul class="contact-info">
-                    <li><i class="fas fa-phone"></i> +504 9681-1650
-                    </li>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0bdbfb2b9bcb5b5a8a0a2b5a3a3b8be90b7bdb1b9bcfeb3bfbd">[email&#160;protected]</a>
-                    </li>
-                    <li><i class="fas fa-map-marker-alt"></i> Tegucigalpa, Honduras
-                    </li>
-                    <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
-                </ul>
-            </div>
+<section class="categories-section">
+  <div class="container">
+    <h2 class="section-title">Nuestras <span>Categorías</span></h2>
+    <div class="categories-grid">
+      <div class="category-card" onclick="filterCat('all')"><div class="category-icon"><i class="fas fa-th-large"></i></div><h3>Todos</h3></div>
+      <div class="category-card" onclick="filterCat('smartphones')"><div class="category-icon"><i class="fas fa-mobile-alt"></i></div><h3>Smartphones</h3></div>
+      <div class="category-card" onclick="filterCat('consolas')"><div class="category-icon"><i class="fas fa-gamepad"></i></div><h3>Consolas</h3></div>
+      <div class="category-card" onclick="filterCat('accesorios')"><div class="category-icon"><i class="fas fa-headphones"></i></div><h3>Accesorios</h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="minimal-filter-section">
+  <div class="container minimal-filter-container">
+    <div class="filter-dropdown">
+      <button class="filter-toggle" onclick="document.getElementById('fp').classList.toggle('open')"><i class="fas fa-filter"></i> Filtros</button>
+      <div class="filter-dropdown-content" id="fp">
+        <div class="filter-option"><label>Categoría</label><select id="catF"><option value="all">Todas</option><option value="smartphones">Smartphones</option><option value="consolas">Consolas</option><option value="accesorios">Accesorios</option></select></div>
+        <div class="filter-option"><label>Precio máximo</label><select id="priceF"><option value="0">Cualquier precio</option><option value="5000">L.5,000</option><option value="10000">L.10,000</option><option value="15000">L.15,000</option><option value="20000">L.20,000</option><option value="30000">L.30,000+</option></select></div>
+        <div class="filter-option"><label>Ordenar por</label><select id="sortF"><option value="default">Recomendados</option><option value="price-asc">Precio: Menor a Mayor</option><option value="price-desc">Precio: Mayor a Menor</option><option value="rating">Mejor Valorados</option></select></div>
+        <button class="apply-filter-btn" onclick="applyF()">Aplicar Filtros</button>
+      </div>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+  </div>
+</section>
+
+<section class="products-section bg-accent" id="offers">
+  <div class="container">
+    <div class="section-header"><h2 class="section-title">Ofertas <span>Especiales</span></h2><div class="section-decorator"><div class="decorator-line"></div><div class="decorator-dot"></div><div class="decorator-line"></div></div></div>
+    <div class="products-grid" id="offersGrid"><div class="loading-grid"><div class="spinner"></div> Cargando...</div></div>
+  </div>
+</section>
+
+<section class="products-section">
+  <div class="container">
+    <div class="section-header"><h2 class="section-title">Los Más <span>Vendidos</span></h2><div class="section-decorator"><div class="decorator-line"></div><div class="decorator-dot"></div><div class="decorator-line"></div></div></div>
+    <div class="products-grid" id="bestsellersGrid"><div class="loading-grid"><div class="spinner"></div> Cargando...</div></div>
+  </div>
+</section>
+
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="section-header"><h2 class="section-title">Todos los <span>Productos</span></h2><div class="section-decorator"><div class="decorator-line"></div><div class="decorator-dot"></div><div class="decorator-line"></div></div></div>
+    <div class="products-grid" id="productsGrid"><div class="loading-grid"><div class="spinner"></div> Cargando productos...</div></div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Productos Originales</h3><p>100% originales con garantía</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-shipping-fast"></i></div><h3>Envío Rápido</h3><p>Recibe en 24-48 horas</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-certificate"></i></div><h3>Garantía</h3><p>Todos los productos la incluyen</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-headset"></i></div><h3>Soporte 24/7</h3><p>Siempre disponibles para ti</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CART MODAL -->
+<div class="modal" id="cartModal">
+  <div class="modal-content cart-modal-content">
+    <span class="close-modal" onclick="closeCart()">&times;</span>
+    <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total: L.0.00</div>
+    <div class="checkout-form">
+      <h3>Información de Envío</h3>
+      <form id="checkoutForm" onsubmit="doCheckout(event)">
+        <div class="form-group"><input type="text" id="cName" required placeholder=" "><label>Nombre Completo *</label></div>
+        <div class="form-group"><input type="tel" id="cPhone" required placeholder=" "><label>Teléfono *</label></div>
+        <div class="form-group"><input type="text" id="cAddress" required placeholder=" "><label>Dirección *</label></div>
+        <div class="form-group"><textarea id="cNotes" placeholder=" " rows="2"></textarea><label>Notas Adicionales</label></div>
+        <h3>Método de Pago</h3>
+        <div class="payment-methods">
+          <label class="payment-option"><input type="radio" name="pm" value="Tarjeta Bac" required> <i class="fas fa-credit-card"></i> Tarjeta Bac</label>
+          <label class="payment-option"><input type="radio" name="pm" value="Tarjeta Ficohsa"> <i class="fas fa-credit-card"></i> Tarjeta Ficohsa</label>
+          <label class="payment-option"><input type="radio" name="pm" value="American Express"> <i class="fas fa-credit-card"></i> American Express</label>
+          <label class="payment-option"><input type="radio" name="pm" value="Transferencia"> <i class="fas fa-university"></i> Transferencia</label>
+          <label class="payment-option"><input type="radio" name="pm" value="Efectivo"> <i class="fas fa-money-bill-wave"></i> Efectivo</label>
         </div>
-        
-     <div class="footer-bottom">
+        <button type="submit" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Finalizar por WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-content product-modal-content">
+    <span class="close-modal" onclick="closeProduct()">&times;</span>
+    <div class="product-modal-body" id="productModalBody"></div>
+  </div>
+</div>
+
+<!-- TRADE-IN MODAL -->
+<div class="modal" id="tradeInModal">
+  <div class="modal-content tradein-content">
+    <span class="close-modal" onclick="closeTradeIn()">&times;</span>
+    <h2><i class="fas fa-sync-alt"></i> Permuta tu Dispositivo</h2>
+    <form id="tradeInForm" onsubmit="doTradeIn(event)">
+      <div class="form-group"><input type="text" id="dBrand" required placeholder=" "><label>Marca *</label></div>
+      <div class="form-group"><input type="text" id="dName" required placeholder=" "><label>Modelo *</label></div>
+      <div class="form-group"><input type="number" id="dStorage" required placeholder=" "><label>Almacenamiento (GB) *</label></div>
+      <div class="form-group">
+        <select id="dCond" required style="padding:10px 13px">
+          <option value="" disabled selected></option>
+          <option value="Excelente">Excelente (sin uso)</option>
+          <option value="Bueno">Bueno (poco uso)</option>
+          <option value="Regular">Regular (uso visible)</option>
+        </select>
+        <label style="top:-8px;left:9px;font-size:.68rem;background:var(--bg2);padding:0 4px;color:var(--primary);position:absolute">Estado *</label>
+      </div>
+      <div class="form-group"><textarea id="dNotes" placeholder=" " rows="2"></textarea><label>Notas Adicionales</label></div>
+      <p style="font-size:.76rem;color:var(--text3);margin-bottom:13px"><i class="fab fa-whatsapp" style="color:#25D366"></i> Envíanos fotos del dispositivo por WhatsApp</p>
+      <button type="submit" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Enviar Solicitud</button>
+    </form>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <img src="https://github.com/Osmedi/Nueva-Tienda/blob/main/Logo_MobileExpresHN.png?raw=true" alt="MobileExpressHN" class="footer-logo">
+      <p>Tu tienda de tecnología de confianza en Honduras. Productos de calidad y el mejor servicio al cliente.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/MobileExpressHN" target="_blank" class="share-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/mobile.expresshn" target="_blank" class="share-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/50496811650" target="_blank" class="share-icon"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h3>Categorías</h3><ul>
+      <li><a href="#products" onclick="filterCat('smartphones')">Smartphones</a></li>
+      <li><a href="#products" onclick="filterCat('consolas')">Consolas</a></li>
+      <li><a href="#products" onclick="filterCat('accesorios')">Accesorios</a></li>
+    </ul></div>
+    <div class="footer-col"><h3>Servicios</h3><ul>
+      <li><a href="#">Garantías</a></li>
+      <li><a href="#">Asesoría Técnica</a></li>
+      <li><a href="#">Soporte Post-Venta</a></li>
+      <li><a href="#" onclick="openTradeIn()">Permutas</a></li>
+    </ul></div>
+    <div class="footer-col"><h3>Contacto</h3><ul class="contact-info">
+      <li><i class="fas fa-phone"></i> +504 9681-1650</li>
+      <li><i class="fas fa-envelope"></i> mobileexpresshn@gmail.com</li>
+      <li><i class="fas fa-map-marker-alt"></i> Tegucigalpa, Honduras</li>
+      <li><i class="fas fa-clock"></i> Lun-Sáb: 8AM-6PM</li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
     © 2026 MobileExpressHN. Todos los derechos reservados.
-    <div class="developer-credit">
-        <i class="fas fa-code"></i> Desarrollado por 
-        <a href="osmedidev.com" class="dev-email">OsmediDev</a>
-    </div>
-</div>
-    </footer>
+    <div class="developer-credit"><i class="fas fa-code"></i> Desarrollado por <a href="https://osmedidev.com" class="dev-email">OsmediDev</a></div>
+  </div>
+</footer>
 
-    <!-- Firebase carga productos ANTES de que script.js arranque -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="firebase-loader.js"></script>
-    <script src="script.js"></script>
-    <script src="firebase-integration.js"></script>
+<script>
+// ══════════════════════════════════════════════════
+//  MOBILEEXPRESSHN — Tienda con Firebase nativo
+//  db viene de firebase-config.js (ya cargado arriba)
+// ══════════════════════════════════════════════════
+
+let allProducts = [];
+let cart = JSON.parse(localStorage.getItem('mexhn_cart') || '[]');
+let selOpts = {}; // opciones seleccionadas por producto
+let filters = { cat:'all', price:0, sort:'default' };
+
+// ── FIREBASE REALTIME ──
+function startStore() {
+  db.collection('productos').onSnapshot(snap => {
+    allProducts = snap.docs.map(d => {
+      const x = d.data();
+      return {
+        id: d.id, name: x.name||'', brand: x.brand||'',
+        category: x.category||'smartphones',
+        price: Number(x.price)||0,
+        originalPrice: x.originalPrice ? Number(x.originalPrice) : null,
+        rating: Number(x.rating)||0, reviews: Number(x.reviews)||0,
+        images: Array.isArray(x.images) ? x.images : (x.images?[x.images]:[]),
+        description: x.description||'', badge: x.badge||'',
+        isBestseller: !!x.isBestseller, isOnOffer: !!x.isOnOffer,
+        specs: x.specs||{}, features: x.features||[],
+        gb_options: x.gb_options||[], colors: x.colors||[],
+      };
+    });
+    renderAll();
+    buildBrands();
+    buildNewProducts();
+    console.log('[Firebase] ' + allProducts.length + ' productos ✓');
+  }, e => console.error('[Firebase]', e));
+}
+
+// ── RENDER ──
+function renderAll() {
+  const filtered = getFiltered();
+  renderGrid('productsGrid', filtered);
+  renderGrid('offersGrid', allProducts.filter(p=>p.isOnOffer).slice(0,6));
+  renderGrid('bestsellersGrid', allProducts.filter(p=>p.isBestseller).slice(0,6));
+  updateCart();
+}
+
+function getFiltered() {
+  let r = [...allProducts];
+  if (filters.cat !== 'all') r = r.filter(p=>p.category===filters.cat);
+  if (filters.price > 0) r = r.filter(p=>p.price<=filters.price);
+  if (filters.sort==='price-asc') r.sort((a,b)=>a.price-b.price);
+  else if (filters.sort==='price-desc') r.sort((a,b)=>b.price-a.price);
+  else if (filters.sort==='rating') r.sort((a,b)=>(b.rating||0)-(a.rating||0));
+  return r;
+}
+
+function renderGrid(id, prods) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  if (!prods.length) { g.innerHTML='<div class="empty-grid">Sin productos en esta sección</div>'; return; }
+  g.innerHTML = prods.map(p => cardHTML(p)).join('');
+  // auto-slide imágenes en cards
+  g.querySelectorAll('.product-carousel').forEach(initAutoSlide);
+}
+
+function cardHTML(p) {
+  const disc = p.originalPrice ? Math.round((1-p.price/p.originalPrice)*100) : 0;
+  const stars = '★'.repeat(Math.round(p.rating||0))+'☆'.repeat(5-Math.round(p.rating||0));
+  const imgs = p.images.length ? p.images : [''];
+  const navBtns = imgs.length > 1
+    ? `<button class="card-nav prev" onclick="event.stopPropagation();cardNav(this,-1)"><i class="fas fa-chevron-left"></i></button>
+       <button class="card-nav next" onclick="event.stopPropagation();cardNav(this,1)"><i class="fas fa-chevron-right"></i></button>`
+    : '';
+  return `<div class="product-card" onclick="openProduct('${p.id}')">
+    ${p.isBestseller?'<div class="product-badge best">Más Vendido</div>':p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+    <div class="product-carousel" data-idx="0">
+      ${imgs.map((img,i)=>`<img src="${img}" class="active"  style="opacity:${i===0?1:0}" alt="${p.name}" loading="lazy" onerror="this.src=''"/>`).join('')}
+      ${navBtns}
+    </div>
+    <div class="product-info">
+      <div class="product-title">${p.name}</div>
+      <div class="product-price">
+        ${p.originalPrice?`<span class="original-price">L.${p.originalPrice.toLocaleString()}</span>`:''}
+        L.${p.price.toLocaleString()}
+        ${disc>0?`<span style="font-size:.7rem;background:rgba(34,197,94,.1);color:#22c55e;padding:2px 7px;border-radius:10px;margin-left:5px">-${disc}%</span>`:''}
+      </div>
+      <div class="stars">${stars} <span style="font-size:.73rem;color:var(--text3)">(${p.reviews||0})</span></div>
+      <button class="add-to-cart" onclick="event.stopPropagation();doAddToCart('${p.id}')">
+        <i class="fas fa-shopping-cart"></i> Añadir al Carrito
+      </button>
+    </div>
+  </div>`;
+}
+
+function cardNav(btn, dir) {
+  const car = btn.closest('.product-carousel');
+  const imgs = car.querySelectorAll('img');
+  let idx = parseInt(car.dataset.idx||0);
+  imgs[idx].style.opacity = '0';
+  idx = (idx+dir+imgs.length)%imgs.length;
+  imgs[idx].style.opacity = '1';
+  car.dataset.idx = idx;
+}
+
+function initAutoSlide(car) {
+  const imgs = car.querySelectorAll('img');
+  if (imgs.length < 2) return;
+  setInterval(() => {
+    if (car.matches(':hover')) return;
+    let idx = parseInt(car.dataset.idx||0);
+    imgs[idx].style.opacity='0';
+    idx=(idx+1)%imgs.length;
+    imgs[idx].style.opacity='1';
+    car.dataset.idx=idx;
+  }, 3500);
+}
+
+// ── PRODUCT MODAL ──
+function openProduct(id) {
+  const p = allProducts.find(x=>x.id===id);
+  if (!p) return;
+  selOpts[id] = {gb:null,color:null,price:p.price};
+  const stars='★'.repeat(Math.round(p.rating||0))+'☆'.repeat(5-Math.round(p.rating||0));
+  const thumbs=p.images.map((img,i)=>`<div class="product-modal-thumbnail ${i===0?'active':''}" onclick="changeImg('${img}',this)"><img src="${img}" alt=""></div>`).join('');
+  const specs=Object.entries(p.specs||{}).map(([k,v])=>`<div class="spec-item"><span class="spec-key">${k.charAt(0).toUpperCase()+k.slice(1)}:</span><span>${v}</span></div>`).join('');
+  const feats=(p.features||[]).map(f=>`<li>${f}</li>`).join('');
+  const gbSel=p.gb_options?.length?`<div class="selector-group"><div class="selector-label">Almacenamiento:</div><div class="selector-options">${p.gb_options.map(g=>`<div class="selector-option" onclick="pickGB('${id}','${g.gb}',${g.price},this)">${g.gb}GB — L.${Number(g.price).toLocaleString()}</div>`).join('')}</div></div>`:'';
+  const colSel=p.colors?.length?`<div class="selector-group"><div class="selector-label">Color:</div><div class="selector-options">${p.colors.map(c=>`<div class="selector-option" onclick="pickColor('${id}','${c}',this)">${c}</div>`).join('')}</div></div>`:'';
+  document.getElementById('productModalBody').innerHTML=`
+    <div class="product-modal-images">
+      <div class="product-modal-main-image"><img id="mImg" src="${p.images[0]||''}" alt="${p.name}"></div>
+      <div class="product-modal-thumbnails">${thumbs}</div>
+    </div>
+    <div class="product-modal-details">
+      <h2>${p.name}</h2>
+      <div class="product-modal-price" id="mPrice">L.${p.price.toLocaleString()}</div>
+      <div class="product-modal-rating"><span class="stars">${stars}</span><span>(${p.reviews||0} reseñas)</span></div>
+      <p class="product-modal-description">${p.description||''}</p>
+      ${gbSel}${colSel}
+      ${specs?`<div class="product-modal-specs"><h3>Especificaciones</h3><div class="specs-grid">${specs}</div></div>`:''}
+      ${feats?`<div class="product-modal-features"><h3>Características</h3><ul>${feats}</ul></div>`:''}
+      <div class="product-modal-actions">
+        <button class="add-to-cart" onclick="doAddToCart('${id}');closeProduct()"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
+        <button class="tradein-btn" onclick="closeProduct();openTradeIn()"><i class="fas fa-sync-alt"></i> Permutar</button>
+      </div>
+    </div>`;
+  document.getElementById('productModal').classList.add('open');
+}
+function changeImg(src,el){document.getElementById('mImg').src=src;document.querySelectorAll('.product-modal-thumbnail').forEach(t=>t.classList.remove('active'));el.classList.add('active')}
+function pickGB(id,gb,price,el){el.closest('.selector-options').querySelectorAll('.selector-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');selOpts[id]={...selOpts[id],gb,price};document.getElementById('mPrice').textContent='L.'+Number(price).toLocaleString()}
+function pickColor(id,color,el){el.closest('.selector-options').querySelectorAll('.selector-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');selOpts[id]={...selOpts[id],color}}
+function closeProduct(){document.getElementById('productModal').classList.remove('open')}
+
+// ── CART ──
+function doAddToCart(id) {
+  const p = allProducts.find(x=>x.id===id);
+  if (!p) return;
+  const o = selOpts[id]||{};
+  const price = o.price||p.price;
+  const key = `${id}_${o.gb||''}_${o.color||''}`;
+  const ex = cart.find(i=>i.key===key);
+  if (ex) ex.quantity++;
+  else cart.push({key,id,name:p.name,price,quantity:1,image:p.images[0]||'',selectedGB:o.gb||null,selectedColor:o.color||null});
+  saveCart(); updateCart();
+  notify(`${p.name} agregado al carrito`,'success');
+}
+function saveCart(){localStorage.setItem('mexhn_cart',JSON.stringify(cart))}
+function updateCart() {
+  const count = cart.reduce((s,i)=>s+i.quantity,0);
+  document.getElementById('cartCount').textContent=count;
+  const ci=document.getElementById('cartItems'),ct=document.getElementById('cartTotal');
+  if(!ci)return;
+  if(!cart.length){ci.innerHTML='<p style="text-align:center;color:var(--text3);padding:20px">Tu carrito está vacío</p>';ct.textContent='Total: L.0.00';return}
+  ci.innerHTML=cart.map(i=>`
+    <div class="cart-item">
+      <img src="${i.image}" alt="${i.name}" onerror="this.src=''">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${i.name}</div>
+        ${i.selectedGB||i.selectedColor?`<div class="cart-item-opts">${i.selectedGB?'💾'+i.selectedGB+'GB':''}${i.selectedGB&&i.selectedColor?' • ':''}${i.selectedColor?'🎨'+i.selectedColor:''}</div>`:''}
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="chQty('${i.key}',-1)">−</button>
+          <span style="font-size:.83rem;font-weight:600">${i.quantity}</span>
+          <button class="qty-btn" onclick="chQty('${i.key}',1)">+</button>
+          <button class="rm-btn" onclick="rmItem('${i.key}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <div class="cart-item-price">L.${(i.price*i.quantity).toLocaleString()}</div>
+    </div>`).join('');
+  ct.textContent='Total: L.'+cart.reduce((s,i)=>s+i.price*i.quantity,0).toLocaleString();
+}
+function chQty(key,d){const i=cart.find(x=>x.key===key);if(!i)return;i.quantity+=d;if(i.quantity<=0)cart=cart.filter(x=>x.key!==key);saveCart();updateCart()}
+function rmItem(key){cart=cart.filter(x=>x.key!==key);saveCart();updateCart()}
+function openCart(){document.getElementById('cartModal').classList.add('open');updateCart()}
+function closeCart(){document.getElementById('cartModal').classList.remove('open')}
+
+// ── CHECKOUT ──
+function doCheckout(e) {
+  e.preventDefault();
+  if(!cart.length){notify('El carrito está vacío','warning');return}
+  const name=document.getElementById('cName').value;
+  const phone=document.getElementById('cPhone').value;
+  const address=document.getElementById('cAddress').value;
+  const notes=document.getElementById('cNotes').value;
+  const pmEl=document.querySelector('input[name="pm"]:checked');
+  if(!pmEl){notify('Selecciona un método de pago','warning');return}
+  const pm=pmEl.value;
+  const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
+  let msg=`🛍️ *FACTURA ELECTRÓNICA - MOBILEEXPRESSHN* 🛍️\n\n`;
+  msg+=`📅 *Fecha:* ${new Date().toLocaleDateString()}\n⏰ *Hora:* ${new Date().toLocaleTimeString()}\n\n`;
+  msg+=`👤 *INFORMACIÓN DEL CLIENTE*\n══════════════════════════\n`;
+  msg+=`▸ *Nombre:* ${name}\n▸ *Teléfono:* ${phone}\n▸ *Dirección:* ${address}\n▸ *Método de Pago:* ${pm}\n▸ *Notas:* ${notes||'Ninguna'}\n\n`;
+  msg+=`📋 *DETALLE DEL PEDIDO*\n══════════════════════════\n`;
+  cart.forEach((i,idx)=>{
+    const opts=[i.selectedGB?'💾'+i.selectedGB+'GB':'',i.selectedColor?'🎨'+i.selectedColor:''].filter(Boolean).join(' • ');
+    msg+=`➤ *${i.name}*${opts?'\n   └── '+opts:''}\n   ▸ Cantidad: ${i.quantity}\n   ▸ Precio: L.${i.price.toLocaleString()}\n   ▸ Subtotal: L.${(i.price*i.quantity).toLocaleString()}\n`;
+    if(idx<cart.length-1)msg+=`   ─────────────────────\n`;
+  });
+  msg+=`══════════════════════════\n💰 *TOTAL A PAGAR: L.${total.toLocaleString()}*\n\n`;
+  msg+=`📦 *Tiempo estimado:* 24-48 horas\n▸ *Zona:* ${address.toLowerCase().includes('teguc')?'Área Metropolitana':'Fuera del área metropolitana'}\n\n`;
+  msg+=`¡Gracias por tu compra en *MobileExpressHN*! 💜\n📞 +504 9681-1650\n📧 mobileexpresshn@gmail.com`;
+  window.open(`https://wa.me/+50496811650?text=${encodeURIComponent(msg)}`,'_blank');
+  notify('¡Pedido enviado por WhatsApp!','success');
+  // Firebase
+  try{db.collection('pedidos').add({customer:name,phone,address,notes:notes||'',payment:pm,product:cart.map(i=>i.name).join(', '),items:cart.map(i=>({name:i.name,price:i.price,quantity:i.quantity,selectedGB:i.selectedGB||null,selectedColor:i.selectedColor||null})),total,status:'pendiente',fecha:firebase.firestore.FieldValue.serverTimestamp()})}catch(err){}
+  cart=[];saveCart();updateCart();closeCart();
+}
+
+// ── TRADE-IN ──
+function openTradeIn(){document.getElementById('tradeInModal').classList.add('open')}
+function closeTradeIn(){document.getElementById('tradeInModal').classList.remove('open')}
+function doTradeIn(e){
+  e.preventDefault();
+  const brand=document.getElementById('dBrand').value,name=document.getElementById('dName').value,storage=document.getElementById('dStorage').value,cond=document.getElementById('dCond').value,notes=document.getElementById('dNotes').value;
+  window.open(`https://wa.me/+50496811650?text=${encodeURIComponent(`Solicitud de permuta:\nMarca: ${brand}\nModelo: ${name}\nAlmacenamiento: ${storage}GB\nEstado: ${cond}\nNotas: ${notes||'Ninguna'}`)}`, '_blank');
+  try{db.collection('permutas').add({deviceBrand:brand,deviceName:name,deviceStorage:storage+'GB',condition:cond,additionalNotes:notes||'',status:'pendiente',fecha:firebase.firestore.FieldValue.serverTimestamp()})}catch(err){}
+  closeTradeIn();document.getElementById('tradeInForm').reset();
+}
+
+// ── FILTERS ──
+function filterCat(cat){filters.cat=cat;document.getElementById('catF').value=cat;renderAll();document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
+function applyF(){filters.cat=document.getElementById('catF').value;filters.price=parseInt(document.getElementById('priceF').value)||0;filters.sort=document.getElementById('sortF').value;renderAll();document.getElementById('fp').classList.remove('open')}
+
+// ── SEARCH ──
+document.getElementById('searchInput').addEventListener('input',function(){
+  const q=this.value.toLowerCase().trim(),sug=document.getElementById('searchSuggestions');
+  if(!q){sug.style.display='none';return}
+  const m=allProducts.filter(p=>p.name.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q)).slice(0,6);
+  if(!m.length){sug.style.display='none';return}
+  sug.innerHTML=m.map(p=>`<div class="sug-item" onclick="openProduct('${p.id}');this.closest('.search-suggestions').style.display='none';document.getElementById('searchInput').value=''"><img src="${p.images[0]||''}" alt="" onerror="this.src=''"><div><div style="font-weight:600">${p.name}</div><div style="font-size:.7rem;color:var(--text3)">L.${p.price.toLocaleString()}</div></div></div>`).join('');
+  sug.style.display='block';
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.search-container'))document.getElementById('searchSuggestions').style.display='none'});
+
+// ── BRANDS ──
+function buildBrands(){
+  const brands=[
+    {name:'Apple',logo:'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg'},
+    {name:'Samsung',logo:'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg'},
+    {name:'Google',logo:'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg'},
+    {name:'Microsoft',logo:'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg'},
+    {name:'Sony',logo:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg'},
+    {name:'Asus',logo:'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg'},
+  ];
+  const all=[...brands,...brands];
+  document.getElementById('brandsList').innerHTML=all.map(b=>`<div class="brand-carousel-item"><div class="brand-carousel-card" onclick="filterBrand('${b.name}')"><img src="${b.logo}" alt="${b.name}" class="brand-carousel-logo"><h3>${b.name}</h3></div></div>`).join('');
+}
+function filterBrand(brand){renderGrid('productsGrid',allProducts.filter(p=>p.brand===brand));document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
+
+// ── NEW PRODUCTS ──
+function buildNewProducts(){
+  const prods=[...allProducts].slice(0,8);
+  if(!prods.length)return;
+  const all=[...prods,...prods];
+  document.getElementById('newProductsList').innerHTML=all.map(p=>`<div class="new-product-item"><div class="new-product-card" onclick="openProduct('${p.id}')"><span class="new-product-badge">${p.badge||'Nuevo'}</span><img src="${p.images[0]||''}" alt="${p.name}" class="new-product-image" onerror="this.src=''"><div class="new-product-name">${p.name}</div><button class="view-product-btn">Ver Producto</button></div></div>`).join('');
+}
+
+// ── BANNER CAROUSELS ──
+const cState={};
+function slideC(id,dir){
+  const car=document.getElementById(id);if(!car)return;
+  const isDesktop=window.innerWidth>=768;
+  const imgs=isDesktop?car.querySelectorAll('.carousel-image.desktop-image'):car.querySelectorAll('.carousel-image.mobile-image');
+  const allImgs=imgs.length>0?imgs:car.querySelectorAll('.carousel-image');
+  if(!cState[id])cState[id]=0;
+  allImgs[cState[id]].classList.remove('active');
+  cState[id]=(cState[id]+dir+allImgs.length)%allImgs.length;
+  allImgs[cState[id]].classList.add('active');
+  const dNum=id.replace('c','');
+  document.querySelectorAll(`#d${dNum} .dot`).forEach((d,i)=>d.classList.toggle('active',i===cState[id]));
+}
+setInterval(()=>slideC('c1',1),4000);
+setInterval(()=>slideC('c2',1),5500);
+
+// ── THEME ──
+function loadTheme(){
+  const t=localStorage.getItem('mexhn_theme')||'light';
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('themeCheckbox').checked=t==='dark';
+}
+document.getElementById('themeCheckbox').addEventListener('change',function(){
+  const t=this.checked?'dark':'light';
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('mexhn_theme',t);
+});
+
+// ── MISC ──
+function toggleMenu(){document.getElementById('navContent').classList.toggle('active')}
+window.addEventListener('scroll',()=>{document.getElementById('scrollTop').style.display=window.scrollY>400?'block':'none'});
+['cartModal','productModal','tradeInModal'].forEach(id=>document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+function notify(msg,type='info'){
+  const n=document.createElement('div');
+  n.className=`notification ${type}`;
+  n.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':'exclamation-triangle'}"></i> ${msg}<span class="notification-close" onclick="this.parentElement.remove()">&times;</span>`;
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),3500);
+}
+
+// ── INIT ──
+loadTheme();
+startStore();
+setTimeout(()=>{const p=document.getElementById('preloader');if(p){p.style.opacity='0';setTimeout(()=>p.style.display='none',500)}},2000);
+</script>
 </body>
 </html>
