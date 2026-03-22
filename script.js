@@ -1,7 +1,7 @@
 const products = [
     {
         id: 1,
-        name: "iPhone 16",
+        name: "iPhone 16 2026",
         brand: "Apple",
         category: "smartphones",
         price: 23500,
