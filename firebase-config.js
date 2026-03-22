@@ -4,7 +4,7 @@
 //  Edita SOLO este archivo con tus credenciales reales.
 // ============================================================
 
-const firebaseConfig = {
+const FIREBASE_CONFIG = {
   apiKey: "AIzaSy...",
   authDomain: "tu-proyecto.firebaseapp.com",
   projectId: "tu-proyecto",
