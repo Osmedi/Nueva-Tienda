@@ -4,19 +4,17 @@
 //  Edita SOLO este archivo con tus credenciales reales.
 // ============================================================
 
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSy...",
-  authDomain: "tu-proyecto.firebaseapp.com",
-  projectId: "tu-proyecto",
-  storageBucket: "tu-proyecto.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef..."
+const firebaseConfig = {
+  apiKey: "AIzaSyDECEJdhkQxdsP3GcLtdJSUJGGreyaHUag",
+  authDomain: "mobileexpresshn-af354.firebaseapp.com",
+  projectId: "mobileexpresshn-af354",
+  storageBucket: "mobileexpresshn-af354.firebasestorage.app",
+  messagingSenderId: "851553673604",
+  appId: "1:851553673604:web:ee8255e28b167f83a73dd1"
 };
 
-// Inicializa Firebase una sola vez (lo usan script.js y admin-firebase.html)
-if (!firebase.apps || !firebase.apps.length) {
-  firebase.initializeApp(FIREBASE_CONFIG);
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 const db   = firebase.firestore();
 const auth = firebase.auth();
