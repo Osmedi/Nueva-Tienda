@@ -541,6 +541,7 @@
 
     <div class="nav-label">Catálogo</div>
     <div class="nav-item" onclick="navigate('products',this)"><i class="fas fa-box"></i> Productos</div>
+    <div class="nav-item" onclick="navigate('banners',this)"><i class="fas fa-images"></i> Banners</div>
     <div class="nav-item" onclick="navigate('inventory',this)"><i class="fas fa-warehouse"></i> Inventario</div>
 
     <div class="nav-label">Clientes</div>
@@ -752,7 +753,31 @@
         </table>
       </div>
     </div>
+<!-- BANNERS -->
+<div class="page" id="page-banners">
+  <div class="section-hd">
+    <h2>Gestión de <span>Banners</span></h2>
+    <button class="tb-btn primary" onclick="openAddBanner()"><i class="fas fa-plus"></i> Nuevo Banner</button>
+  </div>
 
+  <div style="margin-bottom:14px;font-size:0.8rem;color:var(--text2)">
+    <i class="fas fa-info-circle" style="color:var(--blue)"></i>
+    <strong>Carrusel 1</strong> = banners grandes (izquierda) &nbsp;|&nbsp;
+    <strong>Carrusel 2</strong> = banners pequeños (derecha)
+  </div>
+
+  <div class="panel">
+    <table class="data-table">
+      <thead><tr>
+        <th>Vista previa</th><th>URL Desktop</th><th>URL Mobile</th>
+        <th>Carrusel</th><th>Orden</th><th>Estado</th><th>Acciones</th>
+      </tr></thead>
+      <tbody id="bannersTbody">
+        <tr><td colspan="7"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
     <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <div class="section-hd"><h2>Configuración <span>del Sistema</span></h2></div>
@@ -787,6 +812,48 @@
 
   </div><!-- /content -->
 </div><!-- /main -->
+
+<!-- MODAL: BANNER -->
+<div class="modal-overlay" id="bannerModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="bannerModalTitle">Nuevo Banner</span>
+      <button class="modal-close" onclick="closeModal('bannerModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">URL Imagen Desktop *</label>
+        <input class="form-input" id="bDesktop" placeholder="https://... (ancho recomendado: 1200px)">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">URL Imagen Mobile</label>
+        <input class="form-input" id="bMobile" placeholder="https://... (ancho recomendado: 600px) — opcional">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Carrusel</label>
+        <select class="form-select" id="bCarrusel">
+          <option value="1">Carrusel 1 — Grande (izquierda)</option>
+          <option value="2">Carrusel 2 — Pequeño (derecha)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Orden (1 = primero)</label>
+        <input class="form-input" type="number" id="bOrden" value="1" min="1">
+      </div>
+      <div class="form-group full" style="flex-direction:row;gap:20px">
+        <label class="form-check"><input type="checkbox" id="bActivo" checked> Banner activo (visible en tienda)</label>
+      </div>
+      <div class="form-group full" id="bPreviewWrap" style="display:none">
+        <label class="form-label">Vista previa</label>
+        <img id="bPreview" src="" style="max-height:160px;border-radius:8px;border:1px solid var(--border);object-fit:cover;width:100%">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn secondary" onclick="closeModal('bannerModal')">Cancelar</button>
+      <button class="btn primary" id="saveBannerBtn" onclick="saveBanner()"><i class="fas fa-save"></i> Guardar en Firebase</button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL: PRODUCTO -->
 <div class="modal-overlay" id="productModal">
@@ -958,8 +1025,9 @@ function navigate(page, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   if (el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
-  const titles = { dashboard:'Dashboard', products:'Productos', orders:'Pedidos', inventory:'Inventario', customers:'Clientes', tradein:'Permutas', settings:'Configuración' };
+  const titles = { dashboard:'Dashboard', products:'Productos', orders:'Pedidos', inventory:'Inventario', customers:'Clientes', tradein:'Permutas', settings:'Configuración' , banners:'Banners' };
   document.getElementById('topbarTitle').textContent = titles[page] || page;
+  if (page === 'banners') renderBanners();
 }
 
 // ═══════════════════════════════════════════
@@ -1346,6 +1414,110 @@ function buildChartFallback() {
     `<div class="chart-label">${m}</div>`
   ).join('');
 }
+
+// ═══════════════════════════════════════════
+//  BANNERS
+// ═══════════════════════════════════════════
+let editingBannerId = null;
+
+function renderBanners() {
+  db.collection('banners').orderBy('orden').get().then(snap => {
+    const tbody = document.getElementById('bannersTbody');
+    if (snap.empty) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-images"></i><p>Sin banners. Crea el primero.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = snap.docs.map(doc => {
+      const b = doc.data();
+      return `<tr>
+        <td><img src="${b.url_desktop}" style="height:48px;border-radius:6px;object-fit:cover;max-width:120px" onerror="this.style.opacity=0.2"></td>
+        <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.72rem;color:var(--text2)">${b.url_desktop||'—'}</td>
+        <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.72rem;color:var(--text2)">${b.url_mobile||'—'}</td>
+        <td style="text-align:center"><span class="badge ${b.carrusel==2?'blue':'orange'}">Carrusel ${b.carrusel||1}</span></td>
+        <td style="text-align:center;font-weight:600">${b.orden||1}</td>
+        <td>${b.activo?'<span class="badge green">Activo</span>':'<span class="badge gray">Inactivo</span>'}</td>
+        <td><div style="display:flex;gap:5px">
+          <div class="icon-btn" onclick="openEditBanner('${doc.id}')" title="Editar"><i class="fas fa-pen"></i></div>
+          <div class="icon-btn del" onclick="deleteBanner('${doc.id}')" title="Eliminar"><i class="fas fa-trash"></i></div>
+        </div></td>
+      </tr>`;
+    }).join('');
+  });
+}
+
+function openAddBanner() {
+  editingBannerId = null;
+  document.getElementById('bannerModalTitle').textContent = 'Nuevo Banner';
+  document.getElementById('bDesktop').value = '';
+  document.getElementById('bMobile').value = '';
+  document.getElementById('bCarrusel').value = '1';
+  document.getElementById('bOrden').value = '1';
+  document.getElementById('bActivo').checked = true;
+  document.getElementById('bPreviewWrap').style.display = 'none';
+  openModal('bannerModal');
+}
+
+function openEditBanner(id) {
+  db.collection('banners').doc(id).get().then(doc => {
+    const b = doc.data();
+    editingBannerId = id;
+    document.getElementById('bannerModalTitle').textContent = 'Editar Banner';
+    document.getElementById('bDesktop').value = b.url_desktop||'';
+    document.getElementById('bMobile').value = b.url_mobile||'';
+    document.getElementById('bCarrusel').value = String(b.carrusel||1);
+    document.getElementById('bOrden').value = b.orden||1;
+    document.getElementById('bActivo').checked = !!b.activo;
+    if (b.url_desktop) {
+      document.getElementById('bPreview').src = b.url_desktop;
+      document.getElementById('bPreviewWrap').style.display = 'block';
+    }
+    openModal('bannerModal');
+  });
+}
+
+async function saveBanner() {
+  const url = document.getElementById('bDesktop').value.trim();
+  if (!url) { showToast('La URL desktop es requerida','error'); return; }
+  const btn = document.getElementById('saveBannerBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+  const data = {
+    url_desktop: url,
+    url_mobile: document.getElementById('bMobile').value.trim() || url,
+    carrusel: parseInt(document.getElementById('bCarrusel').value),
+    orden: parseInt(document.getElementById('bOrden').value) || 1,
+    activo: document.getElementById('bActivo').checked,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+  try {
+    if (editingBannerId) {
+      await db.collection('banners').doc(editingBannerId).update(data);
+      showToast('Banner actualizado ✓','success');
+    } else {
+      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('banners').add(data);
+      showToast('Banner guardado ✓','success');
+    }
+    closeModal('bannerModal');
+    renderBanners();
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Guardar en Firebase';
+}
+
+async function deleteBanner(id) {
+  if (!confirm('¿Eliminar este banner?')) return;
+  await db.collection('banners').doc(id).delete();
+  showToast('Banner eliminado','error');
+  renderBanners();
+}
+
+// Vista previa al escribir URL
+document.addEventListener('input', e => {
+  if (e.target.id === 'bDesktop' && e.target.value.startsWith('http')) {
+    document.getElementById('bPreview').src = e.target.value;
+    document.getElementById('bPreviewWrap').style.display = 'block';
+  }
+});
+
 
 function exportCSV() {
   const rows = [['ID','Nombre','Marca','Categoría','Precio','Precio Original','Rating','Reseñas','Oferta','Bestseller']];
