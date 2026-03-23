@@ -810,13 +810,23 @@
       <div class="form-group"><label class="form-label">Precio original (L.)</label><input class="form-input" type="number" id="fOriginalPrice" placeholder="32995"></div>
       <div class="form-group"><label class="form-label">Rating (0-5)</label><input class="form-input" type="number" id="fRating" min="0" max="5" step="0.1" placeholder="4.5"></div>
       <div class="form-group"><label class="form-label">Reseñas</label><input class="form-input" type="number" id="fReviews" placeholder="10"></div>
-      <div class="form-group full"><label class="form-label">URL Imagen Principal</label><input class="form-input" id="fImage" placeholder="https://..."></div>
+      <div class="form-group full"><label class="form-label">URL Imagen 1 (Principal)</label><input class="form-input" id="fImage1" placeholder="https://..."></div>
+      <div class="form-group full"><label class="form-label">URL Imagen 2</label><input class="form-input" id="fImage2" placeholder="https://..."></div>
+      <div class="form-group full"><label class="form-label">URL Imagen 3</label><input class="form-input" id="fImage3" placeholder="https://..."></div>
       <div class="form-group full"><label class="form-label">Descripción</label><textarea class="form-textarea" id="fDesc" placeholder="Descripción del producto..."></textarea></div>
       <div class="form-group full" style="flex-direction:row;gap:20px">
         <label class="form-check"><input type="checkbox" id="fBestseller"> Bestseller</label>
         <label class="form-check"><input type="checkbox" id="fOffer"> En Oferta</label>
       </div>
     </div>
+    <div class="form-group full">
+  <label class="form-label">Especificaciones (una por línea: Pantalla: 6.1 pulgadas)</label>
+  <textarea class="form-textarea" id="fSpecs" placeholder="Pantalla: 6.1 pulgadas OLED&#10;Procesador: A18&#10;Almacenamiento: 128GB" rows="5"></textarea>
+</div>
+<div class="form-group full">
+  <label class="form-label">Características (una por línea)</label>
+  <textarea class="form-textarea" id="fFeatures" placeholder="Resistente al agua IP68&#10;Face ID&#10;5G" rows="4"></textarea>
+</div>
     <div class="modal-footer">
       <button class="btn secondary" onclick="closeModal('productModal')">Cancelar</button>
       <button class="btn primary" id="saveProdBtn" onclick="saveProduct()"><i class="fas fa-save"></i> Guardar en Firebase</button>
@@ -1008,7 +1018,10 @@ function renderProducts() {
 function openAddProduct() {
   editingId = null;
   document.getElementById('modalTitle').textContent = 'Nuevo Producto';
-  ['fName','fBrand','fBadge','fImage','fDesc'].forEach(id => document.getElementById(id).value='');
+  ['fName','fBrand','fBadge','fImage1','fImage2','fImage3','fDesc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   ['fPrice','fOriginalPrice','fRating','fReviews'].forEach(id => document.getElementById(id).value='');
   document.getElementById('fCategory').value = 'smartphones';
   document.getElementById('fBestseller').checked = false;
@@ -1017,7 +1030,7 @@ function openAddProduct() {
 }
 
 function openEditProduct(id) {
-  const p = allProducts.find(x => x.id===id);
+  const p = allProducts.find(x => x.id === id);
   if (!p) return;
   editingId = id;
   document.getElementById('modalTitle').textContent = 'Editar Producto';
@@ -1029,8 +1042,13 @@ function openEditProduct(id) {
   document.getElementById('fOriginalPrice').value = p.originalPrice||'';
   document.getElementById('fRating').value = p.rating||'';
   document.getElementById('fReviews').value = p.reviews||'';
-  document.getElementById('fImage').value = p.images?.[0]||'';
+  document.getElementById('fImage1').value = p.images?.[0]||'';
+  document.getElementById('fImage2').value = p.images?.[1]||'';
+  document.getElementById('fImage3').value = p.images?.[2]||'';
   document.getElementById('fDesc').value = p.description||'';
+  const specsText = Object.entries(p.specs||{}).map(([k,v])=>`${k}: ${v}`).join('\n');
+  if (document.getElementById('fSpecs')) document.getElementById('fSpecs').value = specsText;
+  if (document.getElementById('fFeatures')) document.getElementById('fFeatures').value = (p.features||[]).join('\n');
   document.getElementById('fBestseller').checked = !!p.isBestseller;
   document.getElementById('fOffer').checked = !!p.isOnOffer;
   openModal('productModal');
@@ -1049,8 +1067,14 @@ async function saveProduct() {
     price, originalPrice: parseFloat(document.getElementById('fOriginalPrice').value)||null,
     rating: parseFloat(document.getElementById('fRating').value)||0,
     reviews: parseInt(document.getElementById('fReviews').value)||0,
-    images: [document.getElementById('fImage').value.trim()].filter(Boolean),
+    images: [
+  document.getElementById('fImage1').value.trim(),
+  document.getElementById('fImage2').value.trim(),
+  document.getElementById('fImage3').value.trim(),
+].filter(Boolean),
     description: document.getElementById('fDesc').value.trim(),
+    specs: parseSpecs(document.getElementById('fSpecs')?.value || ''),
+    features: (document.getElementById('fFeatures')?.value || '').split('\n').map(s=>s.trim()).filter(Boolean),
     isBestseller: document.getElementById('fBestseller').checked,
     isOnOffer: document.getElementById('fOffer').checked,
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -1290,13 +1314,37 @@ function showToast(msg, type='success') {
 }
 
 function buildChart() {
+  db.collection('pedidos').get().then(snap => {
+    const meses = {};
+    snap.docs.forEach(doc => {
+      const d = doc.data();
+      if (!d.fecha || !d.total) return;
+      const fecha = d.fecha.toDate ? d.fecha.toDate() : new Date(d.fecha);
+      const key = fecha.toLocaleString('es-HN', { month: 'short', year: '2-digit' });
+      meses[key] = (meses[key] || 0) + Number(d.total);
+    });
+    const labels = Object.keys(meses).slice(-8);
+    const values = labels.map(k => meses[k]);
+    const max = Math.max(...values, 1);
+    document.getElementById('salesChart').innerHTML = values.map((v, i) =>
+      `<div class="chart-bar" style="height:${Math.round(v/max*165)}px;opacity:${0.25+(i/values.length*0.75)}" title="L.${v.toLocaleString()}"></div>`
+    ).join('') || '<div style="color:var(--text3);padding:20px;font-size:.8rem">Sin pedidos aún</div>';
+    document.getElementById('salesLabels').innerHTML = labels.map(m =>
+      `<div class="chart-label">${m}</div>`
+    ).join('');
+  }).catch(() => buildChartFallback());
+}
+
+function buildChartFallback() {
   const months = ['Ago','Sep','Oct','Nov','Dic','Ene','Feb','Mar'];
   const values = [72,110,88,165,290,135,178,260];
   const max = Math.max(...values);
-  document.getElementById('salesChart').innerHTML = values.map((v,i)=>
-    `<div class="chart-bar" style="height:${Math.round(v/max*165)}px;opacity:${0.2+(i/values.length*0.8)}" title="${months[i]}: L.${(v*1000).toLocaleString()}"></div>`
+  document.getElementById('salesChart').innerHTML = values.map((v,i) =>
+    `<div class="chart-bar" style="height:${Math.round(v/max*165)}px;opacity:${0.2+(i/values.length*0.8)}"></div>`
   ).join('');
-  document.getElementById('salesLabels').innerHTML = months.map(m=>`<div class="chart-label">${m}</div>`).join('');
+  document.getElementById('salesLabels').innerHTML = months.map(m =>
+    `<div class="chart-label">${m}</div>`
+  ).join('');
 }
 
 function exportCSV() {
@@ -1350,6 +1398,16 @@ function exportCSV() {
     }
   });
 })();
+
+function parseSpecs(text) {
+  const obj = {};
+  text.split('\n').forEach(line => {
+    const [key, ...rest] = line.split(':');
+    if (key && rest.length) obj[key.trim().toLowerCase()] = rest.join(':').trim();
+  });
+  return obj;
+}
+
 </script>
 </body>
 </html>

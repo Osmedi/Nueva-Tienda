@@ -387,28 +387,20 @@
   <div class="container">
     <div class="carousel-wrapper">
       <div class="custom-carousel" id="c1">
-        <div class="carousel-container">
-          <img src="assets/images/Banner-Desktop 1.png" class="carousel-image desktop-image active" alt="Banner 1">
-          <img src="assets/images/Banner-Mobile 1.png" class="carousel-image mobile-image active" alt="Banner 1 Mobile">
-          <img src="assets/images/Banner-Desktop 2.png" class="carousel-image desktop-image" alt="">
-          <img src="assets/images/Banner-Mobile 2.png" class="carousel-image mobile-image" alt="">
-          <img src="assets/images/Banner-Desktop 3.png" class="carousel-image desktop-image" alt="">
-          <img src="assets/images/Banner-Mobile 3.png" class="carousel-image mobile-image" alt="">
-          <img src="assets/images/Banner-Desktop 4.png" class="carousel-image desktop-image" alt="">
-          <img src="assets/images/Banner-Mobile 4.png" class="carousel-image mobile-image" alt="">
+        <div class="carousel-container" id="c1imgs">
+          <!-- Se llena desde Firebase -->
         </div>
         <button class="carousel-nav carousel-prev" onclick="slideC('c1',-1)"><i class="fas fa-chevron-left"></i></button>
         <button class="carousel-nav carousel-next" onclick="slideC('c1',1)"><i class="fas fa-chevron-right"></i></button>
-        <div class="carousel-dots" id="d1"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="carousel-dots" id="d1"></div>
       </div>
       <div class="custom-carousel" id="c2">
-        <div class="carousel-container">
-          <img src="assets/images/Banner-1-2.png" class="carousel-image active" alt="">
-          <img src="assets/images/Banner-2-2.png" class="carousel-image" alt="">
+        <div class="carousel-container" id="c2imgs">
+          <!-- Se llena desde Firebase -->
         </div>
         <button class="carousel-nav carousel-prev" onclick="slideC('c2',-1)"><i class="fas fa-chevron-left"></i></button>
         <button class="carousel-nav carousel-next" onclick="slideC('c2',1)"><i class="fas fa-chevron-right"></i></button>
-        <div class="carousel-dots" id="d2"><span class="dot active"></span><span class="dot"></span></div>
+        <div class="carousel-dots" id="d2"></div>
       </div>
     </div>
   </div>
@@ -626,6 +618,7 @@ function startStore() {
     });
     renderAll();
     buildBrands();
+    buildBanners();
     buildNewProducts();
     console.log('[Firebase] ' + allProducts.length + ' productos ✓');
   }, e => console.error('[Firebase]', e));
@@ -860,6 +853,33 @@ function buildBrands(){
   const all=[...brands,...brands];
   document.getElementById('brandsList').innerHTML=all.map(b=>`<div class="brand-carousel-item"><div class="brand-carousel-card" onclick="filterBrand('${b.name}')"><img src="${b.logo}" alt="${b.name}" class="brand-carousel-logo"><h3>${b.name}</h3></div></div>`).join('');
 }
+
+function buildBanners() {
+  db.collection('banners').where('activo','==',true).orderBy('orden').get().then(snap => {
+    if (snap.empty) return; // mantiene los locales si no hay banners en Firebase
+    const banners = snap.docs.map(d => d.data());
+    const c1 = banners.filter(b => b.carrusel === 1 || !b.carrusel); // carrusel grande
+    const c2 = banners.filter(b => b.carrusel === 2); // carrusel pequeño
+
+    if (c1.length) {
+      document.getElementById('c1imgs').innerHTML = c1.map((b,i) => `
+        <img src="${b.url_desktop}" class="carousel-image desktop-image ${i===0?'active':''}" alt="Banner">
+        <img src="${b.url_mobile||b.url_desktop}" class="carousel-image mobile-image ${i===0?'active':''}" alt="Banner">`
+      ).join('');
+      document.getElementById('d1').innerHTML = c1.map((_,i) =>
+        `<span class="dot ${i===0?'active':''}"></span>`).join('');
+    }
+
+    if (c2.length) {
+      document.getElementById('c2imgs').innerHTML = c2.map((b,i) => `
+        <img src="${b.url_desktop}" class="carousel-image ${i===0?'active':''}" alt="Banner">`
+      ).join('');
+      document.getElementById('d2').innerHTML = c2.map((_,i) =>
+        `<span class="dot ${i===0?'active':''}"></span>`).join('');
+    }
+  }).catch(e => console.log('[Banners] usando locales:', e));
+}
+
 function filterBrand(brand){renderGrid('productsGrid',allProducts.filter(p=>p.brand===brand));document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
 
 // ── NEW PRODUCTS ──
