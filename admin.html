@@ -433,8 +433,113 @@
     ::-webkit-scrollbar-track{background:transparent}
     ::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
 
-    @media(max-width:1100px){.stats-grid{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
-    @media(max-width:700px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:span 1}}
+    /* ── NOTIFICACIONES ── */
+    .notif-btn{transition:all .2s}
+    .notif-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .notif-panel{
+      position:absolute;top:calc(100% + 8px);right:0;width:320px;
+      background:var(--surface);border:1px solid var(--border);border-radius:12px;
+      box-shadow:0 8px 32px rgba(0,0,0,.3);z-index:200;display:none;overflow:hidden;
+    }
+    .notif-panel.open{display:block;animation:mIn .2s ease}
+    .notif-panel-header{
+      padding:14px 16px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .notif-panel-header h4{font-size:.85rem;font-weight:600}
+    .notif-mark-read{font-size:.72rem;color:var(--accent);background:none;border:none;cursor:pointer;padding:3px 8px;border-radius:6px;transition:all .2s}
+    .notif-mark-read:hover{background:var(--glow)}
+    .notif-list{max-height:320px;overflow-y:auto}
+    .notif-item{
+      padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;
+      transition:background .15s;display:flex;gap:10px;align-items:flex-start;
+    }
+    .notif-item:hover{background:var(--surface2)}
+    .notif-item.unread{background:var(--glow)}
+    .notif-item-icon{
+      width:30px;height:30px;border-radius:8px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;font-size:.78rem;
+    }
+    .notif-item-icon.order{background:rgba(59,130,246,.15);color:var(--blue)}
+    .notif-item-icon.trade{background:rgba(251,191,36,.15);color:#f59e0b}
+    .notif-item-icon.info{background:rgba(139,92,246,.15);color:#8b5cf6}
+    .notif-item-body{flex:1;min-width:0}
+    .notif-item-title{font-size:.78rem;font-weight:600;margin-bottom:2px}
+    .notif-item-desc{font-size:.72rem;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .notif-item-time{font-size:.65rem;color:var(--text3);margin-top:3px}
+    .notif-empty{padding:28px;text-align:center;color:var(--text3);font-size:.8rem}
+    .notif-empty i{font-size:1.6rem;display:block;margin-bottom:8px;opacity:.4}
+    .notif-count{
+      position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;
+      background:var(--red);color:#fff;font-size:.58rem;font-weight:700;
+      border-radius:8px;border:1.5px solid var(--surface);
+      display:none;align-items:center;justify-content:center;padding:0 3px;
+    }
+    .notif-count.visible{display:flex}
+    .notif-wrap{position:relative}
+
+    /* ── BÚSQUEDA GLOBAL ── */
+    .search-results-dropdown{
+      position:absolute;top:calc(100% + 6px);left:0;right:0;
+      background:var(--surface);border:1px solid var(--border);border-radius:10px;
+      box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:200;display:none;max-height:300px;overflow-y:auto;
+    }
+    .search-results-dropdown.open{display:block}
+    .sr-item{
+      padding:9px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;
+      border-bottom:1px solid var(--border);transition:background .15s;font-size:.8rem;
+    }
+    .sr-item:last-child{border-bottom:none}
+    .sr-item:hover{background:var(--surface2)}
+    .sr-item img{width:32px;height:32px;object-fit:contain;border-radius:6px;background:var(--surface2)}
+    .sr-item-name{font-weight:500;flex:1}
+    .sr-item-price{font-size:.72rem;color:var(--accent);font-weight:600}
+    .sr-no-results{padding:20px;text-align:center;color:var(--text3);font-size:.8rem}
+
+    /* ── HAMBURGER ── */
+    .hamburger{
+      display:none;width:36px;height:36px;background:var(--surface2);
+      border:1px solid var(--border);border-radius:8px;cursor:pointer;
+      align-items:center;justify-content:center;font-size:.9rem;color:var(--text2);
+      transition:all .2s;flex-shrink:0;
+    }
+    .hamburger:hover{border-color:var(--accent);color:var(--accent)}
+    .sidebar-overlay{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+      z-index:99;backdrop-filter:blur(2px);
+    }
+    .sidebar-overlay.open{display:block}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1100px){
+      .stats-grid{grid-template-columns:1fr 1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media(max-width:700px){
+      .hamburger{display:flex}
+      .sidebar{transform:translateX(-100%);transition:transform .28s ease;z-index:200}
+      .sidebar.open{transform:translateX(0)}
+      .main{margin-left:0}
+      .topbar{padding:0 14px;gap:8px}
+      .topbar-title{font-size:.82rem}
+      .search-wrap{display:none}
+      .tb-btn.primary span{display:none}
+      .tb-btn.primary{padding:6px 10px}
+      .content{padding:14px}
+      .stats-grid{grid-template-columns:1fr 1fr}
+      .form-grid{grid-template-columns:1fr}
+      .form-group.full{grid-column:span 1}
+      .notif-panel{right:-60px;width:290px}
+      .prod-grid{grid-template-columns:1fr 1fr}
+      table{font-size:.72rem}
+      table th,table td{padding:8px 6px}
+      .modal-content{padding:18px;margin:10px}
+    }
+    @media(max-width:420px){
+      .stats-grid{grid-template-columns:1fr}
+      .prod-grid{grid-template-columns:1fr}
+      .topbar-title{display:none}
+    }
   </style>
 </head>
 <body>
@@ -564,17 +669,36 @@
   </div>
 </aside>
 
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
 <!-- ===================== MAIN ===================== -->
 <div class="main">
   <header class="topbar">
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     <div class="topbar-title" id="topbarTitle">Dashboard</div>
     <div class="topbar-actions">
-      <div class="search-wrap">
+      <div class="search-wrap" style="position:relative">
         <i class="fas fa-search"></i>
-        <input class="tb-search" type="text" placeholder="Buscar..." id="globalSearch" oninput="filterProds()">
+        <input class="tb-search" type="text" placeholder="Buscar producto..." id="globalSearch" oninput="handleGlobalSearch()" autocomplete="off">
+        <div class="search-results-dropdown" id="searchDropdown"></div>
       </div>
-      <div class="notif-btn" id="notifBtn"><i class="fas fa-bell"></i><div class="notif-dot"></div></div>
-      <button class="tb-btn primary" onclick="openAddProduct()"><i class="fas fa-plus"></i> Nuevo Producto</button>
+      <div class="notif-wrap">
+        <div class="notif-btn" id="notifBtn" onclick="toggleNotifPanel()">
+          <i class="fas fa-bell"></i>
+          <div class="notif-dot" id="notifDot"></div>
+          <span class="notif-count" id="notifCount"></span>
+        </div>
+        <div class="notif-panel" id="notifPanel">
+          <div class="notif-panel-header">
+            <h4><i class="fas fa-bell" style="margin-right:6px;color:var(--accent)"></i>Notificaciones</h4>
+            <button class="notif-mark-read" onclick="markAllRead()">Marcar leídas</button>
+          </div>
+          <div class="notif-list" id="notifList">
+            <div class="notif-empty"><i class="fas fa-bell-slash"></i>Sin notificaciones</div>
+          </div>
+        </div>
+      </div>
+      <button class="tb-btn primary" onclick="openAddProduct()"><i class="fas fa-plus"></i> <span>Nuevo Producto</span></button>
     </div>
   </header>
 
@@ -997,6 +1121,7 @@ function startListeners() {
   // Orders
   const u2 = db.collection('pedidos').orderBy('fecha','desc').onSnapshot(snap => {
     allOrders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    checkNewOrders(allOrders);
     renderOrders();
     renderCustomers();
     updateDashStats();
@@ -1005,6 +1130,7 @@ function startListeners() {
   // Trade-ins
   const u3 = db.collection('permutas').orderBy('fecha','desc').onSnapshot(snap => {
     allTradeIns = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    checkNewTrades(allTradeIns);
     renderTradeIns();
     updateDashStats();
   }, e => console.error(e));
@@ -1579,6 +1705,154 @@ function parseSpecs(text) {
   });
   return obj;
 }
+
+// ── SIDEBAR MÓVIL ──
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+// Cerrar sidebar al navegar en móvil
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (window.innerWidth <= 700) closeSidebar();
+  });
+});
+
+// ── BÚSQUEDA GLOBAL ──
+function handleGlobalSearch() {
+  const q = document.getElementById('globalSearch').value.trim().toLowerCase();
+  const dropdown = document.getElementById('searchDropdown');
+  if (!q) { dropdown.classList.remove('open'); return; }
+  const results = allProducts.filter(p =>
+    p.name?.toLowerCase().includes(q) || p.brand?.toLowerCase().includes(q) || p.category?.toLowerCase().includes(q)
+  ).slice(0, 6);
+  if (!results.length) {
+    dropdown.innerHTML = '<div class="sr-no-results"><i class="fas fa-search"></i> Sin resultados para "' + q + '"</div>';
+  } else {
+    dropdown.innerHTML = results.map(p => `
+      <div class="sr-item" onclick="goToProduct('${p.id}')">
+        <img src="${p.images?.[0]||''}" onerror="this.style.opacity=0.2">
+        <span class="sr-item-name">${p.name}</span>
+        <span class="sr-item-price">L.${Number(p.price).toLocaleString()}</span>
+      </div>`).join('');
+  }
+  dropdown.classList.add('open');
+  // también filtrar la página de productos si está activa
+  filterProds();
+}
+
+function goToProduct(id) {
+  document.getElementById('globalSearch').value = '';
+  document.getElementById('searchDropdown').classList.remove('open');
+  showPage('page-products');
+  setTimeout(() => {
+    const card = document.querySelector(`[data-id="${id}"]`);
+    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 200);
+}
+
+// Cerrar dropdown al hacer click fuera
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) {
+    document.getElementById('searchDropdown')?.classList.remove('open');
+  }
+  if (!e.target.closest('.notif-wrap')) {
+    document.getElementById('notifPanel')?.classList.remove('open');
+  }
+});
+
+// ── NOTIFICACIONES ──
+let notifications = JSON.parse(localStorage.getItem('admin_notifs') || '[]');
+let lastOrderCount = null;
+let lastTradeCount = null;
+
+function saveNotifs() { localStorage.setItem('admin_notifs', JSON.stringify(notifications.slice(0, 50))); }
+
+function addNotif(title, desc, type = 'info') {
+  notifications.unshift({ id: Date.now(), title, desc, type, time: new Date().toISOString(), read: false });
+  saveNotifs();
+  renderNotifPanel();
+  updateNotifBadge();
+}
+
+function updateNotifBadge() {
+  const unread = notifications.filter(n => !n.read).length;
+  const dot = document.getElementById('notifDot');
+  const count = document.getElementById('notifCount');
+  if (dot) dot.style.display = unread > 0 ? 'block' : 'none';
+  if (count) {
+    count.textContent = unread > 9 ? '9+' : unread;
+    count.classList.toggle('visible', unread > 0);
+  }
+}
+
+function renderNotifPanel() {
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  if (!notifications.length) {
+    list.innerHTML = '<div class="notif-empty"><i class="fas fa-bell-slash"></i>Sin notificaciones</div>';
+    return;
+  }
+  list.innerHTML = notifications.slice(0, 20).map(n => {
+    const iconMap = { order: 'fa-shopping-bag', trade: 'fa-sync-alt', info: 'fa-info-circle' };
+    const t = new Date(n.time);
+    const timeStr = t.toLocaleDateString('es-HN', { day:'numeric', month:'short' }) + ' ' + t.toLocaleTimeString('es-HN', { hour:'2-digit', minute:'2-digit' });
+    return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="readNotif('${n.id}')">
+      <div class="notif-item-icon ${n.type}"><i class="fas ${iconMap[n.type]||'fa-bell'}"></i></div>
+      <div class="notif-item-body">
+        <div class="notif-item-title">${n.title}</div>
+        <div class="notif-item-desc">${n.desc}</div>
+        <div class="notif-item-time">${timeStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function readNotif(id) {
+  const n = notifications.find(x => x.id == id);
+  if (n) { n.read = true; saveNotifs(); renderNotifPanel(); updateNotifBadge(); }
+}
+
+function markAllRead() {
+  notifications.forEach(n => n.read = true);
+  saveNotifs();
+  renderNotifPanel();
+  updateNotifBadge();
+}
+
+function toggleNotifPanel() {
+  const panel = document.getElementById('notifPanel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) renderNotifPanel();
+}
+
+// Detectar nuevos pedidos y permutas en tiempo real
+function checkNewOrders(orders) {
+  if (lastOrderCount === null) { lastOrderCount = orders.length; return; }
+  if (orders.length > lastOrderCount) {
+    const diff = orders.length - lastOrderCount;
+    const newest = orders[0];
+    addNotif(`🛍️ Nuevo pedido recibido`, `${newest?.customer || 'Cliente'} — L.${Number(newest?.total||0).toLocaleString()}`, 'order');
+    lastOrderCount = orders.length;
+  }
+}
+
+function checkNewTrades(trades) {
+  if (lastTradeCount === null) { lastTradeCount = trades.length; return; }
+  if (trades.length > lastTradeCount) {
+    const newest = trades[0];
+    addNotif(`🔄 Nueva solicitud de permuta`, `${newest?.deviceBrand || ''} ${newest?.deviceName || ''} — ${newest?.condition || ''}`, 'trade');
+    lastTradeCount = trades.length;
+  }
+}
+
+// Inicializar notificaciones
+renderNotifPanel();
+updateNotifBadge();
 
 </script>
 </body>
