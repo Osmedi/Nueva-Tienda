@@ -911,10 +911,8 @@ function slideC(id,dir){
   const dNum=id.replace('c','');
   document.querySelectorAll(`#d${dNum} .dot`).forEach((d,i)=>d.classList.toggle('active',i===cState[id]));
 }
-setTimeout(()=>{
-  setInterval(()=>slideC('c1',1),4000);
-  setInterval(()=>slideC('c2',1),5500);
-}, 500);
+setInterval(()=>slideC('c1',1),4000);
+setInterval(()=>slideC('c2',1),5500);
 
 // ── THEME ──
 function loadTheme(){
