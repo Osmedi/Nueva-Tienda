@@ -152,6 +152,38 @@
     .remove-filter{cursor:pointer;font-weight:700;opacity:.7}
     .remove-filter:hover{opacity:1}
 
+    /* ── WISHLIST ── */
+.wish-btn{position:absolute;top:8px;right:8px;z-index:10;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--t);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.wish-btn:hover{border-color:#e74c3c;transform:scale(1.12)}
+.wish-btn i{font-size:.8rem;color:var(--text3);transition:var(--t)}
+.wish-btn.active i{color:#e74c3c}
+.wish-btn.active{border-color:#e74c3c;background:rgba(231,76,60,.07)}
+.floating-wish{position:fixed;bottom:156px;right:28px;z-index:500}
+.wish-icon{width:48px;height:48px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);transition:var(--t);position:relative}
+.wish-icon:hover{background:var(--primary);border-color:var(--primary)}
+.wish-icon i{font-size:1.1rem;color:var(--text2)}
+.wish-icon:hover i{color:#fff}
+.wish-count{position:absolute;top:-4px;right:-4px;width:19px;height:19px;border-radius:50%;background:#e74c3c;color:#fff;font-size:.62rem;font-weight:700;display:none;align-items:center;justify-content:center;border:2px solid var(--bg)}
+.wish-count.visible{display:flex}
+.wish-modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-height:60vh;overflow-y:auto;padding:4px 2px}
+.wish-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center;cursor:pointer;transition:var(--t)}
+.wish-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.wish-card img{width:100%;height:100px;object-fit:contain;margin-bottom:8px}
+.wish-card-name{font-size:.78rem;font-weight:600;margin-bottom:4px;color:var(--text)}
+.wish-card-price{font-size:.82rem;color:var(--primary);font-weight:700;margin-bottom:8px}
+.wish-card-actions{display:flex;gap:6px;justify-content:center}
+.wish-card-actions button{flex:1;padding:5px 0;border-radius:8px;border:none;cursor:pointer;font-size:.7rem;font-weight:600;transition:var(--t)}
+.wish-add-cart{background:var(--primary);color:#fff}
+.wish-remove{background:var(--bg2);border:1px solid var(--border)!important;color:var(--text2)}
+.wish-empty{text-align:center;padding:40px 20px;color:var(--text3)}
+.wish-empty i{font-size:2.5rem;margin-bottom:12px;display:block;color:#e74c3c;opacity:.4}
+.wish-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.wish-clear-btn{font-size:.75rem;color:var(--text3);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;transition:var(--t);position:absolute;bottom:20px;right:20px}
+.wish-clear-btn:hover{color:#e74c3c;background:rgba(231,76,60,.08)}
+.modal-wish-btn{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 16px;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:6px;transition:var(--t)}
+.modal-wish-btn:hover{border-color:#e74c3c;color:#e74c3c}
+.modal-wish-btn.active{background:rgba(231,76,60,.08);border-color:#e74c3c;color:#e74c3c}
+
     /* PRODUCTS */
     .products-section{padding:48px 0}
     .bg-accent{background:rgba(242,140,56,.04)}
@@ -360,6 +392,24 @@
     <i class="fas fa-phone-alt"></i> <strong>CONTACTO:</strong> +504 9681-1650 •
     <i class="fab fa-whatsapp"></i> <strong>WHATSAPP:</strong> +504 9681-1650
   </marquee>
+</div>
+
+<div class="floating-wish">
+  <div class="wish-icon" onclick="openWishlist()">
+    <i class="fas fa-heart"></i>
+    <span class="wish-count" id="wishCount">0</span>
+  </div>
+</div>
+
+<div class="modal" id="wishModal">
+  <div class="modal-content cart-modal-content">
+    <div class="wish-modal-header">
+      <h2><i class="fas fa-heart" style="color:#e74c3c;margin-right:8px"></i>Lista de Deseos</h2>
+    </div>
+    <button class="wish-clear-btn" onclick="clearWishlist()"><i class="fas fa-trash"></i> Vaciar</button>
+    <button onclick="closeWishlist()" style="position:absolute;top:14px;right:14px;background:var(--bg);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;color:var(--text2);transition:var(--t)" onmouseover="this.style.background='#e74c3c';this.style.color='#fff';this.style.borderColor='#e74c3c'" onmouseout="this.style.background='var(--bg)';this.style.color='var(--text2)';this.style.borderColor='var(--border)'"><i class="fas fa-times"></i></button>
+    <div id="wishlistBody"></div>
+  </div>
 </div>
 
 <div class="floating-cart">
@@ -661,6 +711,9 @@ function cardHTML(p) {
        <button class="card-nav next" onclick="event.stopPropagation();cardNav(this,1)"><i class="fas fa-chevron-right"></i></button>`
     : '';
   return `<div class="product-card" onclick="openProduct('${p.id}')">
+    <button class="wish-btn ${isWished(p.id)?'active':''}" onclick="event.stopPropagation();toggleWish('${p.id}')" title="Lista de deseos">
+  <i class="fas fa-heart"></i>
+</button>
     ${p.isBestseller?'<div class="product-badge best">Más Vendido</div>':p.badge?`<div class="product-badge">${p.badge}</div>`:''}
     <div class="product-carousel" data-idx="0">
       ${imgs.map((img,i)=>`<img src="${img}" class="active"  style="opacity:${i===0?1:0}" alt="${p.name}" loading="lazy" onerror="this.src=''"/>`).join('')}
@@ -730,6 +783,8 @@ function openProduct(id) {
       ${feats?`<div class="product-modal-features"><h3>Características</h3><ul>${feats}</ul></div>`:''}
       <div class="product-modal-actions">
         <button class="add-to-cart" onclick="doAddToCart('${id}');closeProduct()"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</button>
+        <button class="modal-wish-btn ${isWished(id)?'active':''}" id="modalWishBtn" onclick="toggleWish('${id}');this.classList.toggle('active')">
+        <i class="fas fa-heart"></i> ${isWished(id)?'En tu lista':'Guardar'}</button>
         <button class="tradein-btn" onclick="closeProduct();openTradeIn()"><i class="fas fa-sync-alt"></i> Permutar</button>
       </div>
     </div>`;
@@ -926,10 +981,76 @@ document.getElementById('themeCheckbox').addEventListener('change',function(){
   localStorage.setItem('mexhn_theme',t);
 });
 
+// ── WISHLIST ──
+let wishlist = JSON.parse(localStorage.getItem('mexhn_wish') || '[]');
+
+function saveWish() { localStorage.setItem('mexhn_wish', JSON.stringify(wishlist)); }
+function isWished(id) { return wishlist.includes(id); }
+
+function toggleWish(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  if (isWished(id)) {
+    wishlist = wishlist.filter(x => x !== id);
+    notify(`${p.name} eliminado de tu lista`, 'info');
+  } else {
+    wishlist.push(id);
+    notify(`${p.name} guardado en tu lista ❤️`, 'success');
+  }
+  saveWish();
+  updateWishCount();
+  document.querySelectorAll('.wish-btn').forEach(btn => {
+    const card = btn.closest('.product-card');
+    if (!card) return;
+    const match = card.getAttribute('onclick')?.match(/'([^']+)'/);
+    if (match && match[1] === id) btn.classList.toggle('active', isWished(id));
+  });
+}
+
+function updateWishCount() {
+  const el = document.getElementById('wishCount');
+  if (!el) return;
+  el.textContent = wishlist.length;
+  el.classList.toggle('visible', wishlist.length > 0);
+}
+
+function openWishlist() {
+  const body = document.getElementById('wishlistBody');
+  const items = wishlist.map(id => allProducts.find(x => x.id === id)).filter(Boolean);
+  if (!items.length) {
+    body.innerHTML = `<div class="wish-empty"><i class="fas fa-heart-broken"></i><p>Tu lista de deseos está vacía</p><p style="font-size:.8rem;margin-top:6px">Toca el corazón en cualquier producto para guardarlo</p></div>`;
+  } else {
+    body.innerHTML = `<div class="wish-modal-grid">${items.map(p => `
+      <div class="wish-card" onclick="closeWishlist();openProduct('${p.id}')">
+        <img src="${p.images[0]||''}" alt="${p.name}" onerror="this.src=''">
+        <div class="wish-card-name">${p.name}</div>
+        <div class="wish-card-price">L.${p.price.toLocaleString()}</div>
+        <div class="wish-card-actions" onclick="event.stopPropagation()">
+          <button class="wish-add-cart" onclick="doAddToCart('${p.id}');notify('Agregado al carrito','success')"><i class="fas fa-cart-plus"></i> Carrito</button>
+          <button class="wish-remove" onclick="toggleWish('${p.id}');openWishlist()"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>`).join('')}</div>`;
+  }
+  document.getElementById('wishModal').classList.add('open');
+}
+
+function closeWishlist() { document.getElementById('wishModal').classList.remove('open'); }
+
+function clearWishlist() {
+  if (!wishlist.length) return;
+  wishlist = [];
+  saveWish();
+  updateWishCount();
+  openWishlist();
+  notify('Lista de deseos vaciada', 'info');
+}
+
 // ── MISC ──
 function toggleMenu(){document.getElementById('navContent').classList.toggle('active')}
 window.addEventListener('scroll',()=>{document.getElementById('scrollTop').style.display=window.scrollY>400?'block':'none'});
-['cartModal','productModal','tradeInModal'].forEach(id=>document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+['cartModal','productModal','tradeInModal','wishModal'].forEach(id=>document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+updateWishCount();
+updateWishCount();
 function notify(msg,type='info'){
   const n=document.createElement('div');
   n.className=`notification ${type}`;
