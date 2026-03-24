@@ -857,12 +857,12 @@ function buildBrands(){
 function buildBanners() {
   db.collection('banners')
     .where('activo', '==', true)
-    .orderBy('orden')
     .get()
     .then(snap => {
       if (snap.empty) return;
-      const c1 = snap.docs.filter(d => (d.data().carrusel || 1) === 1);
-      const c2 = snap.docs.filter(d => d.data().carrusel === 2);
+const all = snap.docs.sort((a,b) => (a.data().orden||0) - (b.data().orden||0));
+const c1 = all.filter(d => (d.data().carrusel || 1) === 1);
+const c2 = all.filter(d => d.data().carrusel === 2);
 
       if (c1.length) {
         document.getElementById('c1imgs').innerHTML = c1.map((d, i) => {
