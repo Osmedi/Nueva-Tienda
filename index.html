@@ -855,29 +855,36 @@ function buildBrands(){
 }
 
 function buildBanners() {
-  db.collection('banners').where('activo','==',true).orderBy('orden').get().then(snap => {
-    if (snap.empty) return; // mantiene los locales si no hay banners en Firebase
-    const banners = snap.docs.map(d => d.data());
-    const c1 = banners.filter(b => b.carrusel === 1 || !b.carrusel); // carrusel grande
-    const c2 = banners.filter(b => b.carrusel === 2); // carrusel pequeño
+  db.collection('banners')
+    .where('activo', '==', true)
+    .orderBy('orden')
+    .get()
+    .then(snap => {
+      if (snap.empty) return;
+      const c1 = snap.docs.filter(d => (d.data().carrusel || 1) === 1);
+      const c2 = snap.docs.filter(d => d.data().carrusel === 2);
 
-    if (c1.length) {
-      document.getElementById('c1imgs').innerHTML = c1.map((b,i) => `
-        <img src="${b.url_desktop}" class="carousel-image desktop-image ${i===0?'active':''}" alt="Banner">
-        <img src="${b.url_mobile||b.url_desktop}" class="carousel-image mobile-image ${i===0?'active':''}" alt="Banner">`
-      ).join('');
-      document.getElementById('d1').innerHTML = c1.map((_,i) =>
-        `<span class="dot ${i===0?'active':''}"></span>`).join('');
-    }
+      if (c1.length) {
+        document.getElementById('c1imgs').innerHTML = c1.map((d, i) => {
+          const b = d.data();
+          return `
+            <img src="${b.url_desktop}" class="carousel-image desktop-image ${i===0?'active':''}" alt="Banner">
+            <img src="${b.url_mobile||b.url_desktop}" class="carousel-image mobile-image ${i===0?'active':''}" alt="Banner">`;
+        }).join('');
+        document.getElementById('d1').innerHTML = c1.map((_,i) =>
+          `<span class="dot ${i===0?'active':''}"></span>`).join('');
+      }
 
-    if (c2.length) {
-      document.getElementById('c2imgs').innerHTML = c2.map((b,i) => `
-        <img src="${b.url_desktop}" class="carousel-image ${i===0?'active':''}" alt="Banner">`
-      ).join('');
-      document.getElementById('d2').innerHTML = c2.map((_,i) =>
-        `<span class="dot ${i===0?'active':''}"></span>`).join('');
-    }
-  }).catch(e => console.log('[Banners] usando locales:', e));
+      if (c2.length) {
+        document.getElementById('c2imgs').innerHTML = c2.map((d, i) => {
+          const b = d.data();
+          return `<img src="${b.url_desktop}" class="carousel-image ${i===0?'active':''}" alt="Banner">`;
+        }).join('');
+        document.getElementById('d2').innerHTML = c2.map((_,i) =>
+          `<span class="dot ${i===0?'active':''}"></span>`).join('');
+      }
+    })
+    .catch(e => console.log('[Banners]', e.message));
 }
 
 function filterBrand(brand){renderGrid('productsGrid',allProducts.filter(p=>p.brand===brand));document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
