@@ -735,8 +735,45 @@
           <div class="stat-value" style="color:var(--accent2)" id="statPermutas">0</div>
           <div class="stat-change" id="statPermuPend">0 por revisar</div>
         </div>
-      </div>
+        <!-- Tarjeta visitas hoy -->
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class="fas fa-eye"></i></div>
+          <div class="stat-label">Visitas Hoy</div>
+          <div class="stat-value" style="color:#8b5cf6" id="statVisitasHoy">0</div>
+          <div class="stat-change" id="statVisitasAyer">Ayer: 0</div>
+        </div>
 
+        <!-- Tarjeta admins activos -->
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(34,197,94,.1);color:var(--green)"><i class="fas fa-user-shield"></i></div>
+          <div class="stat-label">Admins Activos</div>
+          <div class="stat-value" style="color:var(--green)" id="statAdminsActivos">1</div>
+          <div class="stat-change" id="statAdminsLista">Solo tú conectado</div>
+        </div>
+
+      </div>
+<!-- Panel de sesiones y visitas -->
+        <div class="grid-2" style="margin-top:22px">
+
+          <!-- Admins conectados -->
+          <div class="card">
+            <div class="section-hd" style="margin-bottom:14px">
+              <h3 style="font-size:.9rem">Admins Conectados <span style="font-size:.72rem;color:var(--text3);font-weight:400">en tiempo real</span></h3>
+            </div>
+            <div id="sesionesLista" style="display:flex;flex-direction:column;gap:8px">
+              <div style="text-align:center;color:var(--text3);font-size:.8rem;padding:20px">Cargando...</div>
+            </div>
+          </div>
+
+          <!-- Visitas últimos 7 días -->
+          <div class="card">
+            <div class="section-hd" style="margin-bottom:14px">
+              <h3 style="font-size:.9rem">Visitas <span style="font-size:.72rem;color:var(--text3);font-weight:400">últimos 7 días</span></h3>
+            </div>
+            <div id="visitasChart" style="display:flex;flex-direction:column;gap:6px"></div>
+          </div>
+
+        </div>    
       <div class="grid-2" style="margin-bottom:14px">
         <div class="panel">
           <div class="panel-header"><div class="panel-title">Ventas por mes (estimado)</div></div>
@@ -1052,6 +1089,7 @@ let allProducts = [];
 let allOrders = [];
 let allTradeIns = [];
 let unsubscribers = [];
+let allVisitas = [];
 
 function resetConfig() {
   if (!confirm('¿Recargar la página?')) return;
@@ -1135,7 +1173,25 @@ function startListeners() {
     updateDashStats();
   }, e => console.error(e));
 
-  unsubscribers = [u1, u2, u3];
+  // Sesion activa
+const uid = auth.currentUser?.uid || 'admin';
+const sesionRef = db.collection('sesiones_admin').doc(uid);
+sesionRef.set({
+  nombre: document.getElementById('adminName')?.textContent || 'Admin',
+  email: auth.currentUser?.email || '',
+  desde: firebase.firestore.FieldValue.serverTimestamp(),
+  dispositivo: /Mobi|Android/i.test(navigator.userAgent) ? 'Móvil' : 'Desktop'
+});
+window.addEventListener('beforeunload', () => sesionRef.delete());
+
+// Visitas
+const u4 = db.collection('visitas').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(30).onSnapshot(snap => {
+  allVisitas = snap.docs.map(d => d.data());
+  renderVisitas();
+});
+
+unsubscribers = [u1, u2, u3, u4];
+unsubscribers = [u1, u2, u3];
   setFbStatus('connected');
 }
 
@@ -1689,6 +1745,7 @@ function exportCSV() {
       const av = document.getElementById('adminAvatar');
       if (av) av.textContent = (user.email?.[0]||'A').toUpperCase();
       startListeners();
+      startSesionesListener();
       showToast('Bienvenido de vuelta 👋','info');
     } else {
       stopListeners();
@@ -1850,10 +1907,81 @@ function checkNewTrades(trades) {
   }
 }
 
+// ── SESIONES ADMIN ──
+function startSesionesListener() {
+  db.collection('sesiones_admin').onSnapshot(snap => {
+    const sesiones = snap.docs.map(d => d.data());
+    const el = document.getElementById('sesionesLista');
+    const stat = document.getElementById('statAdminsActivos');
+    const lista = document.getElementById('statAdminsLista');
+    if (stat) stat.textContent = sesiones.length;
+    if (lista) lista.textContent = sesiones.length === 1 ? 'Solo tú conectado' : sesiones.length + ' admins activos';
+    if (!el) return;
+    if (!sesiones.length) {
+      el.innerHTML = '<div style="text-align:center;color:var(--text3);font-size:.8rem;padding:20px">Sin sesiones activas</div>';
+      return;
+    }
+    el.innerHTML = sesiones.map(s => {
+      const desde = s.desde?.toDate ? s.desde.toDate().toLocaleTimeString('es-HN', { hour: '2-digit', minute: '2-digit' }) : '--:--';
+      return `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#ff7a40);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;color:#fff;flex-shrink:0">
+          ${(s.nombre?.[0] || 'A').toUpperCase()}
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:.8rem;font-weight:600;color:var(--text)">${s.nombre}</div>
+          <div style="font-size:.7rem;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.email}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:.68rem;color:var(--green);font-weight:600"><i class="fas fa-circle" style="font-size:.45rem"></i> En línea</div>
+          <div style="font-size:.65rem;color:var(--text3)">desde ${desde}</div>
+          <div style="font-size:.65rem;color:var(--text3)">${s.dispositivo || 'Desktop'}</div>
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+
+// ── VISITAS ──
+function renderVisitas() {
+  const el = document.getElementById('visitasChart');
+  if (!el) return;
+
+  // Actualizar stat de hoy y ayer
+  const hoy = new Date().toISOString().split('T')[0];
+  const ayer = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+  const visitasHoy = allVisitas.find(v => v.fecha === hoy)?.total || 0;
+  const visitasAyer = allVisitas.find(v => v.fecha === ayer)?.total || 0;
+  const statHoy = document.getElementById('statVisitasHoy');
+  const statAyer = document.getElementById('statVisitasAyer');
+  if (statHoy) statHoy.textContent = visitasHoy;
+  if (statAyer) statAyer.textContent = 'Ayer: ' + visitasAyer;
+
+  // Gráfica de barras últimos 7 días
+  const ultimos7 = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000).toISOString().split('T')[0];
+    const label = new Date(Date.now() - i * 86400000).toLocaleDateString('es-HN', { weekday: 'short', day: 'numeric' });
+    const total = allVisitas.find(v => v.fecha === d)?.total || 0;
+    ultimos7.push({ label, total, hoy: d === hoy });
+  }
+
+  const max = Math.max(...ultimos7.map(d => d.total), 1);
+  el.innerHTML = ultimos7.map(d => {
+    const pct = Math.round((d.total / max) * 100);
+    return `<div style="display:flex;align-items:center;gap:8px">
+      <div style="font-size:.68rem;color:var(--text3);width:52px;text-align:right;flex-shrink:0">${d.label}</div>
+      <div style="flex:1;background:var(--surface2);border-radius:4px;height:20px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${d.hoy ? 'var(--accent)' : 'rgba(99,102,241,.5)'};border-radius:4px;transition:width .4s ease;min-width:${d.total > 0 ? 4 : 0}px"></div>
+      </div>
+      <div style="font-size:.72rem;font-weight:600;color:${d.hoy ? 'var(--accent)' : 'var(--text2)'};width:28px;text-align:right">${d.total}</div>
+    </div>`;
+  }).join('');
+}
+
 // Inicializar notificaciones
 renderNotifPanel();
 updateNotifBadge();
 
 </script>
 </body>
-</html>
+</html

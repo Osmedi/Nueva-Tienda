@@ -648,8 +648,24 @@ let cart = JSON.parse(localStorage.getItem('mexhn_cart') || '[]');
 let selOpts = {}; // opciones seleccionadas por producto
 let filters = { cat:'all', price:0, sort:'default' };
 
+// ── VISITAS ──
+function registrarVisita() {
+  try {
+    const hoy = new Date().toISOString().split('T')[0]; // "2025-07-14"
+    const ref = db.collection('visitas').doc(hoy);
+    ref.get().then(doc => {
+      if (doc.exists) {
+        ref.update({ total: firebase.firestore.FieldValue.increment(1) });
+      } else {
+        ref.set({ fecha: hoy, total: 1 });
+      }
+    });
+  } catch(e) { console.log('[Visitas]', e); }
+}
+
 // ── FIREBASE REALTIME ──
 function startStore() {
+  registrarVisita();
   db.collection('productos').onSnapshot(snap => {
     allProducts = snap.docs.map(d => {
       const x = d.data();
