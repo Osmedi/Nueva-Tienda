@@ -650,17 +650,18 @@ let filters = { cat:'all', price:0, sort:'default' };
 
 // ── VISITAS ──
 function registrarVisita() {
-  try {
-    const hoy = new Date().toISOString().split('T')[0]; // "2025-07-14"
-    const ref = db.collection('visitas').doc(hoy);
-    ref.get().then(doc => {
+  const hoy = new Date().toISOString().split('T')[0];
+  const ref = db.collection('visitas').doc(hoy);
+  ref.get()
+    .then(doc => {
       if (doc.exists) {
-        ref.update({ total: firebase.firestore.FieldValue.increment(1) });
+        return ref.update({ total: firebase.firestore.FieldValue.increment(1) });
       } else {
-        ref.set({ fecha: hoy, total: 1 });
+        return ref.set({ fecha: hoy, total: 1 });
       }
-    });
-  } catch(e) { console.log('[Visitas]', e); }
+    })
+    .then(() => console.log('[Visitas] Registrada:', hoy))
+    .catch(e => console.error('[Visitas] Error:', e.message));
 }
 
 // ── FIREBASE REALTIME ──
