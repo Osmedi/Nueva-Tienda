@@ -651,17 +651,12 @@ let filters = { cat:'all', price:0, sort:'default' };
 // ── VISITAS ──
 function registrarVisita() {
   const hoy = new Date().toISOString().split('T')[0];
-  const ref = db.collection('visitas').doc(hoy);
-  ref.get()
-    .then(doc => {
-      if (doc.exists) {
-        return ref.update({ total: firebase.firestore.FieldValue.increment(1) });
-      } else {
-        return ref.set({ fecha: hoy, total: 1 });
-      }
-    })
-    .then(() => console.log('[Visitas] Registrada:', hoy))
-    .catch(e => console.error('[Visitas] Error:', e.message));
+  db.collection('visitas').doc(hoy).set(
+    { fecha: hoy, total: firebase.firestore.FieldValue.increment(1) },
+    { merge: true }
+  )
+  .then(() => console.log('[Visitas] Registrada:', hoy))
+  .catch(e => console.error('[Visitas] Error:', e.message));
 }
 
 // ── FIREBASE REALTIME ──
