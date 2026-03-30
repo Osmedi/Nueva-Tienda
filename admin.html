@@ -1186,13 +1186,16 @@ sesionRef.set({
 window.addEventListener('beforeunload', () => sesionRef.delete());
 
 // Visitas - Solo disponible para admin autenticado
-const u4 = db.collection('visitas').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(30).onSnapshot(snap => {
+const u4 = db.collection('visitas').onSnapshot(snap => {
   console.log('[Admin] Listener de visitas: ', snap.docs.length, ' documentos');
   allVisitas = snap.docs.map(d => ({
     fecha: d.data().fecha || d.id,
     total: d.data().total || 0,
     ...d.data()
-  }));
+  }))
+  // Ordenar por fecha descendente (últimos primero)
+  .sort((a, b) => b.fecha.localeCompare(a.fecha))
+  .slice(0, 30); // Tomar última 30
   console.log('[Admin] Visitas:', allVisitas);
   renderVisitas();
 }, error => {
