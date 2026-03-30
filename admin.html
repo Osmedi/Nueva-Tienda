@@ -1719,20 +1719,21 @@ function buildChartFallback() {
 let editingBannerId = null;
 
 function renderBanners() {
-  db.collection('banners').orderBy('orden').get().then(snap => {
+  db.collection('banners').get().then(snap => {
     const tbody = document.getElementById('bannersTbody');
     if (snap.empty) {
       tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-images"></i><p>Sin banners. Crea el primero.</p></div></td></tr>`;
       return;
     }
-    tbody.innerHTML = snap.docs.map(doc => {
-      const b = doc.data();
+    const banners = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => (a.orden || 999) - (b.orden || 999));
+    tbody.innerHTML = banners.map(doc => {
+      const b = doc;
       return `<tr>
         <td><img src="${b.url_desktop}" style="height:48px;border-radius:6px;object-fit:cover;max-width:120px" onerror="this.style.opacity=0.2"></td>
         <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.72rem;color:var(--text2)">${b.url_desktop||'—'}</td>
         <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.72rem;color:var(--text2)">${b.url_mobile||'—'}</td>
         <td style="text-align:center"><span class="badge ${b.carrusel==2?'blue':'orange'}">Carrusel ${b.carrusel||1}</span></td>
-        <td style="text-align:center;font-weight:600">${b.orden||1}</td>
+        <td style="text-align:center;font-weight:600">${b.orden||'—'}</td>
         <td>${b.activo?'<span class="badge green">Activo</span>':'<span class="badge gray">Inactivo</span>'}</td>
         <td><div style="display:flex;gap:5px">
           <div class="icon-btn" onclick="moveBanner('${doc.id}', 'up')" title="Mover arriba"><i class="fas fa-arrow-up"></i></div>
@@ -1812,8 +1813,8 @@ async function deleteBanner(id) {
 
 async function moveBanner(id, direction) {
   try {
-    const snap = await db.collection('banners').orderBy('orden').get();
-    const banners = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const snap = await db.collection('banners').get();
+    const banners = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => (a.orden || 999) - (b.orden || 999));
     const index = banners.findIndex(b => b.id === id);
     if (index === -1) return;
     let swapIndex;
@@ -1825,8 +1826,9 @@ async function moveBanner(id, direction) {
       return; // No se puede mover
     }
     // Swap órdenes
-    const temp = banners[index].orden;
-    banners[index].orden = banners[swapIndex].orden;
+    const temp = banners[index].orden || (index + 1);
+    const swapTemp = banners[swapIndex].orden || (swapIndex + 1);
+    banners[index].orden = swapTemp;
     banners[swapIndex].orden = temp;
     // Actualizar en Firebase
     const batch = db.batch();
