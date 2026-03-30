@@ -510,6 +510,35 @@
     }
     .sidebar-overlay.open{display:block}
 
+    /* ── SEARCH BTN ── */
+    .search-btn{
+      display:none;width:32px;height:32px;background:var(--surface2);border:1px solid var(--border);
+      border-radius:7px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--text2);font-size:0.82rem;position:relative;
+      transition:all .2s;
+    }
+    .search-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .search-close{
+      position:absolute;right:9px;top:50%;transform:translateY(-50%);
+      background:none;border:none;color:var(--text3);cursor:pointer;
+      font-size:0.72rem;padding:2px;transition:color .2s;
+    }
+    .search-close:hover{color:var(--text)}
+
+    /* ── HAMBURGER ── */
+    .hamburger{
+      display:none;width:36px;height:36px;background:var(--surface2);
+      border:1px solid var(--border);border-radius:8px;cursor:pointer;
+      align-items:center;justify-content:center;font-size:.9rem;color:var(--text2);
+      transition:all .2s;flex-shrink:0;
+    }
+    .hamburger:hover{border-color:var(--accent);color:var(--accent)}
+    .sidebar-overlay{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+      z-index:99;backdrop-filter:blur(2px);
+    }
+    .sidebar-overlay.open{display:block}
+
     /* ── RESPONSIVE ── */
     @media(max-width:1100px){
       .stats-grid{grid-template-columns:1fr 1fr}
@@ -523,6 +552,8 @@
       .topbar{padding:0 14px;gap:8px}
       .topbar-title{font-size:.82rem}
       .search-wrap{display:none}
+      .search-wrap.open{display:block}
+      .search-btn{display:flex}
       .tb-btn.primary span{display:none}
       .tb-btn.primary{padding:6px 10px}
       .content{padding:14px}
@@ -534,6 +565,9 @@
       table{font-size:.72rem}
       table th,table td{padding:8px 6px}
       .modal-content{padding:18px;margin:10px}
+      .modal{
+        width:95vw;max-height:95vh;margin:10px;
+      }
     }
     @media(max-width:420px){
       .stats-grid{grid-template-columns:1fr}
@@ -677,9 +711,11 @@
     <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     <div class="topbar-title" id="topbarTitle">Dashboard</div>
     <div class="topbar-actions">
+      <button class="search-btn" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
       <div class="search-wrap" style="position:relative">
         <i class="fas fa-search"></i>
         <input class="tb-search" type="text" placeholder="Buscar producto..." id="globalSearch" oninput="handleGlobalSearch()" autocomplete="off">
+        <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
         <div class="search-results-dropdown" id="searchDropdown"></div>
       </div>
       <div class="notif-wrap">
@@ -1794,6 +1830,19 @@ document.querySelectorAll('.nav-item').forEach(item => {
     if (window.innerWidth <= 700) closeSidebar();
   });
 });
+
+// ── BÚSQUEDA MÓVIL ──
+function toggleSearch() {
+  document.querySelector('.search-wrap').classList.toggle('open');
+  if (document.querySelector('.search-wrap').classList.contains('open')) {
+    document.getElementById('globalSearch').focus();
+  }
+}
+function closeSearch() {
+  document.querySelector('.search-wrap').classList.remove('open');
+  document.getElementById('globalSearch').value = '';
+  document.getElementById('searchDropdown').classList.remove('open');
+}
 
 // ── BÚSQUEDA GLOBAL ──
 function handleGlobalSearch() {
