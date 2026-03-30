@@ -349,6 +349,8 @@
       .products-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
     }
   </style>
+  .load-more-btn{margin:20px auto;display:block;background:var(--primary);color:#fff;border:none;padding:12px 24px;border-radius:25px;font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--t)}
+  .load-more-btn:hover{background:#e07c28}
 </head>
 <body>
 
@@ -532,6 +534,7 @@
   <div class="container">
     <div class="section-header"><h2 class="section-title">Todos los <span>Productos</span></h2><div class="section-decorator"><div class="decorator-line"></div><div class="decorator-dot"></div><div class="decorator-line"></div></div></div>
     <div class="products-grid" id="productsGrid"><div class="loading-grid"><div class="spinner"></div> Cargando productos...</div></div>
+    <button id="loadMoreBtn" class="load-more-btn" style="display:none" onclick="loadMoreProducts()">Ver Más Productos</button>
   </div>
 </section>
 
@@ -652,7 +655,8 @@ let allProducts = [];
 let fuse;
 let cart = JSON.parse(localStorage.getItem('mexhn_cart') || '[]');
 let selOpts = {}; // opciones seleccionadas por producto
-let filters = { cat:'all', price:0, sort:'default' };
+let filters = { cat:'all', price:0, sort:'default', brand:'all' };
+let productsShown = 12;
 
 // ── VISITAS ──
 function registrarVisita() {
@@ -697,7 +701,7 @@ function startStore() {
 // ── RENDER ──
 function renderAll() {
   const filtered = getFiltered();
-  renderGrid('productsGrid', filtered);
+  renderGrid('productsGrid', filtered.slice(0, productsShown));
   renderGrid('offersGrid', allProducts.filter(p=>p.isOnOffer).slice(0,6));
   renderGrid('bestsellersGrid', allProducts.filter(p=>p.isBestseller).slice(0,6));
   updateCart();
@@ -706,10 +710,12 @@ function renderAll() {
 function getFiltered() {
   let r = [...allProducts];
   if (filters.cat !== 'all') r = r.filter(p=>p.category===filters.cat);
+  if (filters.brand !== 'all') r = r.filter(p=>p.brand===filters.brand);
   if (filters.price > 0) r = r.filter(p=>p.price<=filters.price);
   if (filters.sort==='price-asc') r.sort((a,b)=>a.price-b.price);
   else if (filters.sort==='price-desc') r.sort((a,b)=>b.price-a.price);
   else if (filters.sort==='rating') r.sort((a,b)=>(b.rating||0)-(a.rating||0));
+  else r.sort((a,b)=> b.id.localeCompare(a.id));
   return r;
 }
 
@@ -720,6 +726,16 @@ function renderGrid(id, prods) {
   g.innerHTML = prods.map(p => cardHTML(p)).join('');
   // auto-slide imágenes en cards
   g.querySelectorAll('.product-carousel').forEach(initAutoSlide);
+  // Ver Más para productsGrid
+  if (id === 'productsGrid') {
+    const filtered = getFiltered();
+    const btn = document.getElementById('loadMoreBtn');
+    if (filtered.length > productsShown) {
+      btn.style.display = 'block';
+    } else {
+      btn.style.display = 'none';
+    }
+  }
 }
 
 function cardHTML(p) {
@@ -901,7 +917,7 @@ function doTradeIn(e){
 }
 
 // ── FILTERS ──
-function filterCat(cat){filters.cat=cat;document.getElementById('catF').value=cat;renderAll();document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
+function filterCat(cat){filters.cat=cat;document.getElementById('catF').value=cat;productsShown=12;renderAll();document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
 function applyF(){filters.cat=document.getElementById('catF').value;filters.price=parseInt(document.getElementById('priceF').value)||0;filters.sort=document.getElementById('sortF').value;renderAll();document.getElementById('fp').classList.remove('open')}
 
 // ── SEARCH ──
@@ -966,7 +982,9 @@ const c2 = all.filter(d => d.data().carrusel === 2);
     .catch(e => console.log('[Banners]', e.message));
 }
 
-function filterBrand(brand){renderGrid('productsGrid',allProducts.filter(p=>p.brand===brand));document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
+function filterBrand(brand){filters.brand=brand;productsShown=12;renderAll();document.getElementById('productsGrid')?.scrollIntoView({behavior:'smooth',block:'start'})}
+
+function loadMoreProducts(){ productsShown += 12; renderAll(); }
 
 // ── NEW PRODUCTS ──
 function buildNewProducts(){
