@@ -661,12 +661,14 @@ let productsShown = 12;
 // ── VISITAS ──
 function registrarVisita() {
   const hoy = new Date().toISOString().split('T')[0];
+  console.log('[Visitas] Registrando visita para:', hoy);
+  
   db.collection('visitas').doc(hoy).set(
     { fecha: hoy, total: firebase.firestore.FieldValue.increment(1) },
     { merge: true }
   )
-  .then(() => console.log('[Visitas] Registrada:', hoy))
-  .catch(e => console.error('[Visitas] Error:', e.message));
+  .then(() => console.log('[Visitas] ✓ Registrada exitosamente:', hoy))
+  .catch(e => console.error('[Visitas] ✗ Error:', e.code, e.message));
 }
 
 // ── FIREBASE REALTIME ──

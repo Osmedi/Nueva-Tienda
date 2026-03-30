@@ -1188,12 +1188,12 @@ window.addEventListener('beforeunload', () => sesionRef.delete());
 // Visitas
 const u4 = db.collection('visitas').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(30).onSnapshot(snap => {
   allVisitas = snap.docs.map(d => d.data());
+  console.log('[Admin] Visitas recibidas:', allVisitas.length, allVisitas);
   renderVisitas();
 });
 
 unsubscribers = [u1, u2, u3, u4];
-unsubscribers = [u1, u2, u3];
-  setFbStatus('connected');
+setFbStatus('connected');
 }
 
 function stopListeners() {
