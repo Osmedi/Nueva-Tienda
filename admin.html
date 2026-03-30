@@ -1735,6 +1735,8 @@ function renderBanners() {
         <td style="text-align:center;font-weight:600">${b.orden||1}</td>
         <td>${b.activo?'<span class="badge green">Activo</span>':'<span class="badge gray">Inactivo</span>'}</td>
         <td><div style="display:flex;gap:5px">
+          <div class="icon-btn" onclick="moveBanner('${doc.id}', 'up')" title="Mover arriba"><i class="fas fa-arrow-up"></i></div>
+          <div class="icon-btn" onclick="moveBanner('${doc.id}', 'down')" title="Mover abajo"><i class="fas fa-arrow-down"></i></div>
           <div class="icon-btn" onclick="openEditBanner('${doc.id}')" title="Editar"><i class="fas fa-pen"></i></div>
           <div class="icon-btn del" onclick="deleteBanner('${doc.id}')" title="Eliminar"><i class="fas fa-trash"></i></div>
         </div></td>
@@ -1806,6 +1808,36 @@ async function deleteBanner(id) {
   await db.collection('banners').doc(id).delete();
   showToast('Banner eliminado','error');
   renderBanners();
+}
+
+async function moveBanner(id, direction) {
+  try {
+    const snap = await db.collection('banners').orderBy('orden').get();
+    const banners = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const index = banners.findIndex(b => b.id === id);
+    if (index === -1) return;
+    let swapIndex;
+    if (direction === 'up' && index > 0) {
+      swapIndex = index - 1;
+    } else if (direction === 'down' && index < banners.length - 1) {
+      swapIndex = index + 1;
+    } else {
+      return; // No se puede mover
+    }
+    // Swap órdenes
+    const temp = banners[index].orden;
+    banners[index].orden = banners[swapIndex].orden;
+    banners[swapIndex].orden = temp;
+    // Actualizar en Firebase
+    const batch = db.batch();
+    batch.update(db.collection('banners').doc(banners[index].id), { orden: banners[index].orden });
+    batch.update(db.collection('banners').doc(banners[swapIndex].id), { orden: banners[swapIndex].orden });
+    await batch.commit();
+    showToast('Orden actualizado', 'success');
+    renderBanners();
+  } catch (e) {
+    showToast('Error al mover banner: ' + e.message, 'error');
+  }
 }
 
 // Vista previa al escribir URL

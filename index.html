@@ -708,6 +708,13 @@ function startStore() {
     buildBanners();
     buildNewProducts();
     console.log('[Firebase] ' + allProducts.length + ' productos ✓');
+    // Check for product URL param
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product');
+    if (productId) {
+      const p = allProducts.find(x => x.id === productId);
+      if (p) openProduct(productId);
+    }
   }, e => console.error('[Firebase]', e));
 }
 
@@ -1128,6 +1135,16 @@ function notify(msg,type='info'){
 loadTheme();
 startStore();
 setTimeout(()=>{const p=document.getElementById('preloader');if(p){p.style.opacity='0';setTimeout(()=>p.style.display='none',500)}},2000);
+
+// Check for product URL param on page load
+setTimeout(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('product');
+  if (productId && allProducts.length > 0) {
+    const p = allProducts.find(x => x.id === productId);
+    if (p) openProduct(productId);
+  }
+}, 2000);
 </script>
 </body>
 </html>
