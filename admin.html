@@ -1185,22 +1185,24 @@ sesionRef.set({
 });
 window.addEventListener('beforeunload', () => sesionRef.delete());
 
-// Visitas
-const u4 = db.collection('visitas').orderBy('fecha', 'desc').limit(30).onSnapshot(snap => {
-  allVisitas = snap.docs.map(d => {
-    const data = d.data();
-    console.log('[Admin] Visita recibida:', d.id, data);
-    return data;
-  });
-  console.log('[Admin] Total visitas:', allVisitas.length);
+// Visitas - Solo disponible para admin autenticado
+const u4 = db.collection('visitas').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(30).onSnapshot(snap => {
+  console.log('[Admin] Listener de visitas: ', snap.docs.length, ' documentos');
+  allVisitas = snap.docs.map(d => ({
+    fecha: d.data().fecha || d.id,
+    total: d.data().total || 0,
+    ...d.data()
+  }));
+  console.log('[Admin] Visitas:', allVisitas);
   renderVisitas();
 }, error => {
-  console.error('[Admin] Error al escuchar visitas:', error.code, error.message);
+  console.error('[Admin] Error en listener de visitas:', error.code, error.message);
 });
 
 unsubscribers = [u1, u2, u3, u4];
 setFbStatus('connected');
 }
+
 
 function stopListeners() {
   unsubscribers.forEach(u => u && u());
