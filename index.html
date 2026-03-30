@@ -14,6 +14,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script> 
   <script src="firebase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
   <style>
     :root{--primary:#F28C38;--bg:#F5F5F5;--bg2:#fff;--surface:rgba(255,255,255,0.88);--text:#1a1a1a;--text2:#555;--text3:#999;--border:#e0e0e0;--shadow:0 4px 16px rgba(0,0,0,0.1);--r:12px;--t:all 0.3s ease}
@@ -32,7 +33,7 @@
     @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.8}}
 
     /* HEADER */
-    .glass-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+    .glass-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:var(--shadow);border-radius:0 0 15px 15px}
     nav{display:flex;align-items:center;gap:16px;padding:10px 20px;max-width:1200px;margin:0 auto}
     .logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
     .logo-img{height:38px}
@@ -329,8 +330,11 @@
 
     /* RESPONSIVE */
     @media(max-width:768px){
-      .nav-links,.header-actions .search-container{display:none}
+      .nav-links{display:none}
+      .header-actions .theme-switch, .header-actions .tradein-btn{display:none}
       .mobile-menu-toggle{display:block}
+      .search-container input{width:120px}
+      .search-container input:focus{width:150px}
       .nav-content.active{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:var(--bg2);padding:14px;border-bottom:1px solid var(--border);z-index:99}
       .nav-content.active .nav-links{display:flex;flex-direction:column}
       .nav-content.active .search-container{display:block;width:100%}
@@ -645,6 +649,7 @@
 // ══════════════════════════════════════════════════
 
 let allProducts = [];
+let fuse;
 let cart = JSON.parse(localStorage.getItem('mexhn_cart') || '[]');
 let selOpts = {}; // opciones seleccionadas por producto
 let filters = { cat:'all', price:0, sort:'default' };
@@ -675,10 +680,12 @@ function startStore() {
         images: Array.isArray(x.images) ? x.images : (x.images?[x.images]:[]),
         description: x.description||'', badge: x.badge||'',
         isBestseller: !!x.isBestseller, isOnOffer: !!x.isOnOffer,
+        isNew: !!x.isNew,
         specs: x.specs||{}, features: x.features||[],
         gb_options: x.gb_options||[], colors: x.colors||[],
       };
     });
+    fuse = new Fuse(allProducts, { keys: ['name', 'brand'], threshold: 0.4 });
     renderAll();
     buildBrands();
     buildBanners();
@@ -901,9 +908,13 @@ function applyF(){filters.cat=document.getElementById('catF').value;filters.pric
 document.getElementById('searchInput').addEventListener('input',function(){
   const q=this.value.toLowerCase().trim(),sug=document.getElementById('searchSuggestions');
   if(!q){sug.style.display='none';return}
-  const m=allProducts.filter(p=>p.name.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q)).slice(0,6);
-  if(!m.length){sug.style.display='none';return}
-  sug.innerHTML=m.map(p=>`<div class="sug-item" onclick="openProduct('${p.id}');this.closest('.search-suggestions').style.display='none';document.getElementById('searchInput').value=''"><img src="${p.images[0]||''}" alt="" onerror="this.src=''"><div><div style="font-weight:600">${p.name}</div><div style="font-size:.7rem;color:var(--text3)">L.${p.price.toLocaleString()}</div></div></div>`).join('');
+  const results = fuse.search(q).slice(0,6).map(r => r.item);
+  if(!results.length){
+    sug.innerHTML='<div class="sug-item" style="justify-content:center;padding:12px;font-size:.8rem;color:var(--text3)">No se encontraron productos</div>';
+    sug.style.display='block';
+    return;
+  }
+  sug.innerHTML=results.map(p=>`<div class="sug-item" onclick="openProduct('${p.id}');this.closest('.search-suggestions').style.display='none';document.getElementById('searchInput').value=''"><img src="${p.images[0]||''}" alt="" onerror="this.src=''"><div><div style="font-weight:600">${p.name}</div><div style="font-size:.7rem;color:var(--text3)">L.${p.price.toLocaleString()}</div></div></div>`).join('');
   sug.style.display='block';
 });
 document.addEventListener('click',e=>{if(!e.target.closest('.search-container'))document.getElementById('searchSuggestions').style.display='none'});
@@ -912,7 +923,7 @@ document.addEventListener('click',e=>{if(!e.target.closest('.search-container'))
 function buildBrands(){
   const brands=[
     {name:'Apple',logo:'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg'},
-    {name:'Samsung',logo:'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg'},
+    {name:'Samsung',logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Samsung_wordmark.svg/1920px-Samsung_wordmark.svg.png'},
     {name:'Google',logo:'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg'},
     {name:'Microsoft',logo:'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg'},
     {name:'Sony',logo:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg'},
@@ -959,7 +970,7 @@ function filterBrand(brand){renderGrid('productsGrid',allProducts.filter(p=>p.br
 
 // ── NEW PRODUCTS ──
 function buildNewProducts(){
-  const prods=[...allProducts].slice(0,8);
+  const prods = allProducts.filter(p => p.isNew).slice(0,8);
   if(!prods.length)return;
   const all=[...prods,...prods];
   document.getElementById('newProductsList').innerHTML=all.map(p=>`<div class="new-product-item"><div class="new-product-card" onclick="openProduct('${p.id}')"><span class="new-product-badge">${p.badge||'Nuevo'}</span><img src="${p.images[0]||''}" alt="${p.name}" class="new-product-image" onerror="this.src=''"><div class="new-product-name">${p.name}</div><button class="view-product-btn">Ver Producto</button></div></div>`).join('');

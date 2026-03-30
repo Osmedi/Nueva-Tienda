@@ -887,7 +887,7 @@
       <div class="section-hd"><h2>Control de <span>Inventario</span></h2></div>
       <div class="panel">
         <table class="data-table">
-          <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Precio Original</th><th>Descuento</th><th>Oferta</th><th>Bestseller</th></tr></thead>
+          <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Precio Original</th><th>Descuento</th><th>Oferta</th><th>Bestseller</th><th>Nuevo</th></tr></thead>
           <tbody id="inventoryTbody"><tr><td colspan="7"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr></tbody>
         </table>
       </div>
@@ -1045,6 +1045,7 @@
       <div class="form-group full" style="flex-direction:row;gap:20px">
         <label class="form-check"><input type="checkbox" id="fBestseller"> Bestseller</label>
         <label class="form-check"><input type="checkbox" id="fOffer"> En Oferta</label>
+        <label class="form-check"><input type="checkbox" id="fNew"> Nuevo</label>
       </div>
     </div>
     <div class="form-group full">
@@ -1276,6 +1277,7 @@ function openAddProduct() {
   document.getElementById('fCategory').value = 'smartphones';
   document.getElementById('fBestseller').checked = false;
   document.getElementById('fOffer').checked = false;
+  document.getElementById('fNew').checked = false;
   openModal('productModal');
 }
 
@@ -1301,6 +1303,7 @@ function openEditProduct(id) {
   if (document.getElementById('fFeatures')) document.getElementById('fFeatures').value = (p.features||[]).join('\n');
   document.getElementById('fBestseller').checked = !!p.isBestseller;
   document.getElementById('fOffer').checked = !!p.isOnOffer;
+  document.getElementById('fNew').checked = !!p.isNew;
   openModal('productModal');
 }
 
@@ -1327,6 +1330,7 @@ async function saveProduct() {
     features: (document.getElementById('fFeatures')?.value || '').split('\n').map(s=>s.trim()).filter(Boolean),
     isBestseller: document.getElementById('fBestseller').checked,
     isOnOffer: document.getElementById('fOffer').checked,
+    isNew: document.getElementById('fNew').checked,
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
   };
   try {
@@ -1428,7 +1432,7 @@ function waOrder(id) {
 // ═══════════════════════════════════════════
 function renderInventory() {
   const tbody = document.getElementById('inventoryTbody');
-  if(!allProducts.length) { tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fas fa-box-open"></i><p>Sin productos</p></div></td></tr>`; return; }
+  if(!allProducts.length) { tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><i class="fas fa-box-open"></i><p>Sin productos</p></div></td></tr>`; return; }
   tbody.innerHTML = allProducts.map(p => {
     const disc = p.originalPrice ? Math.round((1-p.price/p.originalPrice)*100) : 0;
     return `<tr>
@@ -1442,6 +1446,7 @@ function renderInventory() {
       <td>${disc>0?`<span class="badge green">-${disc}%</span>`:'—'}</td>
       <td>${p.isOnOffer?'<span class="badge orange">Sí</span>':'<span class="badge gray">No</span>'}</td>
       <td>${p.isBestseller?'<span class="badge yellow">Sí</span>':'<span class="badge gray">No</span>'}</td>
+      <td>${p.isNew?'<span class="badge blue">Sí</span>':'<span class="badge gray">No</span>'}</td>
     </tr>`;
   }).join('');
 }
@@ -1702,8 +1707,8 @@ document.addEventListener('input', e => {
 
 
 function exportCSV() {
-  const rows = [['ID','Nombre','Marca','Categoría','Precio','Precio Original','Rating','Reseñas','Oferta','Bestseller']];
-  allProducts.forEach(p=>rows.push([p.id,p.name,p.brand,p.category,p.price,p.originalPrice||'',p.rating||'',p.reviews||'',p.isOnOffer?'Sí':'No',p.isBestseller?'Sí':'No']));
+  const rows = [['ID','Nombre','Marca','Categoría','Precio','Precio Original','Rating','Reseñas','Oferta','Bestseller','Nuevo']];
+  allProducts.forEach(p=>rows.push([p.id,p.name,p.brand,p.category,p.price,p.originalPrice||'',p.rating||'',p.reviews||'',p.isOnOffer?'Sí':'No',p.isBestseller?'Sí':'No',p.isNew?'Sí':'No']));
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));
   a.download = 'productos_mobileexpresshn.csv';
