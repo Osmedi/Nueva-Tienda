@@ -51,6 +51,8 @@
     .sug-item{display:flex;align-items:center;gap:10px;padding:9px 13px;cursor:pointer;font-size:.8rem;transition:background .2s}
     .sug-item:hover{background:rgba(242,140,56,.07)}
     .sug-item img{width:34px;height:34px;object-fit:contain;border-radius:6px;background:var(--bg)}
+    .mobile-search-btn{display:none;background:none;border:none;color:var(--text);font-size:1.1rem;cursor:pointer;padding:8px;transition:var(--t)}
+    .mobile-search-btn:hover{color:var(--primary)}
     /* Theme */
     .theme-switch{cursor:pointer;display:flex;align-items:center}
     .theme-switch__checkbox{display:none}
@@ -331,8 +333,14 @@
     /* RESPONSIVE */
     @media(max-width:768px){
       .nav-links{display:none}
-      .header-actions .theme-switch, .header-actions .tradein-btn{display:none}
+      .header-actions .theme-switch{display:none}
+      .header-actions .tradein-btn{display:flex !important;padding:8px 14px;font-size:.75rem;background:var(--primary);color:#fff;font-weight:700}
       .mobile-menu-toggle{display:block}
+      .mobile-search-btn{display:flex;align-items:center;justify-content:center;background:none;border:none;color:var(--text);font-size:1rem;cursor:pointer;padding:6px;margin-right:8px}
+      .search-container{display:none !important}
+      .search-container.mobile-search-visible{display:block !important;position:fixed;top:60px;left:0;right:0;width:100%;background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px;z-index:98}
+      .search-container.mobile-search-visible input{width:100%;padding:10px 40px 10px 13px}
+      .search-container.mobile-search-visible button{position:absolute;right:25px;top:50%;transform:translateY(-50%)}
       .search-container input{width:120px}
       .search-container input:focus{width:150px}
       .nav-content.active{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:var(--bg2);padding:14px;border-bottom:1px solid var(--border);z-index:99}
@@ -373,6 +381,9 @@
         <li><a href="#contact" class="nav-link">Contacto</a></li>
       </ul>
       <div class="header-actions">
+        <button class="mobile-search-btn" onclick="toggleMobileSearch()" title="Buscar">
+          <i class="fas fa-search"></i>
+        </button>
         <div class="search-container">
           <input type="text" id="searchInput" placeholder="Buscar dispositivos...">
           <button class="search-button"><i class="fas fa-search"></i></button>
@@ -1091,6 +1102,16 @@ function clearWishlist() {
 
 // ── MISC ──
 function toggleMenu(){document.getElementById('navContent').classList.toggle('active')}
+function toggleMobileSearch(){
+  const searchContainer = document.querySelector('.search-container');
+  searchContainer.classList.toggle('mobile-search-visible');
+  if(searchContainer.classList.contains('mobile-search-visible')){
+    document.getElementById('searchInput').focus();
+  } else {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchSuggestions').style.display = 'none';
+  }
+}
 window.addEventListener('scroll',()=>{document.getElementById('scrollTop').style.display=window.scrollY>400?'block':'none'});
 ['cartModal','productModal','tradeInModal','wishModal'].forEach(id=>document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
 updateWishCount();
