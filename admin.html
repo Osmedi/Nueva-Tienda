@@ -1186,10 +1186,16 @@ sesionRef.set({
 window.addEventListener('beforeunload', () => sesionRef.delete());
 
 // Visitas
-const u4 = db.collection('visitas').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(30).onSnapshot(snap => {
-  allVisitas = snap.docs.map(d => d.data());
-  console.log('[Admin] Visitas recibidas:', allVisitas.length, allVisitas);
+const u4 = db.collection('visitas').orderBy('fecha', 'desc').limit(30).onSnapshot(snap => {
+  allVisitas = snap.docs.map(d => {
+    const data = d.data();
+    console.log('[Admin] Visita recibida:', d.id, data);
+    return data;
+  });
+  console.log('[Admin] Total visitas:', allVisitas.length);
   renderVisitas();
+}, error => {
+  console.error('[Admin] Error al escuchar visitas:', error.code, error.message);
 });
 
 unsubscribers = [u1, u2, u3, u4];
