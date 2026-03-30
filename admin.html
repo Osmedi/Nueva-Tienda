@@ -1083,14 +1083,14 @@
         <button class="tb-btn primary" onclick="openAddProduct()"><i class="fas fa-plus"></i> Nuevo</button>
       </div>
       <div class="filter-bar">
-        <input class="f-input" type="text" placeholder="Buscar producto..." id="prodSearch" oninput="filterProds()">
-        <select class="f-select" id="prodCat" onchange="filterProds()">
+        <input class="f-input" type="text" placeholder="Buscar producto..." id="prodSearch" oninput="renderProducts()">
+        <select class="f-select" id="prodCat" onchange="renderProducts()">
           <option value="">Todas las categorías</option>
           <option value="smartphones">Smartphones</option>
           <option value="consolas">Consolas</option>
           <option value="accesorios">Accesorios</option>
         </select>
-        <select class="f-select" id="prodOffer" onchange="filterProds()">
+        <select class="f-select" id="prodOffer" onchange="renderProducts()">
           <option value="">Todos</option>
           <option value="offer">En oferta</option>
           <option value="best">Más vendidos</option>
@@ -2226,7 +2226,9 @@ function handleGlobalSearch() {
   }
   dropdown.classList.add('open');
   // también filtrar la página de productos si está activa
-  filterProds();
+  if (document.getElementById('page-products').classList.contains('active')) {
+    renderProducts();
+  }
 }
 
 function goToProduct(id) {
