@@ -574,6 +574,210 @@
       .prod-grid{grid-template-columns:1fr}
       .topbar-title{display:none}
     }
+
+    /* ── MOBILE OPTIMIZATIONS ── */
+    @media(max-width:768px){
+      /* Layout principal */
+      .main{margin-left:0;width:100%}
+      .sidebar{position:fixed;left:-280px;top:0;width:280px;height:100vh;z-index:1000;background:var(--bg);border-right:1px solid var(--border);transition:transform 0.3s ease}
+      .sidebar.open{transform:translateX(280px)}
+      .sidebar-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999;backdrop-filter:blur(2px)}
+      .sidebar-overlay.open{display:block}
+
+      /* Topbar móvil */
+      .topbar{height:56px;padding:0 16px;display:flex;align-items:center;gap:12px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+      .hamburger{display:flex;width:40px;height:40px;border-radius:8px;background:var(--surface2);align-items:center;justify-content:center;color:var(--text);cursor:pointer;border:1px solid var(--border)}
+      .topbar-title{font-size:1rem;margin:0 auto;font-weight:600}
+      .search-wrap{display:none}
+      .search-wrap.open{position:absolute;top:56px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px}
+      .search-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:0.9rem}
+      .search-input:focus{outline:none;border-color:var(--accent)}
+
+      /* Navegación */
+      .nav-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:8px;margin:4px 8px;color:var(--text2);cursor:pointer;transition:all 0.2s}
+      .nav-item:hover{background:var(--surface2)}
+      .nav-item.active{background:var(--glow);color:var(--accent2);border-left:3px solid var(--accent)}
+      .nav-item i{width:18px;text-align:center;font-size:0.9rem}
+      .nav-badge{background:var(--red);color:#fff;font-size:0.7rem;padding:2px 6px;border-radius:10px;margin-left:auto}
+
+      /* Contenido */
+      .content{padding:16px;max-width:100%;overflow-x:hidden}
+
+      /* Dashboard móvil */
+      .stats-grid{grid-template-columns:1fr 1fr;gap:12px}
+      .stat-card{padding:16px;border-radius:12px;text-align:center}
+      .stat-icon{width:48px;height:48px;margin:0 auto 8px;border-radius:12px}
+      .stat-label{font-size:0.8rem;margin-bottom:4px}
+      .stat-value{font-size:1.4rem;margin-bottom:2px}
+      .stat-change{font-size:0.7rem}
+
+      /* Paneles */
+      .panel{border-radius:12px;overflow:hidden}
+      .panel-header{padding:16px;border-bottom:1px solid var(--border)}
+      .panel-title{font-size:1rem;font-weight:600}
+      .panel-body{padding:16px}
+
+      /* Tablas responsivas */
+      .data-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .data-table th,.data-table td{white-space:nowrap;padding:12px 8px;font-size:0.8rem}
+      .data-table th{font-weight:600;text-align:left}
+
+      /* Grid layouts */
+      .grid-2{grid-template-columns:1fr;gap:16px}
+      .product-grid{grid-template-columns:1fr;gap:12px}
+
+      /* Formularios */
+      .form-grid{grid-template-columns:1fr;gap:12px}
+      .form-group{margin-bottom:12px}
+      .form-input,.form-select,.form-textarea{padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:0.9rem;width:100%}
+      .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--accent)}
+      .form-label{font-size:0.8rem;font-weight:500;margin-bottom:4px;display:block}
+
+      /* Botones */
+      .btn,.tb-btn{padding:12px 16px;border-radius:8px;font-size:0.9rem;font-weight:500;display:flex;align-items:center;gap:6px;justify-content:center}
+      .btn.primary{background:var(--accent);color:#fff;border:none}
+      .btn.secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+      .btn.danger{background:var(--red);color:#fff;border:none}
+
+      /* Modales móviles */
+      .modal-overlay{display:flex;align-items:flex-start;padding:16px;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px)}
+      .modal{width:100%;max-width:100%;margin:0;border-radius:12px;max-height:90vh;overflow-y:auto}
+      .modal-title{padding:16px;border-bottom:1px solid var(--border);font-size:1rem}
+      .modal-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--text2)}
+      .modal-footer{padding:16px;border-top:1px solid var(--border);gap:12px}
+
+      /* Acciones rápidas */
+      .quick-actions{grid-template-columns:1fr 1fr;gap:12px}
+      .qa-btn{padding:16px;border-radius:12px;text-align:center}
+      .qa-icon{width:48px;height:48px;margin:0 auto 8px;border-radius:12px}
+      .qa-label{font-size:0.9rem;margin-bottom:2px}
+      .qa-desc{font-size:0.7rem}
+
+      /* Filtros */
+      .filter-bar{flex-direction:column;gap:12px;padding:16px;background:var(--surface);border-radius:12px;margin-bottom:16px}
+      .f-input,.f-select{padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:0.9rem}
+
+      /* Estados de orden */
+      .os-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+      .os-pill{padding:8px 12px;border-radius:20px;font-size:0.8rem;font-weight:500}
+
+      /* Loading y estados */
+      .loading-overlay{padding:40px;text-align:center}
+      .spinner{width:32px;height:32px;border:3px solid var(--border);border-top:3px solid var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
+      .empty-state{padding:40px;text-align:center}
+      .empty-state i{font-size:2rem;margin-bottom:12px;opacity:0.5}
+
+      /* Iconos y botones */
+      .icon-btn{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+
+      /* Notificaciones */
+      .notif-panel{right:16px;width:calc(100vw - 32px);max-width:400px}
+
+      /* Carrusel de productos */
+      .prod-grid{grid-template-columns:1fr 1fr;gap:12px}
+      .prod-card{border-radius:12px;overflow:hidden}
+      .prod-image{height:120px}
+      .prod-info{padding:12px}
+      .prod-title{font-size:0.9rem;margin-bottom:4px}
+      .prod-price{font-size:1rem;margin-bottom:8px}
+
+      /* Touch-friendly buttons */
+      .btn,.tb-btn,.qa-btn,.icon-btn{min-height:44px;min-width:44px}
+
+      /* Mejor scroll en tablas */
+      .data-table::-webkit-scrollbar{height:4px}
+      .data-table::-webkit-scrollbar-track{background:var(--surface2)}
+      .data-table::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+      /* Formularios táctiles */
+      .form-check{display:flex;align-items:center;gap:8px;margin:12px 0}
+      .form-check input[type="checkbox"]{width:18px;height:18px;accent-color:var(--accent)}
+      .form-check label{font-size:0.9rem}
+
+      /* Dropdowns móviles */
+      .search-results-dropdown{max-height:60vh;overflow-y:auto;border-radius:8px;margin-top:4px}
+
+      /* Loading states */
+      .loading-overlay{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px}
+      .spinner{margin-bottom:12px}
+
+      /* Empty states */
+      .empty-state i{margin-bottom:12px;color:var(--text3)}
+
+      /* Panel actions */
+      .panel-action{font-size:0.8rem;color:var(--accent);cursor:pointer;text-decoration:underline}
+
+      /* Badge improvements */
+      .badge{padding:4px 8px;border-radius:12px;font-size:0.7rem;font-weight:500}
+      .badge.green{background:rgba(34,197,94,.1);color:var(--green)}
+      .badge.blue{background:rgba(59,130,246,.1);color:var(--blue)}
+      .badge.yellow{background:rgba(245,158,11,.1);color:var(--yellow)}
+      .badge.red{background:rgba(239,68,68,.1);color:var(--red)}
+      .badge.gray{background:rgba(107,114,128,.1);color:#6b7280}
+
+      /* Status pills */
+      .os-pill{padding:8px 16px;border-radius:20px;font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.2s;border:1px solid var(--border)}
+      .os-pill.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+      .os-pill:not(.active):hover{background:var(--surface2)}
+
+      /* Product cards móviles */
+      .prod-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface);cursor:pointer;transition:all 0.2s}
+      .prod-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+      .prod-image{background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
+      .prod-image img{max-width:100%;max-height:120px;object-fit:contain}
+      .prod-info{padding:12px}
+      .prod-title{font-size:0.9rem;font-weight:600;margin-bottom:4px;color:var(--text);line-height:1.3}
+      .prod-price{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:8px}
+      .prod-meta{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text3)}
+      .prod-actions{display:flex;gap:6px;margin-top:8px}
+      .prod-actions button{flex:1;padding:8px;border-radius:6px;border:none;font-size:0.8rem;font-weight:500}
+
+      /* Modal improvements */
+      .modal-overlay{align-items:flex-start;padding:16px 16px 0}
+      .modal{max-width:calc(100vw - 32px);margin:16px auto 0;border-radius:16px}
+      .modal-title{display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid var(--border)}
+      .modal-title h3{font-size:1.1rem;margin:0}
+      .modal-body{padding:20px;max-height:70vh;overflow-y:auto}
+      .modal-footer{display:flex;gap:12px;padding:16px;border-top:1px solid var(--border);background:var(--surface2)}
+
+      /* Toast notifications móviles */
+      .toast{position:fixed;bottom:20px;left:16px;right:16px;z-index:10000;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(0,0,0,0.15);transform:translateY(100px);opacity:0;transition:all 0.3s}
+      .toast.show{transform:translateY(0);opacity:1}
+      .toast-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem}
+      .toast.success .toast-icon{background:rgba(34,197,94,.1);color:var(--green)}
+      .toast.error .toast-icon{background:rgba(239,68,68,.1);color:var(--red)}
+      .toast.warning .toast-icon{background:rgba(245,158,11,.1);color:var(--yellow)}
+      .toast.info .toast-icon{background:rgba(59,130,246,.1);color:var(--blue)}
+      .toast-message{flex:1;font-size:0.9rem}
+      .toast-close{margin-left:auto;cursor:pointer;opacity:0.6;padding:4px}
+
+      /* Swipe gestures hint */
+      .swipe-hint{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:8px 16px;font-size:0.8rem;color:var(--text3);pointer-events:none;z-index:1000;opacity:0;transition:opacity 0.3s}
+      .swipe-hint.show{opacity:1}
+
+      /* Better focus states */
+      .btn:focus,.tb-btn:focus,.form-input:focus,.form-select:focus{outline:2px solid var(--accent);outline-offset:2px}
+
+      /* Safe area for devices with notches */
+      @supports (padding: max(0px)) {
+        .topbar{padding-top: max(10px, env(safe-area-inset-top))}
+        .content{padding-bottom: max(16px, env(safe-area-inset-bottom))}
+      }
+    }
+
+    @media(max-width:480px){
+      /* Pantallas muy pequeñas */
+      .stats-grid{grid-template-columns:1fr}
+      .quick-actions{grid-template-columns:1fr}
+      .content{padding:12px}
+      .panel-body{padding:12px}
+      .modal-title{padding:12px}
+      .modal-footer{padding:12px}
+      .form-grid{grid-template-columns:1fr}
+      .btn,.tb-btn{font-size:0.85rem;padding:10px 14px}
+      .stat-value{font-size:1.2rem}
+      .prod-grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
@@ -967,7 +1171,7 @@
     <table class="data-table">
       <thead><tr>
         <th>Vista previa</th><th>URL Desktop</th><th>URL Mobile</th>
-        <th>Carrusel</th><th>Orden</th><th>Estado</th><th>Acciones</th>
+        <th>Carrusel</th><th>Estado</th><th>Acciones</th>
       </tr></thead>
       <tbody id="bannersTbody">
         <tr><td colspan="7"><div class="loading-overlay"><div class="spinner"></div> Cargando...</div></td></tr>
@@ -1722,22 +1926,18 @@ function renderBanners() {
   db.collection('banners').get().then(snap => {
     const tbody = document.getElementById('bannersTbody');
     if (snap.empty) {
-      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-images"></i><p>Sin banners. Crea el primero.</p></div></td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-images"></i><p>Sin banners. Crea el primero.</p></div></td></tr>`;
       return;
     }
-    const banners = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => (a.orden || 999) - (b.orden || 999));
-    tbody.innerHTML = banners.map(doc => {
-      const b = doc;
+    tbody.innerHTML = snap.docs.map(doc => {
+      const b = doc.data();
       return `<tr>
         <td><img src="${b.url_desktop}" style="height:48px;border-radius:6px;object-fit:cover;max-width:120px" onerror="this.style.opacity=0.2"></td>
         <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.72rem;color:var(--text2)">${b.url_desktop||'—'}</td>
         <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.72rem;color:var(--text2)">${b.url_mobile||'—'}</td>
         <td style="text-align:center"><span class="badge ${b.carrusel==2?'blue':'orange'}">Carrusel ${b.carrusel||1}</span></td>
-        <td style="text-align:center;font-weight:600">${b.orden||'—'}</td>
         <td>${b.activo?'<span class="badge green">Activo</span>':'<span class="badge gray">Inactivo</span>'}</td>
         <td><div style="display:flex;gap:5px">
-          <div class="icon-btn" onclick="moveBanner('${doc.id}', 'up')" title="Mover arriba"><i class="fas fa-arrow-up"></i></div>
-          <div class="icon-btn" onclick="moveBanner('${doc.id}', 'down')" title="Mover abajo"><i class="fas fa-arrow-down"></i></div>
           <div class="icon-btn" onclick="openEditBanner('${doc.id}')" title="Editar"><i class="fas fa-pen"></i></div>
           <div class="icon-btn del" onclick="deleteBanner('${doc.id}')" title="Eliminar"><i class="fas fa-trash"></i></div>
         </div></td>
@@ -1809,37 +2009,6 @@ async function deleteBanner(id) {
   await db.collection('banners').doc(id).delete();
   showToast('Banner eliminado','error');
   renderBanners();
-}
-
-async function moveBanner(id, direction) {
-  try {
-    const snap = await db.collection('banners').get();
-    const banners = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => (a.orden || 999) - (b.orden || 999));
-    const index = banners.findIndex(b => b.id === id);
-    if (index === -1) return;
-    let swapIndex;
-    if (direction === 'up' && index > 0) {
-      swapIndex = index - 1;
-    } else if (direction === 'down' && index < banners.length - 1) {
-      swapIndex = index + 1;
-    } else {
-      return; // No se puede mover
-    }
-    // Swap órdenes
-    const temp = banners[index].orden || (index + 1);
-    const swapTemp = banners[swapIndex].orden || (swapIndex + 1);
-    banners[index].orden = swapTemp;
-    banners[swapIndex].orden = temp;
-    // Actualizar en Firebase
-    const batch = db.batch();
-    batch.update(db.collection('banners').doc(banners[index].id), { orden: banners[index].orden });
-    batch.update(db.collection('banners').doc(banners[swapIndex].id), { orden: banners[swapIndex].orden });
-    await batch.commit();
-    showToast('Orden actualizado', 'success');
-    renderBanners();
-  } catch (e) {
-    showToast('Error al mover banner: ' + e.message, 'error');
-  }
 }
 
 // Vista previa al escribir URL
@@ -1925,8 +2094,103 @@ function closeSidebar() {
 // Cerrar sidebar al navegar en móvil
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
-    if (window.innerWidth <= 700) closeSidebar();
+    if (window.innerWidth <= 768) closeSidebar();
   });
+});
+
+// ── GESTOS MÓVILES ──
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+});
+
+document.addEventListener('touchend', e => {
+  touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  const minSwipeDistance = 50;
+
+  // Swipe right to open sidebar (from left edge)
+  if (Math.abs(deltaX) > minSwipeDistance && Math.abs(deltaY) < 100) {
+    if (deltaX > 0 && touchStartX < 50 && window.innerWidth <= 768) {
+      toggleSidebar();
+    }
+    // Swipe left to close sidebar
+    else if (deltaX < 0 && document.querySelector('.sidebar').classList.contains('open')) {
+      closeSidebar();
+    }
+  }
+}
+
+// ── MEJOR FEEDBACK TÁCTIL ──
+document.addEventListener('DOMContentLoaded', () => {
+  // Agregar feedback háptico si está disponible
+  if ('vibrate' in navigator) {
+    document.querySelectorAll('.btn, .tb-btn, .icon-btn, .qa-btn').forEach(btn => {
+      btn.addEventListener('touchstart', () => {
+        navigator.vibrate(10);
+      });
+    });
+  }
+
+  // Prevenir zoom en doble tap
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+
+  // Mostrar hint de swipe en primera visita móvil
+  if (window.innerWidth <= 768 && !localStorage.getItem('mobileHintShown')) {
+    setTimeout(() => {
+      const hint = document.createElement('div');
+      hint.className = 'swipe-hint show';
+      hint.textContent = '👆 Desliza desde el borde izquierdo para abrir el menú';
+      document.body.appendChild(hint);
+      setTimeout(() => {
+        hint.classList.remove('show');
+        setTimeout(() => hint.remove(), 300);
+      }, 3000);
+      localStorage.setItem('mobileHintShown', 'true');
+    }, 2000);
+  }
+});
+
+// ── OPTIMIZACIONES DE RENDIMIENTO ──
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    // Cerrar sidebar si se redimensiona a desktop
+    if (window.innerWidth > 768) {
+      closeSidebar();
+      closeSearch();
+    }
+  }, 250);
+});
+
+// ── MEJOR MANEJO DE ORIENTACIÓN ──
+window.addEventListener('orientationchange', () => {
+  // Pequeño delay para que termine la transición
+  setTimeout(() => {
+    // Recalcular posiciones si es necesario
+    if (document.querySelector('.sidebar').classList.contains('open')) {
+      // Asegurar que el sidebar esté correctamente posicionado
+    }
+  }, 300);
 });
 
 // ── BÚSQUEDA MÓVIL ──
