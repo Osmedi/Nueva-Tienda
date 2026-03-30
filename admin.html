@@ -1099,6 +1099,17 @@
   </div>
 </div>
 
+<!-- MODAL: COMPARTIR -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span>Compartir Producto</span>
+      <button class="modal-close" onclick="closeModal('shareModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="shareModalBody"></div>
+  </div>
+</div>
+
 <!-- MODAL: PEDIDO -->
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
@@ -1305,6 +1316,7 @@ function renderProducts() {
           <span class="badge ${p.badge?'orange':'gray'}">${p.badge||'Sin badge'}</span>
           <div class="prod-actions">
             <div class="icon-btn" onclick="openEditProduct('${p.id}')" title="Editar"><i class="fas fa-pen"></i></div>
+            <div class="icon-btn" onclick="shareProduct('${p.id}', '${p.name.replace(/'/g, "\\'")}', '${p.images?.[0] || ''}')" title="Compartir"><i class="fas fa-share-alt"></i></div>
             <div class="icon-btn del" onclick="deleteProduct('${p.id}','${p.name}')" title="Eliminar"><i class="fas fa-trash"></i></div>
           </div>
         </div>
@@ -1400,6 +1412,29 @@ async function deleteProduct(id, name) {
     await db.collection('productos').doc(id).delete();
     showToast('Producto eliminado','error');
   } catch(e) { showToast('Error: '+e.message,'error'); }
+}
+
+// ═══════════════════════════════════════════
+//  SHARE PRODUCT
+// ═══════════════════════════════════════════
+function shareProduct(id, name, image) {
+  const url = window.location.origin + '/?product=' + id;
+  const text = 'Producto: ' + name;
+  const shareModalBody = document.getElementById('shareModalBody');
+  shareModalBody.innerHTML = `
+    <div style="text-align:center;margin-bottom:20px;">
+      <img src="${image}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid var(--border);" onerror="this.style.display='none'">
+      <h3 style="margin:10px 0;font-size:1.1rem;color:var(--text)">${name}</h3>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;padding:10px;">
+      <button class="btn primary" onclick="window.open('https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}', '_blank')" style="background:#25D366;border-color:#25D366;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+      <button class="btn primary" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}', '_blank')" style="background:#1877F2;border-color:#1877F2;"><i class="fab fa-facebook"></i> Facebook</button>
+      <button class="btn primary" onclick="window.open('https://twitter.com/intent/tweet?text=${encodeURIComponent(text + ' ' + url)}', '_blank')" style="background:#1DA1F2;border-color:#1DA1F2;"><i class="fab fa-twitter"></i> Twitter</button>
+      <button class="btn primary" onclick="window.open('https://www.instagram.com/?url=${encodeURIComponent(url)}', '_blank')" style="background:#E4405F;border-color:#E4405F;"><i class="fab fa-instagram"></i> Instagram</button>
+      <button class="btn secondary" onclick="navigator.clipboard.writeText(url).then(() => showToast('Enlace copiado al portapapeles', 'success')).catch(() => showToast('Error al copiar', 'error'))"><i class="fas fa-copy"></i> Copiar Enlace</button>
+    </div>
+  `;
+  openModal('shareModal');
 }
 
 // ═══════════════════════════════════════════
